@@ -1,0 +1,28 @@
+<ion-view view-title="Log In">
+
+	<ion-content padding="true">
+
+		<div style="text-align: center">
+			<img src="resources/common/images/login.png" />
+		</div>
+		
+		<div class="list">
+			<label class="item item-input">
+				<span class="input-label">{{model.user.label}}</span>
+				<input type="text" ng-model="model.user.value">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">{{model.password.label}}</span>
+				<input type="password" ng-model="model.password.value">
+			</label>
+		</div>
+		<div style="text-align: center">
+			<p ng-if="model.message.length > 0" style="color: red">{{model.message}}</p>
+		</div>
+
+		<button class="button button-positive button-full" ng-click="model.login.handler()">{{model.login.label}}</button>
+		
+		<a class="button button-positive button-full button-clear" ui-sref="help">Help?</a>
+	</ion-content>
+
+</ion-view>

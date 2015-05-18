@@ -1,8 +1,15 @@
 angular.module('AIMA', ['ionic'])
-	.controller('AppCtrl', function() {
+	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('start', { url: '/start', templateUrl: 'views/start.html', controller: 'StartCtrl' })
+			.state('help', { url: '/help', templateUrl: 'views/help.html', controller: 'HelpCtrl' });
 
-	ionic.Platform.ready(function() {
-		navigator.splashscreen.hide();
-	});
+    $urlRouterProvider.otherwise("/start");
+	}])
+	.controller('AppCtrl', [function() {
 
-});
+		ionic.Platform.ready(function() {
+			navigator.splashscreen.hide();
+		});
+
+	}]);
