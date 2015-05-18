@@ -1,15 +1,18 @@
-angular.module('AIMA', ['ionic'])
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+angular.module('aima', ['ionic', 'aima.services'])
+  .config(['$ionicConfigProvider', '$stateProvider', '$urlRouterProvider', function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
+
+    $ionicConfigProvider.views.transition('none');
+
     $stateProvider
       .state('start', { url: '/start', templateUrl: 'views/start.html', controller: 'StartCtrl' })
-			.state('help', { url: '/help', templateUrl: 'views/help.html', controller: 'HelpCtrl' });
-
+      .state('login', { url: '/login', templateUrl: 'views/login.html', controller: 'LoginCtrl' })
+      .state('help', { url: '/help', templateUrl: 'views/help.html', controller: 'HelpCtrl' });
     $urlRouterProvider.otherwise("/start");
-	}])
-	.controller('AppCtrl', [function() {
+  }])
+  .controller('AppCtrl', [function() {
 
-		ionic.Platform.ready(function() {
-			navigator.splashscreen.hide();
-		});
+    ionic.Platform.ready(function() {
+      navigator.splashscreen.hide();
+    });
 
-	}]);
+  }]);

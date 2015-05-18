@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "05fe36c6-7b51-47f9-aa42-1c5b96c8e3cb",
-      "lastModifiedDate": 1431948978072,
+      "lastModifiedDate": 1431985505234,
       "creationDate": 1431937149444
     },
     "sourceDirectory": "www",
@@ -146,7 +146,7 @@
         "crosswalkVersion_": "11",
         "cordovaCLIVersion_": "4.1.2",
         "appDescription_": "",
-        "appAuthor_": ""
+        "appAuthor_": "Accesa"
       },
       "iOS": {
         "platform_": "ios",
@@ -170,7 +170,8 @@
         "excludedLibraries_": "",
         "appVersion_": "0.0.1",
         "cordovaCLIVersion_": "4.1.2",
-        "iosProvs_": []
+        "iosProvs_": [],
+        "appAuthor_": "Accesa"
       },
       "Windows8": {
         "platform_": "windows8",
@@ -192,7 +193,7 @@
         "appVersion_": "0.0.0.1",
         "cordovaCLIVersion_": "4.1.2",
         "appDescription_": "",
-        "appAuthor_": ""
+        "appAuthor_": "Accesa"
       },
       "WebApp": {
         "platform_": "webapp",

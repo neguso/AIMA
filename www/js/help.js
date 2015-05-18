@@ -1,7 +1,7 @@
-angular.module('AIMA')
-	.controller('HelpCtrl', ['$scope', function($scope) {
+angular.module('aima')
+  .controller('HelpCtrl', ['$scope', function($scope) {
 
-		$scope.model = {
-		};
+    $scope.model = {
+    };
 
-	}]);
+  }]);

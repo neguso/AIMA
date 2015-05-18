@@ -1,31 +1,11 @@
-function Input(label, value)
-{
-	this.label = label;
-	this.value = value;
-}
+angular.module('aima')
+  .controller('StartCtrl', ['$scope', '$state', 'identity', function($scope, $state, identity) {
 
-function Command(label, handler)
-{
-	this.label = label;
-	this.handler = handler;
-}
+    $scope.$on('$ionicView.enter', function() {
 
+      identity.authenticate('a', 'a')
+        .then(function() { $state.go('login'); });
 
+    });
 
-
-angular.module('AIMA')
-	.controller('StartCtrl', ['$scope', function($scope) {
-	
-		$scope.model = {
-			user: new Input('Username:', ''),
-			password: new Input('Password:', ''),
-			message: '',
-			login: new Command('Login', login)
-		};
-		
-		function login()
-		{
-			alert('login');
-		}
-	
-	}]);
+  }]);
