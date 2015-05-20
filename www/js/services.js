@@ -4,6 +4,7 @@ angular.module('aima.services', [])
 		var identity = {
 			token: null,
 
+			// authenticate a user and store the token
 			authenticate: function(username, password)
 			{
 				var defer = $q.defer();
@@ -33,6 +34,7 @@ angular.module('aima.services', [])
 				return defer.promise;
 			},
 
+			// check if current authentication is valid
 			check: function()
 			{
 				var defer = $q.defer();
@@ -41,18 +43,26 @@ angular.module('aima.services', [])
 				if(identity.token === null)
 					identity.token = JSON.parse($window.localStorage.getItem('identity.token'));
 
-				if(identity.token === null || identity.token.expires < Date.now())
-					defer.reject();
-				else
-				{
 					//todo: call service to check token
 					$timeout(function() {
-						defer.resolve();
+						if(identity.token === null || identity.token.expires < Date.now())
+							defer.reject();
+						else
+							defer.resolve();
 					}, 1000);
-				}
 
 				return defer.promise;
+			},
+			
+			// get the authenticated identity information
+			identity: function()
+			{
+				var defer = $q.defer();
+				
+				
+				return defer.promise;
 			}
+			
 		};
 
 		return identity;
@@ -60,6 +70,8 @@ angular.module('aima.services', [])
 	.factory('activities', ['$q', '$timeout', 'identity', function($q, $timeout, identity) {
 
 		var activities = {
+			
+			// get monthly activities summary for the current user
 			summary: function()
 			{
 				var defer = $q.defer();
@@ -94,4 +106,25 @@ angular.module('aima.services', [])
 		};
 
 		return activities;
+	}])
+	.factory('projects', ['$q', function($q) {
+	
+		var projects = {
+			asigned: function()
+			{
+
+				$timeout(function() {
+					defer.resolve([
+						{ name: 'accesa Office Administration', status: 'active' },
+						{ name: 'Infonic Presales Activities', status: 'active' },
+						{ name: 'accesa Improvement', status: 'active' },
+						{ name: 'Kruss Proteus', status: 'completed' },
+						{ name: 'accesa Evolve', status: 'active' }
+					]);
+				}, 1000);
+				
+			}
+		};
+		
+		return projects;
 	}]);

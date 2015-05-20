@@ -1,10 +1,11 @@
 angular.module('aima')
-	.controller('HomeCtrl', ['$scope', 'activities', function($scope, activities) {
+	.controller('HomeCtrl', ['$scope', 'activities', 'projects', function($scope, activities, projects) {
 
 		$scope.model = {
 			spinner: true,
 			refresh: refresh,
-			summary: null
+			activities: null,
+			projects: null
 		};
 
 		 $scope.$on('$ionicView.enter', function() {
@@ -15,9 +16,12 @@ angular.module('aima')
 
 		function refresh()
 		{
-			activities.summary()
+			var p1 = activities.summary();
+			var p2 = projects.projects();
+			
+			p1
 				.then(function(result) {
-					$scope.model.summary = result.sort(function(a, b) {
+					$scope.model.activities = result.sort(function(a, b) {
 						if(a.month < b.month) return -1;
 						if(a.month > b.month) return 1;
 						return 0;
@@ -25,6 +29,21 @@ angular.module('aima')
 						return { month: moment(item.month).format('MMMM, YYYY'), hours: item.hours, total: item.total };
 					});
 				})
+				.catch(function(error) {
+					//todo: display error
+				});
+			
+			p2
+				.then(function(result) {
+					$scope.model.projects = result.map(function(item) {
+						return { name: item.name };
+					});
+				})
+				.catch(function(error) {
+					//todo: display error
+				});
+
+			$q.all([p1, p2])
 				.catch(function(error) {
 					//todo: display error
 				})
