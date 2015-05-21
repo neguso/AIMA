@@ -1,28 +1,43 @@
 <ion-view view-title="Log In">
-
   <ion-content padding="true">
 
-    <div style="text-align: center">
-      <img src="resources/common/images/login.png" />
+    <!-- loading -->
+    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+      <p>{{model.loading.message}}</p>
+      <ion-spinner></ion-spinner>
     </div>
 
-    <div class="list">
-      <label class="item item-input">
-        <span class="input-label">{{model.user.label}}</span>
-        <input type="text" ng-model="model.user.value">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">{{model.password.label}}</span>
-        <input type="password" ng-model="model.password.value">
-      </label>
-    </div>
-    <div style="text-align: center">
-      <p ng-if="model.message.length > 0" style="color: red">{{model.message}}</p>
+    <!-- error -->
+    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+      <p>{{model.error.message}}</p>
+      <button ng-click="model.error.retry.handler()" class="button">{{model.error.retry.label}}</button>
     </div>
 
-    <button class="button button-positive button-full" ng-click="model.login.handler()">{{model.login.label}}</button>
+    <!-- content -->
+    <div ng-show="model.status === 'content.ready'">
 
-    <a class="button button-positive button-full button-clear" ui-sref="help">Help?</a>
+      <div style="text-align: center">
+        <img src="resources/common/images/login.png" />
+      </div>
+
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">{{model.user.label}}</span>
+          <input type="text" ng-model="model.user.value">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">{{model.password.label}}</span>
+          <input type="password" ng-model="model.password.value">
+        </label>
+      </div>
+      <div style="text-align: center">
+        <p ng-if="model.message.length > 0" style="color: red">{{model.message}}</p>
+      </div>
+
+      <button class="button button-positive button-full" ng-click="model.login.handler()">{{model.login.label}}</button>
+
+      <a class="button button-positive button-full button-clear" ui-sref="help">Help?</a>
+
+    </div>
   </ion-content>
-
 </ion-view>

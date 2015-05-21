@@ -1,56 +1,86 @@
 angular.module('aima')
-	.controller('HomeCtrl', ['$scope', 'activities', 'projects', function($scope, activities, projects) {
+  .controller('HomeCtrl', ['$scope', '$q', 'activities', 'projects', function($scope, $q, activities, projects) {
 
-		$scope.model = {
-			spinner: true,
-			refresh: refresh,
-			activities: null,
-			projects: null
-		};
+    $scope.model = {
+      status: 'loading', // loading | error | content.ready | content.refresh
+      loading: { message: 'loading...' },
+      error: { message: 'Check your connection and try again.', retry: new Command('Retry', retry) },
 
-		 $scope.$on('$ionicView.enter', function() {
+      refresh: refresh,
+      activities: null,
+      projects: null
+    };
 
-			$scope.model.refresh();
+    function load()
+    {
+      compose()
+        .then(function() {
+          $scope.model.status = 'content.ready';
+        });
+    }
 
+    function retry()
+    {
+      $scope.model.status = 'loading';
+      compose()
+        .then(function() {
+          $scope.model.status = 'content.ready';
+        });
+    }
+
+    function refresh()
+    {
+      $scope.model.status = 'content.refresh';
+      compose()
+        .finally(function() {
+          $scope.$broadcast('scroll.refreshComplete');
+        });
+    }
+
+
+    function compose()
+    {
+      var p1 = activities.summary();
+      var p2 = projects.asigned();
+
+      p1
+        .then(function(result) {
+          $scope.model.activities = result.sort(function(a, b) {
+            if(a.month < b.month) return -1;
+            if(a.month > b.month) return 1;
+            return 0;
+          }).map(function(item) {
+            return { month: moment(item.month).format('MMMM, YYYY'), hours: item.hours, total: item.total };
+          });
+        })
+        .catch(function(error) {
+        });
+
+      p2
+        .then(function(result) {
+          $scope.model.projects = result.map(function(item) {
+            return { name: item.name };
+          });
+        })
+        .catch(function(error) {
+        });
+
+      var all = $q.all([p1, p2]);
+      all
+        .catch(function(error) {
+          compose_error();
+        });
+
+      return all;
+    }
+
+    function compose_error()
+    {
+      $scope.model.status = 'error';
+    }
+
+
+    $scope.$on('$ionicView.enter', function() {
+      load();
     });
-
-		function refresh()
-		{
-			var p1 = activities.summary();
-			var p2 = projects.projects();
-			
-			p1
-				.then(function(result) {
-					$scope.model.activities = result.sort(function(a, b) {
-						if(a.month < b.month) return -1;
-						if(a.month > b.month) return 1;
-						return 0;
-					}).map(function(item) {
-						return { month: moment(item.month).format('MMMM, YYYY'), hours: item.hours, total: item.total };
-					});
-				})
-				.catch(function(error) {
-					//todo: display error
-				});
-			
-			p2
-				.then(function(result) {
-					$scope.model.projects = result.map(function(item) {
-						return { name: item.name };
-					});
-				})
-				.catch(function(error) {
-					//todo: display error
-				});
-
-			$q.all([p1, p2])
-				.catch(function(error) {
-					//todo: display error
-				})
-				.finally(function() {
-					$scope.model.spinner = false;
-					$scope.$broadcast('scroll.refreshComplete');
-				});
-		}
-
-	}]);
+  }]);

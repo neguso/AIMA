@@ -1,130 +1,159 @@
 angular.module('aima.services', [])
-	.factory('identity', ['$q', '$timeout', '$window', function($q, $timeout, $window) {
+  .factory('identity', ['$q', '$timeout', '$window', function($q, $timeout, $window) {
 
-		var identity = {
-			token: null,
+    var identity = {
+      token: null,
 
-			// authenticate a user and store the token
-			authenticate: function(username, password)
-			{
-				var defer = $q.defer();
+      // authenticate a user and store the token
+      authenticate: function(username, password)
+      {
+        var defer = $q.defer();
 
-				//todo: call service to get token
-				$timeout(function() {
-					if(username === 'a' && password === 'a')
-					{
-						identity.token = { key: 123, expires: new Date(2015, 7, 1) };
+        //todo: call service to get token
+        $timeout(function() {
 
-						// store token to storage
-						$window.localStorage.setItem('identity.token', JSON.stringify(identity.token));
+          if(Math.random() > 0.5)
+          {
+            // simulate connection error
+            defer.reject();
+          }
+          else
+          {
+            if(username === 'a' && password === 'a')
+            {
+              identity.token = { key: 123, expires: new Date(2015, 7, 1) };
 
-						defer.resolve(identity.token);
-					}
-					else
-					{
-						identity.token = null;
+              // store token to storage
+              $window.localStorage.setItem('identity.token', JSON.stringify(identity.token));
 
-						// clear token
-						$window.localStorage.removeItem('identity.token');
+              defer.resolve(identity.token);
+            }
+            else
+            {
+              identity.token = null;
 
-						defer.reject(identity.token);
-					}
-				}, 1000);
+              // clear token
+              $window.localStorage.removeItem('identity.token');
 
-				return defer.promise;
-			},
+              defer.resolve(identity.token);
+            }
+          }
+        }, 1000);
 
-			// check if current authentication is valid
-			check: function()
-			{
-				var defer = $q.defer();
+        return defer.promise;
+      },
 
-				// restore token from storage
-				if(identity.token === null)
-					identity.token = JSON.parse($window.localStorage.getItem('identity.token'));
+      // check if current authentication is valid
+      check: function()
+      {
+        var defer = $q.defer();
 
-					//todo: call service to check token
-					$timeout(function() {
-						if(identity.token === null || identity.token.expires < Date.now())
-							defer.reject();
-						else
-							defer.resolve();
-					}, 1000);
+        // restore token from storage
+        if(identity.token === null)
+          identity.token = JSON.parse($window.localStorage.getItem('identity.tokenX'));
 
-				return defer.promise;
-			},
-			
-			// get the authenticated identity information
-			identity: function()
-			{
-				var defer = $q.defer();
-				
-				
-				return defer.promise;
-			}
-			
-		};
+          //todo: call service to check token
+          $timeout(function() {
+            if(Math.random() > 0.5)
+            {
+              // simulate connection error
+              defer.reject();
+            }
+            else
+            {
+              if(identity.token === null || identity.token.expires < Date.now())
+                defer.resolve(false);
+              else
+                defer.resolve(true);
+            }
+          }, 1000);
 
-		return identity;
-	}])
-	.factory('activities', ['$q', '$timeout', 'identity', function($q, $timeout, identity) {
+        return defer.promise;
+      },
 
-		var activities = {
-			
-			// get monthly activities summary for the current user
-			summary: function()
-			{
-				var defer = $q.defer();
-				
-				//todo: call service, pass identity.token to autenticate
-				$timeout(function() {
-					
-					defer.resolve([
-						{ month: new Date(2015, 2, 1), hours: 168, total: 168 },
-						{ month: new Date(2015, 3, 1), hours: 152, total: 160 },
-						{ month: new Date(2015, 4, 1), hours: 16, total: 176 }
-					]);
-				
-				}, 1000);
-				
-				return defer.promise;
-			},
-			
-			get: function() {
-				var defer = $q.defer();
-			
-				//todo: call service, pass identity.token to autenticate
-				$timeout(function() {
-					
-					defer.resolve([]);
-				
-				}, 1000);
-				
-				return defer.promise;
-			}
+      // get the authenticated identity information
+      identity: function()
+      {
+        var defer = $q.defer();
 
-		};
 
-		return activities;
-	}])
-	.factory('projects', ['$q', function($q) {
-	
-		var projects = {
-			asigned: function()
-			{
+        return defer.promise;
+      }
 
-				$timeout(function() {
-					defer.resolve([
-						{ name: 'accesa Office Administration', status: 'active' },
-						{ name: 'Infonic Presales Activities', status: 'active' },
-						{ name: 'accesa Improvement', status: 'active' },
-						{ name: 'Kruss Proteus', status: 'completed' },
-						{ name: 'accesa Evolve', status: 'active' }
-					]);
-				}, 1000);
-				
-			}
-		};
-		
-		return projects;
-	}]);
+    };
+
+    return identity;
+  }])
+  .factory('activities', ['$q', '$timeout', 'identity', function($q, $timeout, identity) {
+
+    var activities = {
+
+      // get monthly activities summary for the current user
+      summary: function()
+      {
+        var defer = $q.defer();
+
+        //todo: call service, pass identity.token to autenticate
+        $timeout(function() {
+
+          if(Math.random() > 0.5)
+          {
+            // simulate connection error
+            defer.reject();
+          }
+          else
+          {
+            defer.resolve([
+              { month: new Date(2015, 2, 1), hours: Math.floor(Math.random() * 100), total: 168 },
+              { month: new Date(2015, 3, 1), hours: Math.floor(Math.random() * 100), total: 160 },
+              { month: new Date(2015, 4, 1), hours: Math.floor(Math.random() * 100), total: 176 }
+            ]);
+          }
+        }, 1000);
+
+        return defer.promise;
+      },
+
+      get: function() {
+        var defer = $q.defer();
+
+        //todo: call service, pass identity.token to autenticate
+        $timeout(function() {
+
+          defer.resolve([]);
+
+        }, 1000);
+
+        return defer.promise;
+      }
+
+    };
+
+    return activities;
+  }])
+  .factory('projects', ['$q', '$timeout', function($q, $timeout) {
+
+    var projects = {
+      asigned: function()
+      {
+        var defer = $q.defer();
+
+        //todo: call service, pass identity.token to autenticate
+        $timeout(function() {
+
+          defer.resolve([
+            { name: 'accesa Office Administration', status: 'active' },
+            { name: 'Infonic Presales Activities', status: 'active' },
+            { name: 'accesa Improvement', status: 'active' },
+            { name: 'Kruss Proteus', status: 'completed' },
+            { name: 'accesa Evolve', status: 'active' }
+          ]);
+
+        }, 1000);
+
+        return defer.promise;
+      }
+    };
+
+    return projects;
+  }]);
