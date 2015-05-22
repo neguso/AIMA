@@ -25,6 +25,12 @@ angular.module('aima')
       authenticate();
     }
 
+    function online()
+    {
+      if($scope.model.status === 'error')
+        retry();
+    }
+
     function authenticate()
     {
       $scope.model.message = 'authenticating...';
@@ -49,4 +55,15 @@ angular.module('aima')
     $scope.$on('$ionicView.enter', function() {
       load();
     });
+
+        //document.addEventListener("offline", yourCallbackFunction, false);
+
+    ionic.EventController.on('online', function() {
+      alert('online');
+      xxxxxxxxxxxxxxx
+      broadcast an application event
+    }, document);
+
+
+
   }]);
