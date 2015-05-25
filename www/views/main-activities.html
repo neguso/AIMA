@@ -1,9 +1,35 @@
-<ion-view view-title="My Activities">
+<ion-view view-title="My Activities {{model.status}}">
+	<ion-content>
+		<ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
+		
+		<!-- loading -->
+    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+      <p>{{model.loading.message}}</p>
+      <ion-spinner></ion-spinner>
+    </div>
 
-	<ion-content class="padding">
-		<ion-refresher pulling-text="Pull to refresh...">
-  	</ion-refresher>
-		<p>activities</p>
+    <!-- error -->
+    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+      <p>{{model.error.message}}</p>
+      <button ng-click="model.error.retry.handler()" class="button">{{model.error.retry.label}}</button>
+    </div>
+
+    <!-- content -->
+    <div ng-show="model.status.indexOf('content.') === 0">
+
+			<ion-list>
+				<ion-item ng-repeat="item in model.list.items">
+					{{item.task}}
+				</ion-item>
+				<ion-item ng-show="model.status === 'content.error'">
+					<div style="text-align: center">
+						<button ng-click="model.error_more.handler()" class="button">{{model.error_more.label}}</button>
+					</div>
+				</ion-item>
+			</ion-list>
+
+    </div>
+		
+		<ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
 	</ion-content>
-
 </ion-view>

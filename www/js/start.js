@@ -28,7 +28,10 @@ angular.module('aima')
     function online()
     {
       if($scope.model.status === 'error')
-        retry();
+			{
+				retry();
+				$scope.$digest();
+			}
     }
 
     function authenticate()
@@ -56,14 +59,8 @@ angular.module('aima')
       load();
     });
 
-        //document.addEventListener("offline", yourCallbackFunction, false);
-
-    ionic.EventController.on('online', function() {
-      alert('online');
-      xxxxxxxxxxxxxxx
-      broadcast an application event
-    }, document);
-
-
-
-  }]);
+		$scope.$on('network:online', function() {
+      online();
+    });
+		
+	}]);

@@ -2,6 +2,7 @@ angular.module('aima', ['ionic', 'aima.services'])
   .config(['$ionicConfigProvider', '$stateProvider', '$urlRouterProvider', function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
 
     $ionicConfigProvider.views.transition('none');
+		//$ionicConfigProvider.scrolling.jsScrolling(false);
 
     $stateProvider
       .state('start', { url: '/start', templateUrl: 'views/start.html', controller: 'StartCtrl' })
@@ -14,10 +15,48 @@ angular.module('aima', ['ionic', 'aima.services'])
       .state('main.about', { url: '/about', views: { 'menuContent': { templateUrl: 'views/main-about.html', controller: 'AboutCtrl' } } });
     $urlRouterProvider.otherwise("/start");
   }])
-  .controller('AppCtrl', [function() {
+  .controller('AppCtrl', ['$rootScope', function($rootScope) {
 
     ionic.Platform.ready(function() {
+
+			// listen for network state changes
+			ionic.EventController.on('online', function() {
+      	$rootScope.$broadcast('network:online');
+			}, document);
+
+			// hide splash
       navigator.splashscreen.hide();
     });
 
   }]);
+
+
+
+// common view models building blocks
+
+function Input(label, value)
+{
+  this.label = label;
+  this.value = value;
+}
+
+
+function Command(label, handler)
+{
+  this.label = label;
+  this.handler = handler;
+}
+
+
+function List()
+{
+	this.items = [];
+}
+
+
+function InfiniteList()
+{
+	this.items = [];
+	this.hasMore = function() { return false; };
+	this.fetchMore = function() { };
+}

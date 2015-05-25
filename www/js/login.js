@@ -1,18 +1,3 @@
-function Input(label, value)
-{
-  this.label = label;
-  this.value = value;
-}
-
-function Command(label, handler)
-{
-  this.label = label;
-  this.handler = handler;
-}
-
-
-
-
 angular.module('aima')
   .controller('LoginCtrl', ['$scope', '$state', '$ionicLoading', 'identity', function($scope, $state, $ionicLoading, identity) {
 
