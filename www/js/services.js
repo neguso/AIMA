@@ -119,26 +119,26 @@ angular.module('aima.services', [])
 
         //todo: call service, pass identity.token to autenticate
         $timeout(function() {
-					
-					if(Math.random() > 0.5)
+
+          if(Math.random() > 0.5)
           {
             // simulate connection error
             defer.reject();
           }
           else
           {
-						var items = [];
-						for(var i = skip; i < Math.min(200, skip + take); i++)
-							items.push({
-								day: new Date(week.getYear(), week.getMonth(), week.getDate() + i % 7),
-								project: 'the looong project ' + Math.floor(Math.random() * 5),
-								task: 'the name of the task ' + Math.floor(Math.random() * 10),
-								duration: 1 + Math.floor(Math.random() * 4),
-								overtime: 1 + Math.floor(Math.random() * 4)
-							});
+            var items = [];
+            for(var i = skip; i < Math.min(200, skip + take); i++)
+              items.push({
+                day: new Date(week.getFullYear(), week.getMonth(), week.getDate() + i % 7),
+                project: 'the looong project ' + Math.floor(Math.random() * 5),
+                task: 'the name of the task ' + Math.floor(Math.random() * 10),
+                duration: 1 + Math.floor(Math.random() * 4),
+                overtime: 1 + Math.floor(Math.random() * 4)
+              });
 
-          	defer.resolve({ activities: items, count: 200 });
-					}
+            defer.resolve({ activities: items, count: 200 });
+          }
 
         }, 1000);
 

@@ -1,8 +1,8 @@
 <ion-view view-title="My Activities">
-	<ion-content>
-		<ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
-		
-		<!-- loading -->
+  <ion-content>
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
+
+    <!-- loading -->
     <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
       <p>{{model.loading.message}}</p>
       <ion-spinner></ion-spinner>
@@ -17,23 +17,25 @@
     <!-- content -->
     <div ng-show="model.status.indexOf('content.') === 0">
 
-			<ion-list>
-				<ion-item ng-repeat="item in model.list.items">
-					{{item.task}}
-				</ion-item>
-			</ion-list>
+      <ion-list>
+        <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h = </span>{{item.duration}}h/{{item.overtime}}h</span>
+          <h2>{{item.header ? item.weekday : item.task}}</h2>
+          <p>{{item.header ? '' : item.project}}</p>
+        </ion-item>
+      </ion-list>
 
-			<div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
-				<div class="row row-center">
-					<div class="col">{{model.error_more.message}}</div>
-					<div class="col">
-						<button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
-					</div>
-				</div>
-			</div>
+      <div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
+        <div class="row row-center">
+          <div class="col">{{model.error_more.message}}</div>
+          <div class="col">
+            <button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
+          </div>
+        </div>
+      </div>
 
-		</div>
+    </div>
 
-		<ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
-	</ion-content>
+    <ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
+  </ion-content>
 </ion-view>

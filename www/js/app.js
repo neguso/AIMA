@@ -2,7 +2,7 @@ angular.module('aima', ['ionic', 'aima.services'])
   .config(['$ionicConfigProvider', '$stateProvider', '$urlRouterProvider', function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
 
     $ionicConfigProvider.views.transition('none');
-		//$ionicConfigProvider.scrolling.jsScrolling(false);
+    //$ionicConfigProvider.scrolling.jsScrolling(false);
 
     $stateProvider
       .state('start', { url: '/start', templateUrl: 'views/start.html', controller: 'StartCtrl' })
@@ -19,12 +19,12 @@ angular.module('aima', ['ionic', 'aima.services'])
 
     ionic.Platform.ready(function() {
 
-			// listen for network state changes
-			ionic.EventController.on('online', function() {
-      	$rootScope.$broadcast('network:online');
-			}, document);
+      // listen for network state changes
+      ionic.EventController.on('online', function() {
+        $rootScope.$broadcast('network:online');
+      }, document);
 
-			// hide splash
+      // hide splash
       navigator.splashscreen.hide();
     });
 
@@ -50,13 +50,14 @@ function Command(label, handler)
 
 function List()
 {
-	this.items = [];
+  this.items = [];
 }
 
 
 function InfiniteList()
 {
-	this.items = [];
-	this.hasMore = function() { return false; };
-	this.fetchMore = function() { };
+  this.items = [];
+  this.count = -1;
+  this.hasMore = function() { return false; };
+  this.fetchMore = function() { };
 }
