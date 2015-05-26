@@ -1,4 +1,4 @@
-<ion-view view-title="My Activities {{model.status}}">
+<ion-view view-title="My Activities">
 	<ion-content>
 		<ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
 		
@@ -21,15 +21,19 @@
 				<ion-item ng-repeat="item in model.list.items">
 					{{item.task}}
 				</ion-item>
-				<ion-item ng-show="model.status === 'content.error'">
-					<div style="text-align: center">
-						<button ng-click="model.error_more.handler()" class="button">{{model.error_more.label}}</button>
-					</div>
-				</ion-item>
 			</ion-list>
 
-    </div>
-		
+			<div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
+				<div class="row row-center">
+					<div class="col">{{model.error_more.message}}</div>
+					<div class="col">
+						<button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
 		<ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
 	</ion-content>
 </ion-view>
