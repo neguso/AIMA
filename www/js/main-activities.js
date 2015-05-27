@@ -1,11 +1,13 @@
 angular.module('aima')
-  .controller('ActivitiesCtrl', ['$scope', '$q', 'activities', function($scope, $q, activities) {
+  .controller('ActivitiesCtrl', ['$scope', '$state', '$q', 'activities', function($scope, $state, $q, activities) {
 
     $scope.model = {
       status: 'loading', // loading | error | content.ready | content.refresh | content.error
       loading: { message: '' },
       error: { message: 'Check your connection and try again.', retry: new Command('Retry', retry) },
 
+			settings: settings,
+			
       week: new Date(),
       take: 20,
       list: new InfiniteList(),
@@ -13,6 +15,12 @@ angular.module('aima')
       error_more: { message: 'Check your connection and try again.', retry: new Command('Retry', retry_more) }
     };
 
+
+		function settings()
+		{
+			//debugger;
+			$state.go('main_activities_settings');
+		}
 
     function load()
     {

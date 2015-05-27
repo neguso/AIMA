@@ -1,4 +1,7 @@
 <ion-view view-title="My Activities">
+	<ion-nav-buttons side="right">
+		<button class="button button-icon icon ion-settings" ng-click="model.settings()"></button>
+	</ion-nav-buttons>
   <ion-content>
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
 
@@ -19,7 +22,7 @@
 
       <ion-list>
         <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
-          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h = </span>{{item.duration}}h/{{item.overtime}}h</span>
+          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.weekday : item.task}}</h2>
           <p>{{item.header ? '' : item.project}}</p>
         </ion-item>
