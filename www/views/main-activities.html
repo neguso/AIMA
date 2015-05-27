@@ -1,7 +1,7 @@
 <ion-view view-title="My Activities">
-	<ion-nav-buttons side="right">
-		<button class="button button-icon icon ion-settings" ng-click="model.settings()"></button>
-	</ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-settings" ui-sref="main.activities_settings"></button>
+  </ion-nav-buttons>
   <ion-content>
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
 

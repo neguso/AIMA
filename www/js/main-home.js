@@ -13,6 +13,7 @@ angular.module('aima')
 
     function load()
     {
+      $scope.model.status = 'loading';
       compose()
         .then(function() {
           $scope.model.status = 'content.ready';

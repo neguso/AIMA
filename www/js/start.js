@@ -1,5 +1,5 @@
 angular.module('aima')
-  .controller('StartCtrl', ['$scope', '$state', 'identity', function($scope, $state, identity) {
+  .controller('StartCtrl', ['$scope', '$state', '$ionicHistory', 'identity', function($scope, $state, $ionicHistory, identity) {
 
     $scope.model = {
       status: 'loading', // loading | error | content.ready
@@ -28,10 +28,10 @@ angular.module('aima')
     function online()
     {
       if($scope.model.status === 'error')
-			{
-				retry();
-				$scope.$digest();
-			}
+      {
+        retry();
+        $scope.$digest();
+      }
     }
 
     function authenticate()
@@ -39,6 +39,7 @@ angular.module('aima')
       $scope.model.message = 'authenticating...';
       identity.check()
         .then(function(valid) {
+          $ionicHistory.nextViewOptions({ disableBack: true });
           if(valid)
             $state.go('main.home');
           else
@@ -59,8 +60,8 @@ angular.module('aima')
       load();
     });
 
-		$scope.$on('network:online', function() {
+    $scope.$on('network:online', function() {
       online();
     });
-		
-	}]);
+
+  }]);

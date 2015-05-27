@@ -11,7 +11,7 @@ angular.module('aima', ['ionic', 'aima.services'])
       .state('main', { url: '/main', templateUrl: 'views/main.html', abstract: true })
       .state('main.home', { url: '/home', views: { 'menuContent': { templateUrl: 'views/main-home.html', controller: 'HomeCtrl' } } })
       .state('main.activities', { url: '/activities', views: { 'menuContent': { templateUrl: 'views/main-activities.html', controller: 'ActivitiesCtrl' } } })
-			.state('main_activities_settings', { url: '/activities_settings', templateUrl: 'views/main-activities-settings.html', controller: 'ActivitiesSettingsCtrl' })
+      .state('main.activities_settings', { url: '/activities_settings', views: { 'menuContent': { templateUrl: 'views/main-activities-settings.html', controller: 'ActivitiesSettingsCtrl' } } })
       .state('main.projects', { url: '/projects', views: { 'menuContent': { templateUrl: 'views/main-projects.html', controller: 'ProjectsCtrl' } } })
       .state('main.about', { url: '/about', views: { 'menuContent': { templateUrl: 'views/main-about.html', controller: 'AboutCtrl' } } });
     $urlRouterProvider.otherwise("/start");

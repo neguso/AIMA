@@ -1,5 +1,5 @@
 angular.module('aima')
-  .controller('LoginCtrl', ['$scope', '$state', '$ionicLoading', 'identity', function($scope, $state, $ionicLoading, identity) {
+  .controller('LoginCtrl', ['$scope', '$state', '$ionicLoading', '$ionicHistory', 'identity', function($scope, $state, $ionicLoading, $ionicHistory, identity) {
 
     $scope.model = {
       status: 'loading', // loading | error | content.ready
@@ -62,6 +62,7 @@ angular.module('aima')
     function login_ok()
     {
       $ionicLoading.hide();
+      $ionicHistory.nextViewOptions({ disableBack: true });
       $state.go('main.home');
     }
 
