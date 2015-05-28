@@ -114,13 +114,14 @@ angular.module('aima.services', [])
         return defer.promise;
       },
 
-      get: function(skip, take, week) {
+      get: function(skip, take, week)
+			{
         var defer = $q.defer();
 
         //todo: call service, pass identity.token to autenticate
         $timeout(function() {
 
-          if(Math.random() > 0.5)
+          if(Math.random() > 5)
           {
             // simulate connection error
             defer.reject();

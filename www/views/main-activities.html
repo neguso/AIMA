@@ -14,17 +14,31 @@
     <!-- error -->
     <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
       <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button">{{model.error.retry.label}}</button>
+      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
     </div>
 
     <!-- content -->
     <div ng-show="model.status.indexOf('content.') === 0">
 
-      <ion-list>
+      <ion-list ng-if="model.configuration.grouping === 'none'">
+        <ion-item ng-repeat="item in model.list.items">
+          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
+          <h2>{{item.weekday}}</h2>
+          <p>{{item.task}}</p>
+        </ion-item>
+      </ion-list>
+			<ion-list ng-if="model.configuration.grouping === 'day'">
         <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.weekday : item.task}}</h2>
           <p>{{item.header ? '' : item.project}}</p>
+        </ion-item>
+      </ion-list>
+			<ion-list ng-if="model.configuration.grouping === 'project'">
+        <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
+          <h2>{{item.header ? item.project : item.weekday}}</h2>
+          <p>{{item.header ? '' : item.task}}</p>
         </ion-item>
       </ion-list>
 
@@ -41,4 +55,14 @@
 
     <ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
   </ion-content>
+	<ion-footer-bar class="bar-positive">
+		<div class="buttons">
+			<button class="button button-icon ion-chevron-left"></button>
+			<button class="button button-icon ion-chevron-right"></button>
+		</div>
+		<h1 class="title">november 2015</h1>
+		<div class="buttons">
+			<button class="button button-icon ion-plus-round"></button>
+		</div>
+	</ion-footer-bar>
 </ion-view>

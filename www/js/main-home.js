@@ -1,4 +1,28 @@
 angular.module('aima')
+	.controller('MainCtrl', ['$scope', function($scope) {
+		$scope.model = {
+			menu: [
+				{ icon: '', label: '', selected: true },
+				{ icon: '', label: '', selected: false },
+				{ icon: '', label: '', selected: false },
+				{ icon: '', label: '', selected: false },
+				{ icon: '', label: '', selected: false },
+				{ icon: '', label: '', selected: false }
+			],
+			select: select
+		};
+		
+		function select(i)
+		{
+			$scope.model.menu.forEach(function(item, index) {
+				item.selected = (i == index);
+			});
+		}
+		
+	}]);
+
+
+angular.module('aima')
   .controller('HomeCtrl', ['$scope', '$q', 'activities', 'projects', function($scope, $q, activities, projects) {
 
     $scope.model = {
