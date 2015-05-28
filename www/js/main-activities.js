@@ -1,5 +1,5 @@
 angular.module('aima')
-  .controller('ActivitiesCtrl', ['$scope', '$state', '$q', '$window', 'activities', function($scope, $state, $q, $window, activities) {
+  .controller('ActivitiesCtrl', ['$scope', '$state', '$q', 'settings','activities', function($scope, $state, $q, settings, activities) {
 
     $scope.model = {
       status: 'loading', // loading | error | content.ready | content.refresh | content.error
@@ -8,7 +8,7 @@ angular.module('aima')
 
       week: new Date(),
       take: 20,
-			configuration: { sorting: 'ascending', interval: 'week', grouping: 'day' },
+      configuration: { sorting: 'ascending', interval: 'week', grouping: 'day' },
       list: new InfiniteList(),
       refresh: refresh,
       error_more: { message: 'Check your connection and try again.', retry: new Command('Retry', retry_more) }
@@ -21,9 +21,9 @@ angular.module('aima')
       $scope.model.week.setDate($scope.model.week.getDate() - $scope.model.week.getDay() + 1);
       $scope.model.list.hasMore = hasMore;
       $scope.model.list.fetchMore = fetchMore;
-			$scope.model.configuration.sorting = JSON.parse($window.localStorage.getItem('activities.sorting'));
-			$scope.model.configuration.interval = JSON.parse($window.localStorage.getItem('activities.interval'));
-			$scope.model.configuration.grouping = JSON.parse($window.localStorage.getItem('activities.grouping'));
+      $scope.model.configuration.sorting = settings.get('activities.sorting', 'ascending');
+      $scope.model.configuration.interval = settings.get('activities.interval', 'week');
+      $scope.model.configuration.grouping = settings.get('activities.grouping', 'day');
 
       $scope.model.status = 'loading';
       compose()
@@ -91,7 +91,7 @@ angular.module('aima')
 
       p.then(function(result) {
         Array.prototype.push.apply($scope.model.list.items, format(result.activities, $scope.model.configuration.sorting, $scope.model.configuration.grouping));
-				//todo: what about the case when datasource changse while pagging?
+        //todo: what about the case when datasource changse while pagging?
       })
       .catch(function(error) {
         more_error();
@@ -127,71 +127,71 @@ angular.module('aima')
       $scope.model.status = 'content.ready';
     }
 
-		function format(items, sorting, grouping)
-		{
-			// group
-			var ary2 = [], previous = null, group = null;
-			if(grouping === 'none')
-			{
-				// sort by date & project
-				var ary1 = items.sort(function(a, b) {
-					if(a.day < b.day) return sorting === 'ascending' ? -1 : 1;
-					if(a.day > b.day) return sorting === 'ascending' ? 1 : -1;
-					if(a.project < b.project) return -1;
-					if(a.project > b.project) return 1;
-					return 0;
-				});
+    function format(items, sorting, grouping)
+    {
+      // group
+      var ary2 = [], previous = null, group = null;
+      if(grouping === 'none')
+      {
+        // sort by date & project
+        var ary1 = items.sort(function(a, b) {
+          if(a.day < b.day) return sorting === 'ascending' ? -1 : 1;
+          if(a.day > b.day) return sorting === 'ascending' ? 1 : -1;
+          if(a.project < b.project) return -1;
+          if(a.project > b.project) return 1;
+          return 0;
+        });
 
-				ary1.forEach(function(item) {
-					ary2.push({ weekday: moment(item.day).format('dddd, D MMM'), project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
-				});
-			}
-			else if(grouping === 'day')
-			{
-				// sort by date & project
-				var ary1 = items.sort(function(a, b) {
-					if(a.day < b.day) return sorting === 'ascending' ? -1 : 1;
-					if(a.day > b.day) return sorting === 'ascending' ? 1 : -1;
-					if(a.project < b.project) return -1;
-					if(a.project > b.project) return 1;
-					return 0;
-				});
+        ary1.forEach(function(item) {
+          ary2.push({ weekday: moment(item.day).format('dddd, D MMM'), project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
+        });
+      }
+      else if(grouping === 'day')
+      {
+        // sort by date & project
+        var ary1 = items.sort(function(a, b) {
+          if(a.day < b.day) return sorting === 'ascending' ? -1 : 1;
+          if(a.day > b.day) return sorting === 'ascending' ? 1 : -1;
+          if(a.project < b.project) return -1;
+          if(a.project > b.project) return 1;
+          return 0;
+        });
 
-				ary1.forEach(function(item) {
-					if(previous === null || item.day.valueOf() != previous.valueOf())
-						ary2.push(group = { header: true, weekday: moment(item.day).format('dddd, D MMM'), duration: 0, overtime: 0 });
-					ary2.push({ header: false, day: item.day, project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
-					group.duration += item.duration;
-					group.overtime += item.overtime;
-					previous = item.day;
-				});
-			}
-			else if(grouping === 'project')
-			{
-				// sort projects & date
-				var ary1 = items.sort(function(a, b) {
-					if(a.project < b.project) return -1;
-					if(a.project > b.project) return 1;
-					if(a.day < b.day) return sorting === 'ascending' ? -1 : 1;
-					if(a.day > b.day) return sorting === 'ascending' ? 1 : -1;
-					return 0;
-				});
+        ary1.forEach(function(item) {
+          if(previous === null || item.day.valueOf() != previous.valueOf())
+            ary2.push(group = { header: true, weekday: moment(item.day).format('dddd, D MMM'), duration: 0, overtime: 0 });
+          ary2.push({ header: false, day: item.day, project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
+          group.duration += item.duration;
+          group.overtime += item.overtime;
+          previous = item.day;
+        });
+      }
+      else if(grouping === 'project')
+      {
+        // sort projects & date
+        var ary1 = items.sort(function(a, b) {
+          if(a.project < b.project) return -1;
+          if(a.project > b.project) return 1;
+          if(a.day < b.day) return sorting === 'ascending' ? -1 : 1;
+          if(a.day > b.day) return sorting === 'ascending' ? 1 : -1;
+          return 0;
+        });
 
-				ary1.forEach(function(item) {
-					if(item.project != previous)
-						ary2.push(group = { header: true, project: item.project, duration: 0, overtime: 0 });
-					ary2.push({ header: false, weekday: moment(item.day).format('dddd, D MMM'), task: item.task, duration: item.duration, overtime: item.overtime });
-					group.duration += item.duration;
-					group.overtime += item.overtime;
-					previous = item.project;
-				});
-			}
-			else
-				throw new Error('Invalid arguments.');
+        ary1.forEach(function(item) {
+          if(item.project != previous)
+            ary2.push(group = { header: true, project: item.project, duration: 0, overtime: 0 });
+          ary2.push({ header: false, weekday: moment(item.day).format('dddd, D MMM'), task: item.task, duration: item.duration, overtime: item.overtime });
+          group.duration += item.duration;
+          group.overtime += item.overtime;
+          previous = item.project;
+        });
+      }
+      else
+        throw new Error('Invalid arguments.');
 
-			return ary2;
-		}
-		
+      return ary2;
+    }
+
 
     $scope.$on('$ionicView.enter', function() {
       load();

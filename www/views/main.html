@@ -17,31 +17,10 @@
     </ion-header-bar>
     <ion-content>
       <ul class="list">
-        <a href="#/main/home" ng-click="model.select(0)" class="item item-icon-left" menu-close ng-style="model.menu[0].selected ? { 'background-color': '#f0f0f0' } : { }">
-					<i class="icon ion-home" style="color: #c0c0c0; font-size: 1.6em"></i>
-          Dashboard
+        <a ng-repeat="item in model.menu" href="{{item.url}}" ng-click="model.select(item)" menu-close class="item item-icon-left" ng-class="{ 'menu-item-selected': item.selected, 'menu-item-separator': item.separator, 'menu-item': !item.separator }">
+          <i class="icon" ng-class="item.icon" style="color: #727272; font-size: 1.4em"></i>
+          {{item.label}}
         </a>
-        <a href="#/main/activities" ng-click="model.select(1)" class="item item-icon-left" menu-close ng-style="model.menu[1].selected ? { 'background-color': '#f0f0f0' } : { }">
-					<i class="icon ion-compose" style="color: #c0c0c0; font-size: 1.6em"></i>
-					My Activities
-				</a>
-        <a href="#/main/projects" ng-click="model.select(2)" class="item item-icon-left" menu-close ng-style="model.menu[2].selected ? { 'background-color': '#f0f0f0' } : { }">
-					<i class="icon ion-android-folder" style="color: #c0c0c0; font-size: 1.6em"></i>
-					My Projects
-				</a>
-				
-				<a href="#" ng-click="model.select(3)" class="item item-icon-left" menu-close ng-style="model.menu[3].selected ? { 'background-color': '#f0f0f0' } : { }">
-					<i class="icon ion-person" style="color: #c0c0c0; font-size: 1.6em"></i>
-          My Profile
-        </a>
-				<a href="#" ng-click="model.select(4)" class="item item-icon-left" menu-close style="border-top-width: 2px" ng-style="model.menu[4].selected ? { 'background-color': '#f0f0f0' } : { }">
-					<i class="icon ion-power" style="color: #c0c0c0; font-size: 1.6em"></i>
-          Logout
-        </a>
-        <a href="#/main/about" ng-click="model.select(5)" class="item item-icon-left" menu-close ng-style="model.menu[5].selected ? { 'background-color': '#f0f0f0' } : { }">
-					<i class="icon ion-information-circled" style="color: #c0c0c0; font-size: 1.6em"></i>
-					About
-				</a>
       </ul>
     </ion-content>
   </ion-side-menu>

@@ -1,5 +1,5 @@
 angular.module('aima')
-  .controller('ActivitiesSettingsCtrl', ['$scope', '$window', function($scope, $window) {
+  .controller('ActivitiesSettingsCtrl', ['$scope', 'settings', function($scope, settings) {
 
     $scope.model = {
       sorting: 'ascending', // ascending, descending
@@ -10,16 +10,16 @@ angular.module('aima')
 
 		function load()
 		{
-			$scope.model.sorting = JSON.parse($window.localStorage.getItem('activities.sorting'));
-			$scope.model.interval = JSON.parse($window.localStorage.getItem('activities.interval'));
-			$scope.model.grouping = JSON.parse($window.localStorage.getItem('activities.grouping'));
+			$scope.model.sorting = settings.get('activities.sorting', 'ascending');
+			$scope.model.interval = settings.get('activities.interval', 'week');
+			$scope.model.grouping = settings.get('activities.grouping', 'day');
 		}
 
 		function save()
 		{
-			$window.localStorage.setItem('activities.sorting', JSON.stringify($scope.model.sorting));
-			$window.localStorage.setItem('activities.interval', JSON.stringify($scope.model.interval));
-			$window.localStorage.setItem('activities.grouping', JSON.stringify($scope.model.grouping));
+			settings.set('activities.sorting', $scope.model.sorting);
+			settings.set('activities.interval', $scope.model.interval);
+			settings.set('activities.grouping',  $scope.model.grouping);
 		}
 
 		$scope.$on('$ionicView.enter', function() {

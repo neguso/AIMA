@@ -1,7 +1,13 @@
 AIMA Mobile Aplication
 
-todo:
+must have:
+- navigate activity intervals
+- create activity
+- update activity
+- delete activity
 - show a message when list is empty
 - logoff
-- user profile
-- user settings
+
+nice to have:
+- user profile view
+- settings view

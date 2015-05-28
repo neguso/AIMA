@@ -1,4 +1,21 @@
 angular.module('aima.services', [])
+  .factory('settings', ['$window', function($window) {
+
+    var settings = {
+			set: function(key, value) {
+				$window.localStorage.setItem(key, JSON.stringify(value));
+			},
+
+			get: function(key) {
+				var val = JSON.parse($window.localStorage.getItem(key));
+				if(val === null && arguments.length === 2)
+					return arguments[1];
+				return val;
+			}
+    };
+
+    return settings;
+  }])
   .factory('identity', ['$q', '$timeout', '$window', function($q, $timeout, $window) {
 
     var identity = {
@@ -115,7 +132,7 @@ angular.module('aima.services', [])
       },
 
       get: function(skip, take, week)
-			{
+      {
         var defer = $q.defer();
 
         //todo: call service, pass identity.token to autenticate
