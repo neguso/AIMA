@@ -15,12 +15,37 @@
 
 ### Identity Service
 
-Request:
-`http://api.aima.accesa.eu/v1/activities&[parameters]`
+Request
+
+`http://api.accesa.eu/v1/auth&[parameters]`
 
 Parameters
 
-| Parameter | Type | Description |
+| Name | Type | Description |
+| ----- | ----- | ----- |
+| key  | string | A unique key required to access the service |
+| action | string |  |
+| user | string | User name |
+| password | string | |
+| auth | string | Authentication token
+
+
+### Activities Service
+
+Request
+
+`http://api.accesa.eu/v1/activities&[parameters]`
+
+Parameters
+
+| Name | Type | Description |
 | ----- | ----- | ----- |
 | key  | string | A unique key required to access the service |
 | auth | string | Authentication token |
+| skip | number | Data items to skip |
+| take | number | Data items to take |
+| order | string | |
+| from | date | Dates interval start |
+| to | date | Dates interval end |
+
+
