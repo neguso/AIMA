@@ -34,6 +34,20 @@
 - auth
 - check
 
+##### auth
+
+Signature
+
+`auth(user, password)`
+
+Result
+
+```
+{
+  token: [string],
+  expires: [date]
+}
+```
 
 ### Activities Service
 
