@@ -21,5 +21,5 @@ Request:
 Parameters
 | Parameter | Type | Description |
 | --- | --- | --- |
-| key | string | A unique key required to access the service |
+| key  | string | A unique key required to access the service |
 | auth | string | Authentication token |
