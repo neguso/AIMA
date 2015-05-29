@@ -148,8 +148,7 @@ angular.module('aima.services', [])
             var items = [];
             for(var i = skip; i < Math.min(200, skip + take); i++)
               items.push({
-                //day: new Date(week.getFullYear(), week.getMonth(), week.getDate() + i % 7),
-								day: moment(from).add(Math.rand(), 'd'),
+                day: moment(from).add(i % moment(from).diff(to, 'd'), 'd').toDate(),
                 project: 'the looong project ' + Math.floor(Math.random() * 5),
                 task: 'the name of the task ' + Math.floor(Math.random() * 10),
                 duration: 1 + Math.floor(Math.random() * 4),
@@ -162,8 +161,33 @@ angular.module('aima.services', [])
         }, 1000);
 
         return defer.promise;
-      }
+      },
 
+			load: function(id)
+			{
+				var defer = $q.defer();
+				
+				//todo: call service, pass identity.token to autenticate
+        $timeout(function() {
+
+          if(Math.random() > 0.5)
+          {
+            // simulate connection error
+            defer.reject();
+          }
+          else
+          {
+            defer.resolve({
+							id: id,
+							date: new Date()
+							//todo: add fields
+						});
+          }
+
+        }, 1000);
+
+        return defer.promise;
+			}
     };
 
     return activities;

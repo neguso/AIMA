@@ -175,6 +175,7 @@ angular.module('aima')
 		
 		function create()
 		{
+			$state.go('main.activities_edit', { id: 0 });
 		}
 
 

@@ -1,10 +1,19 @@
 <ion-view view-title="Activity">
 	<ion-nav-bar class="bar-positive">
-		<ion-nav-back-button class="button-icon ion-arrow-left-c"></ion-nav-back-button>
-	</ion-nav-bar>
+    <ion-nav-back-button class="button-icon ion-arrow-left-c"></ion-nav-back-button>
+		xxxxxxxxxxxxxxxxxxx nu apar butoanele
+    <button ng-if="model.status === 'content.ready'" class="button button-clear" ng-click="model.edit.handler()">{{model.edit.label}}</button>
+		<button ng-if="model.status === 'edit.ready' || model.status === 'edit.error'" class="button button-clear" ng-click="model.save.handler()">{{model.save.label}}</button>
+  </ion-nav-bar>
 	<ion-content padding="true">
 
-		<p>activity view/add/edit</p>
+		<div ng-if="model.status === 'content.ready'">
+			view form
+		</div>
+
+		<div ng-if="model.status === 'edit.ready' || model.status === 'edit.error'">
+			edit form
+		</div>
 
 	</ion-content>
 </ion-view>
