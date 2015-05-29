@@ -19,6 +19,7 @@ Request:
 `http://api.aima.accesa.eu/v1/activities&[parameters]`
 
 Parameters
+
 | Parameter | Type | Description |
 | ----- | ----- | ----- |
 | key  | string | A unique key required to access the service |
