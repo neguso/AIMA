@@ -32,20 +32,25 @@
 #### Actions
 
 - auth
-- check
+- info
 
 ##### auth
 
-Signature
-
 `auth(user, password)`
 
-Result
+Search for an identity that match `user` and `password` and returns a token. The token is used to call services method that require authentication.
+
+`auth(token)`
+Check if token is valid
+
+
+Response
 
 ```
 {
   token: [string],
-  expires: [date]
+  expires: [date],
+  identity: [string]
 }
 ```
 
