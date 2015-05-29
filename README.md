@@ -1,4 +1,4 @@
-AIMA Mobile Aplication
+# AIMA Mobile Aplication
 
 must have:
 - navigate activity intervals
