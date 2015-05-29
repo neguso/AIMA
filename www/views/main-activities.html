@@ -55,12 +55,12 @@
 
     <ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
   </ion-content>
-	<ion-footer-bar class="bar-positive">
+	<ion-footer-bar class="bar-stable">
 		<div class="buttons">
-			<button class="button button-icon ion-chevron-left"></button>
-			<button class="button button-icon ion-chevron-right"></button>
+			<button ng-click="model.prev.handler()" class="button button-icon ion-chevron-left"></button>
+			<button ng-click="model.next.handler()" class="button button-icon ion-chevron-right"></button>
 		</div>
-		<h1 class="title">november 2015</h1>
+		<h1 class="title">{{model.footer()}}</h1>
 		<div class="buttons">
 			<button class="button button-icon ion-plus-round"></button>
 		</div>

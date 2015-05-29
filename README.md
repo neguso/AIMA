@@ -1,15 +1,14 @@
 # AIMA Mobile Aplication
 
-## Required Features
-- create activity
-- update activity
-- delete activity
-- show a message when list is empty
-- logoff
+The document contains a proposal for Accesa Service Bus interface.
 
-## Optional Features
-- user profile view
-- settings view
+
+## Services List
+
+- Identity
+- Projects
+- Timesheet
+
 
 ## Service Specification
 
@@ -26,8 +25,8 @@
 | key  | string | A unique key required to access the service |
 | action | string | Action to be executed |
 | user | string | User name |
-| password | string | |
-| auth | string | Authentication token
+| password | string | User password |
+| token | string | Authentication token |
 
 #### Actions
 
@@ -40,10 +39,6 @@
 
 Search for an identity that match `user` and `password` and returns a token. The token is used to call services method that require authentication.
 
-`auth(token)`
-Check if token is valid
-
-
 Response
 
 ```
@@ -54,11 +49,43 @@ Response
 }
 ```
 
-### Activities Service
+`auth(token)`
+
+Check if `token` is valid.
+
+Response
+
+```
+{
+  token: [string],
+  expires: [date]
+}
+```
+
+'expires' is null if the token has expired.
+
+##### info
+
+`info(identity)`
+
+Returns information about the identity.
+
+Response
+
+```
+{
+  identity: [string],
+	firstname: [string],
+	lastname: [string]
+}
+```
+
+
+### Timesheet Service
 
 Request
 
-`http://api.accesa.eu/v1/activities&[parameters]`
+`http://api.accesa.eu/v1/timesheet&[parameters]`
 
 Parameters
 
@@ -66,6 +93,7 @@ Parameters
 | ----- | ----- | ----- |
 | key  | string | A unique key required to access the service |
 | auth | string | Authentication token |
+| action | string | Action to be executed |
 | skip | number | Data items to skip |
 | take | number | Data items to take |
 | order | string | |

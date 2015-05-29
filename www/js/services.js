@@ -131,7 +131,7 @@ angular.module('aima.services', [])
         return defer.promise;
       },
 
-      get: function(skip, take, week)
+      get: function(skip, take, from, to)
       {
         var defer = $q.defer();
 
@@ -148,7 +148,8 @@ angular.module('aima.services', [])
             var items = [];
             for(var i = skip; i < Math.min(200, skip + take); i++)
               items.push({
-                day: new Date(week.getFullYear(), week.getMonth(), week.getDate() + i % 7),
+                //day: new Date(week.getFullYear(), week.getMonth(), week.getDate() + i % 7),
+								day: moment(from).add(Math.rand(), 'd'),
                 project: 'the looong project ' + Math.floor(Math.random() * 5),
                 task: 'the name of the task ' + Math.floor(Math.random() * 10),
                 duration: 1 + Math.floor(Math.random() * 4),

@@ -6,19 +6,30 @@ angular.module('aima')
       loading: { message: '' },
       error: { message: 'Check your connection and try again.', retry: new Command('Retry', retry) },
 
-      week: new Date(),
+      week: new Date(), footer: footer,
       take: 20,
       configuration: { sorting: 'ascending', interval: 'week', grouping: 'day' },
       list: new InfiniteList(),
       refresh: refresh,
-      error_more: { message: 'Check your connection and try again.', retry: new Command('Retry', retry_more) }
+      error_more: { message: 'Check your connection and try again.', retry: new Command('Retry', retry_more) },
+			
+			prev: new Command(null, interval_prev),
+			next: new Command(null, interval_next)
     };
 
 
     function load()
     {
       // setup model
-      $scope.model.week.setDate($scope.model.week.getDate() - $scope.model.week.getDay() + 1);
+			switch($scope.model.configuration.interval)
+			{
+				case 'week':
+					$scope.model.week = moment().startOf('week').startOf('day').toDate();
+					break;
+				case 'month':
+					$scope.model.week = moment().startOf('month').startOf('day').toDate();
+					break;
+			}
       $scope.model.list.hasMore = hasMore;
       $scope.model.list.fetchMore = fetchMore;
       $scope.model.configuration.sorting = settings.get('activities.sorting', 'ascending');
@@ -44,9 +55,7 @@ angular.module('aima')
     function refresh()
     {
       if($scope.model.status === 'error')
-      {
         $scope.model.list.items.length = 0;
-      }
 
       $scope.model.status = 'content.refresh';
       compose()
@@ -127,6 +136,58 @@ angular.module('aima')
       $scope.model.status = 'content.ready';
     }
 
+		function interval_prev()
+		{
+			switch($scope.model.configuration.interval)
+			{
+				case 'week':
+					$scope.model.week = moment($scope.model.week).subtract(1, 'w').toDate();
+					break;
+				case 'month':
+					$scope.model.week = moment($scope.model.week).subtract(1, 'm').toDate();
+					break;
+			}
+			$scope.model.status = 'loading';
+      compose()
+        .then(function() {
+          $scope.model.status = 'content.ready';
+        });
+		}
+
+		function interval_next()
+		{
+			switch($scope.model.configuration.interval)
+			{
+				case 'week':
+					$scope.model.week = moment($scope.model.week).add(1, 'w').toDate();
+					break;
+				case 'month':
+					$scope.model.week = moment($scope.model.week).add(1, 'M').toDate();
+					break;
+			}
+			$scope.model.status = 'loading';
+      compose()
+        .then(function() {
+          $scope.model.status = 'content.ready';
+        });
+		}
+		
+		function footer()
+		{
+			switch($scope.model.configuration.interval)
+			{
+				case 'week':
+					var a = moment($scope.model.week), b = moment($scope.model.week).add(6, 'd');
+					if(a.month() === b.month())
+						return a.format('D') + ' - ' + b.format('D MMM YYYY');
+					else
+						return a.format('D MMM') + ' - ' + b.format('D MMM YYYY');
+				case 'month': return moment($scope.model.week).format('MMM YYYY');
+			}
+			return '?';
+		}
+		
+		
     function format(items, sorting, grouping)
     {
       // group
