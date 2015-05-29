@@ -15,19 +15,24 @@
 
 ### Identity Service
 
-Request
+#### Request
 
 `http://api.accesa.eu/v1/auth&[parameters]`
 
-Parameters
+#### Parameters
 
 | Name | Type | Description |
 | ----- | ----- | ----- |
 | key  | string | A unique key required to access the service |
-| action | string |  |
+| action | string | Action to be executed |
 | user | string | User name |
 | password | string | |
 | auth | string | Authentication token
+
+#### Actions
+
+- auth
+- check
 
 
 ### Activities Service
