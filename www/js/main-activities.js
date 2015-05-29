@@ -14,7 +14,8 @@ angular.module('aima')
       error_more: { message: 'Check your connection and try again.', retry: new Command('Retry', retry_more) },
 			
 			prev: new Command(null, interval_prev),
-			next: new Command(null, interval_next)
+			next: new Command(null, interval_next),
+			create: new Command(null, create)
     };
 
 
@@ -172,6 +173,11 @@ angular.module('aima')
         });
 		}
 		
+		function create()
+		{
+		}
+
+
 		function footer()
 		{
 			switch($scope.model.configuration.interval)
@@ -186,8 +192,7 @@ angular.module('aima')
 			}
 			return '?';
 		}
-		
-		
+
     function format(items, sorting, grouping)
     {
       // group

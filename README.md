@@ -16,13 +16,13 @@ The document contains a proposal for Accesa Service Bus interface.
 
 #### Request
 
-`http://api.accesa.eu/v1/auth&[parameters]`
+`http://api.accesa.eu/v1/auth?...`
 
 #### Parameters
 
 | Name | Type | Description |
 | ----- | ----- | ----- |
-| key  | string | A unique key required to access the service |
+| key  | string | Application key required to access the service. Each client application has it's own key |
 | action | string | Action to be executed |
 | user | string | User name |
 | password | string | User password |
@@ -49,6 +49,10 @@ Response
 }
 ```
 
+Sample
+
+`http://api.accesa.eu/v1/auth?key=12345&action=auth&user=ovidiu.negus&password=secret`
+
 `auth(token)`
 
 Check if `token` is valid.
@@ -62,7 +66,7 @@ Response
 }
 ```
 
-'expires' is null if the token has expired.
+Field `expires` is `null` if the token has expired.
 
 ##### info
 
@@ -85,7 +89,7 @@ Response
 
 Request
 
-`http://api.accesa.eu/v1/timesheet&[parameters]`
+`http://api.accesa.eu/v1/timesheet?...`
 
 Parameters
 
