@@ -1,5 +1,6 @@
 <ion-view view-title="My Activities">
   <ion-nav-buttons side="right">
+		<button class="button button-icon icon" ng-class="model.delete_toggle.icon" ng-click="model.delete_toggle.handler()"></button>
     <button class="button button-icon icon ion-settings" ui-sref="main.activities_settings"></button>
   </ion-nav-buttons>
   <ion-content>
@@ -20,22 +21,25 @@
     <!-- content -->
     <div ng-show="model.status.indexOf('content.') === 0">
 
-      <ion-list ng-if="model.configuration.grouping === 'none'">
-        <ion-item ng-repeat="item in model.list.items">
-          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
+      <ion-list ng-if="model.configuration.grouping === 'none'" show-delete="model.show_delete">
+        <ion-item ng-repeat="item in model.list.items" class="item-remove-animate">
+          <ion-delete-button class="ion-minus-circled"></ion-delete-button>
+					<span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.weekday}}</h2>
           <p>{{item.task}}</p>
         </ion-item>
       </ion-list>
-			<ion-list ng-if="model.configuration.grouping === 'day'">
+			<ion-list ng-if="model.configuration.grouping === 'day'" show-delete="model.show_delete">
         <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+					<ion-delete-button ng-if="!item.header" class="ion-minus-circled"></ion-delete-button>
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.weekday : item.task}}</h2>
           <p>{{item.header ? '' : item.project}}</p>
         </ion-item>
       </ion-list>
-			<ion-list ng-if="model.configuration.grouping === 'project'">
+			<ion-list ng-if="model.configuration.grouping === 'project'" show-delete="model.show_delete">
         <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+					<ion-delete-button ng-if="!item.header" class="ion-minus-circled"></ion-delete-button>
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.project : item.weekday}}</h2>
           <p>{{item.header ? '' : item.task}}</p>
@@ -50,19 +54,18 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
   </ion-content>
 	<ion-footer-bar class="bar-stable">
 		<div class="buttons">
-			<button ng-click="model.prev.handler()" class="button button-icon ion-chevron-left"></button>
-			<button ng-click="model.next.handler()" class="button button-icon ion-chevron-right"></button>
+			<button ng-click="model.prev.handler()" class="button button-icon" ng-class="model.prev.icon"></button>
+			<button ng-click="model.next.handler()" class="button button-icon" ng-class="model.next.icon"></button>
 		</div>
 		<h1 class="title">{{model.footer()}}</h1>
 		<div class="buttons">
-			<button ng-click="model.create.handler()" class="button button-icon ion-plus-round"></button>
+			<button ng-click="model.create.handler()" class="button button-icon", ng-class="model.create.icon"></button>
 		</div>
 	</ion-footer-bar>
 </ion-view>

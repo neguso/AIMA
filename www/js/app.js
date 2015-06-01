@@ -43,9 +43,10 @@ function Input(label, value)
 }
 
 
-function Command(label, handler)
+function Command(icon, label, handler)
 {
-  this.label = label;
+	this.icon = icon;
+	this.label = label;
   this.handler = handler;
 }
 

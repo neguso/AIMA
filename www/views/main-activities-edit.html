@@ -1,18 +1,37 @@
 <ion-view view-title="Activity">
-	<ion-nav-bar class="bar-positive">
-    <ion-nav-back-button class="button-icon ion-arrow-left-c"></ion-nav-back-button>
-		xxxxxxxxxxxxxxxxxxx nu apar butoanele
-    <button ng-if="model.status === 'content.ready'" class="button button-clear" ng-click="model.edit.handler()">{{model.edit.label}}</button>
-		<button ng-if="model.status === 'edit.ready' || model.status === 'edit.error'" class="button button-clear" ng-click="model.save.handler()">{{model.save.label}}</button>
-  </ion-nav-bar>
+	<ion-nav-buttons side="left">
+		<button ng-click="$ionicGoBack()" class="button button-icon ion-arrow-left-c"></button>
+	</ion-nav-buttons>
+	<ion-nav-buttons side="right">
+    <button ng-show="model.status === 'content.ready'" class="button button-icon icon" ng-class="model.edit.icon" ng-click="model.edit.handler()"></button>
+		<button ng-show="model.status === 'edit.ready' || model.status === 'edit.error'" class="button button-icon icon" ng-class="model.save.icon" ng-click="model.save.handler()"></button>
+	</ion-nav-buttons>
 	<ion-content padding="true">
 
-		<div ng-if="model.status === 'content.ready'">
-			view form
+    <!-- loading -->
+    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+      <p>{{model.loading.message}}</p>
+      <ion-spinner></ion-spinner>
+    </div>
+
+    <!-- error -->
+    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+      <p>{{model.error.message}}</p>
+      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+    </div>
+
+		<div ng-show="model.status === 'content.ready'">
+			<div ng-show="model.message_save.length > 0" style="text-align: center; padding: 0.5em; background-color: #4CAF50; color: #FFFFFF">
+				{{model.message_save}}
+			</div>
+			view record
 		</div>
 
-		<div ng-if="model.status === 'edit.ready' || model.status === 'edit.error'">
-			edit form
+		<div ng-show="model.status === 'edit.ready' || model.status === 'edit.error'">
+			<div ng-show="model.status === 'edit.error'" style="text-align: center; padding: 0.5em; background-color: #F44336; color: #FFFFFF">
+				{{model.error_save.message}}
+			</div>
+			edit record
 		</div>
 
 	</ion-content>

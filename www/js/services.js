@@ -187,6 +187,30 @@ angular.module('aima.services', [])
         }, 1000);
 
         return defer.promise;
+			},
+			
+			update: function()
+			{
+				var defer = $q.defer();
+				
+				//todo: call service, pass identity.token to autenticate
+        $timeout(function() {
+
+          if(Math.random() > 0.5)
+          {
+            // simulate connection error
+            defer.reject();
+          }
+          else
+          {
+            defer.resolve({
+							//todo: add fields
+						});
+          }
+
+        }, 1000);
+
+        return defer.promise;
 			}
     };
 

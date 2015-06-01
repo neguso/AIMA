@@ -4,12 +4,12 @@ angular.module('aima')
     $scope.model = {
       status: 'loading', // loading | error | content.ready
       loading: { message: '' },
-      error: { message: 'Check your connection and try again.', retry: new Command('Retry', retry) },
+      error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
 
       user: new Input('Username:', 'a'),
       password: new Input('Password:', 'a'),
       message: '',
-      login: new Command('Login', login)
+      login: new Command(null, 'Login', login)
     };
 
 
