@@ -262,7 +262,7 @@ for(var p = 0; p < 100; p++)
 {
 	var project = {
 		id: k++,
-		name: 'A very interesting project ' + p,
+		name: 'A very interesting project ' + p.toString(),
 		tasks: []
 	};
 	
@@ -271,7 +271,7 @@ for(var p = 0; p < 100; p++)
 	{
 		var task = {
 			id: k++,
-			name: 'Exciting task ' + t
+			name: 'Exciting task ' + t.toString()
 		};
 		project.tasks.push(task);
 	}
@@ -292,7 +292,7 @@ for(var m = 0; m < 3; m++)
 			task: project.tasks[Math.floor(Math.random() * project.tasks.length)].name,
 			duration: Math.floor(2 + Math.random() * 7),
 			overtime: Math.floor(Math.random() * 4),
-			notes: 'A few notes about the activity'
+			notes: 'A few notes about the activity with id ' + k.toString()
 		});
 	}
 
