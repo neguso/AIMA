@@ -103,7 +103,7 @@ angular.module('aima.services', [])
   }])
   .factory('activities', ['$q', '$timeout', 'identity', function($q, $timeout, identity) {
 
-    var activities = {
+		var activities = {
 
       // get monthly activities summary for the current user
       summary: function()
@@ -188,7 +188,7 @@ angular.module('aima.services', [])
 
         return defer.promise;
 			},
-			
+
 			update: function()
 			{
 				var defer = $q.defer();
@@ -242,3 +242,58 @@ angular.module('aima.services', [])
 
     return projects;
   }]);
+
+
+
+
+
+
+
+
+
+var k = 0;
+var db = {
+	projects: [],
+	activities: []
+};
+
+// create projects
+for(var p = 0; p < 100; p++)
+{
+	var project = {
+		id: k++,
+		name: 'A very interesting project ' + p,
+		tasks: []
+	};
+	
+	var tc = 2 + Math.floor(9 * Math.random());
+	for(var t = 0; t < tc; t++)
+	{
+		var task = {
+			id: k++,
+			name: 'Exciting task ' + t
+		};
+		project.tasks.push(task);
+	}
+	
+	db.projects.push(project);
+}
+
+// create activities
+var now = new Date();
+for(var m = 0; m < 3; m++)
+	for(var d = 1; d < 28; d++)
+	{
+		var project = db.projects[Math.floor(Math.random() * db.projects.length)];
+		db.activities.push({
+			id: k++,
+			date: new Date(now.getFullYear(), now.getMonth() + m, d),
+			project: project.name,
+			task: project.tasks[Math.floor(Math.random() * project.tasks.length)].name,
+			duration: Math.floor(2 + Math.random() * 7),
+			overtime: Math.floor(Math.random() * 4),
+			notes: 'A few notes about the activity'
+		});
+	}
+
+

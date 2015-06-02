@@ -38,8 +38,7 @@ angular.module('aima')
         });
     }
 
-
-    function compose()
+		function compose()
     {
       var p1 = activities.summary();
       var p2 = projects.asigned();

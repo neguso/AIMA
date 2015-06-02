@@ -13,10 +13,7 @@ angular.module('aima')
       list: new InfiniteList(),
       refresh: refresh,
       error_more: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry_more) },
-			
-			delete_toggle: new Command('ion-minus-circled', null, delete_toggle),
-			show_delete: false,
-			
+
 			prev: new Command('ion-chevron-left', null, interval_prev),
 			next: new Command('ion-chevron-right', null, interval_next),
 			create: new Command('ion-plus-round', null, create)
@@ -141,11 +138,6 @@ angular.module('aima')
       $scope.model.status = 'content.ready';
     }
 
-		function delete_toggle()
-		{
-			$scope.model.show_delete = !$scope.model.show_delete;
-		}
-		
 		function interval_prev()
 		{
 			switch($scope.model.configuration.interval)
