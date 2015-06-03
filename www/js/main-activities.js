@@ -6,7 +6,7 @@ angular.module('aima')
       loading: { message: '' },
       error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
 
-      week: new Date(),
+      dateFrom: new Date(), dateTo: new Date(),
 			footer: footer,
       take: 20,
       configuration: { sorting: 'ascending', interval: 'week', grouping: 'day' },
@@ -26,10 +26,12 @@ angular.module('aima')
 			switch($scope.model.configuration.interval)
 			{
 				case 'week':
-					$scope.model.week = moment().startOf('week').startOf('day').toDate();
+					$scope.model.dateFrom = moment().startOf('week').startOf('day').toDate();
+					$scope.model.dateTo = moment().endOf('week').startOf('day').toDate();
 					break;
 				case 'month':
-					$scope.model.week = moment().startOf('month').startOf('day').toDate();
+					$scope.model.dateFrom = moment().startOf('month').startOf('day').toDate();
+					$scope.model.dateFrom = moment().endOf('month').startOf('day').toDate();
 					break;
 			}
       $scope.model.list.hasMore = hasMore;
@@ -72,7 +74,7 @@ angular.module('aima')
 
     function compose()
     {
-      var p1 = activities.get(0, $scope.model.take, $scope.model.week);
+      var p1 = activities.get(0, $scope.model.take, $scope.model.dateFrom, $scope.model.dateTo);
 
       p1
         .then(function(result) {
@@ -98,11 +100,11 @@ angular.module('aima')
 
     function more()
     {
-      var p = activities.get($scope.model.list.items.length, $scope.model.take, $scope.model.week);
+      var p = activities.get($scope.model.list.items.length, $scope.model.take, $scope.model.dateFrom, $scope.model.dateTo);
 
       p.then(function(result) {
         Array.prototype.push.apply($scope.model.list.items, format(result.activities, $scope.model.configuration.sorting, $scope.model.configuration.grouping));
-        //todo: what about the case when datasource changse while pagging?
+        //todo: what about the case when datasource changes while pagging?
       })
       .catch(function(error) {
         more_error();
@@ -143,10 +145,12 @@ angular.module('aima')
 			switch($scope.model.configuration.interval)
 			{
 				case 'week':
-					$scope.model.week = moment($scope.model.week).subtract(1, 'w').toDate();
+					$scope.model.dateFrom = moment($scope.model.dateFrom).subtract(1, 'w').toDate();
+					$scope.model.dateTo = moment($scope.model.dateTo).subtract(1, 'w').toDate();
 					break;
 				case 'month':
-					$scope.model.week = moment($scope.model.week).subtract(1, 'm').toDate();
+					$scope.model.dateFrom = moment($scope.model.dateFrom).subtract(1, 'm').toDate();
+					$scope.model.dateTo = moment($scope.model.dateTo).subtract(1, 'm').toDate();
 					break;
 			}
 			$scope.model.status = 'loading';
@@ -161,10 +165,12 @@ angular.module('aima')
 			switch($scope.model.configuration.interval)
 			{
 				case 'week':
-					$scope.model.week = moment($scope.model.week).add(1, 'w').toDate();
+					$scope.model.dateFrom = moment($scope.model.dateFrom).add(1, 'w').toDate();
+					$scope.model.dateTo = moment($scope.model.dateTo).add(1, 'w').toDate();
 					break;
 				case 'month':
-					$scope.model.week = moment($scope.model.week).add(1, 'M').toDate();
+					$scope.model.dateFrom = moment($scope.model.dateFrom).add(1, 'M').toDate();
+					$scope.model.dateTo = moment($scope.model.dateTo).add(1, 'M').toDate();
 					break;
 			}
 			$scope.model.status = 'loading';
@@ -185,12 +191,11 @@ angular.module('aima')
 			switch($scope.model.configuration.interval)
 			{
 				case 'week':
-					var a = moment($scope.model.week), b = moment($scope.model.week).add(6, 'd');
-					if(a.month() === b.month())
-						return a.format('D') + ' - ' + b.format('D MMM YYYY');
+					if($scope.model.dateFrom.getMonth() === $scope.model.dateTo.getMonth())
+						return moment($scope.model.dateFrom).format('D') + ' - ' + moment($scope.model.dateTo).format('D MMM YYYY');
 					else
-						return a.format('D MMM') + ' - ' + b.format('D MMM YYYY');
-				case 'month': return moment($scope.model.week).format('MMM YYYY');
+						return moment($scope.model.dateFrom).format('D MMM') + ' - ' + moment($scope.model.dateTo).format('D MMM YYYY');
+				case 'month': return moment($scope.model.dateFrom).format('MMM YYYY');
 			}
 			return '?';
 		}

@@ -115,7 +115,7 @@ angular.module('aima.services', [])
 		var activities = {
 
       // get monthly activities summary for the current user
-      summary: function()
+      summary: function(months)
       {
         var defer = $q.defer();
 
@@ -129,11 +129,25 @@ angular.module('aima.services', [])
           }
           else
           {
-            defer.resolve([
-              { month: new Date(2015, 2, 1), hours: Math.floor(Math.random() * 100), total: 168 },
-              { month: new Date(2015, 3, 1), hours: Math.floor(Math.random() * 100), total: 160 },
-              { month: new Date(2015, 4, 1), hours: Math.floor(Math.random() * 100), total: 176 }
-            ]);
+						var result = [], hours;
+						for(var m = 0; m < months.length; m++)
+						{
+							hours = 0;
+							for(var a = 0; a < db.activities.length; a++)
+							{
+								var activity = db.activities[a];
+								if(activity.date.getFullYear() === months[m].getFullYear() && activity.date.getMonth() === months[m].getMonth())
+									hours += activity.duration + activity.overtime;
+							}
+
+							result.push({
+								month: months[m],
+								hours: hours,
+								total: 160
+							});
+						}
+
+            defer.resolve(result);
           }
         }, 1000);
 
@@ -144,7 +158,7 @@ angular.module('aima.services', [])
       {
         var defer = $q.defer();
 
-        //todo: call service, pass identity.token to autenticate
+        //todo: call real service, pass identity.token to autenticate
         $timeout(function() {
 
           if(Math.random() > 5)
@@ -154,17 +168,23 @@ angular.module('aima.services', [])
           }
           else
           {
-            var items = [];
-            for(var i = skip; i < Math.min(200, skip + take); i++)
-              items.push({
-                day: moment(from).add(i % moment(from).diff(to, 'd'), 'd').toDate(),
-                project: 'the looong project ' + Math.floor(Math.random() * 5),
-                task: 'the name of the task ' + Math.floor(Math.random() * 10),
-                duration: 1 + Math.floor(Math.random() * 4),
-                overtime: 1 + Math.floor(Math.random() * 4)
-              });
+						var result = { activities: [], count: 0 };
+						for(var a = 0; a < db.activities.length; a++)
+						{
+							var activity = db.activities[a];
+							if(activity.date.valueOf() >= from.valueOf() && activity.date.valueOf() <= to.valueOf())
+								if(result.activities.length < take)
+									result.activities.push({
+										day: activity.date,
+										project: activity.project,
+										task: activity.task,
+										duration: activity.duration,
+										overtime: activity.overtime
+									});
+								result.count++;
+						}
 
-            defer.resolve({ activities: items, count: 200 });
+						defer.resolve(result);
           }
 
         }, 1000);
@@ -289,20 +309,23 @@ for(var p = 0; p < 100; p++)
 }
 
 // create activities
-var now = new Date();
-for(var m = 0; m < 3; m++)
-	for(var d = 1; d < 28; d++)
+var date = new Date(2015, 0, 1);
+for(var d = 0; d < 365; d++)
+{
+	var ac = 1 + Math.floor(Math.random() * 3);
+	for(var a = 0; a < ac; a++)
 	{
 		var project = db.projects[Math.floor(Math.random() * db.projects.length)];
 		db.activities.push({
 			id: k++,
-			date: new Date(now.getFullYear(), now.getMonth() + m, d),
+			date: new Date(date.getFullYear(), 0, d),
 			project: project.name,
 			task: project.tasks[Math.floor(Math.random() * project.tasks.length)].name,
-			duration: Math.floor(2 + Math.random() * 7),
-			overtime: Math.floor(Math.random() * 4),
+			duration: Math.floor(2 + Math.random() * 4),
+			overtime: Math.floor(Math.random() * 2),
 			notes: 'A few notes about the activity with id ' + k.toString()
 		});
 	}
+}
 
 

@@ -40,7 +40,7 @@ angular.module('aima')
 
 		function compose()
     {
-      var p1 = activities.summary();
+      var p1 = activities.summary([new Date(2015, 4, 1), new Date(2015, 5, 1), new Date(2015, 6, 1)]);
       var p2 = projects.asigned();
 
       p1
