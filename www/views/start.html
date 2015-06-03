@@ -1,27 +1,27 @@
 <ion-view hide-nav-bar="true">
-  <ion-content padding="true">
+	<ion-content padding="true">
 
-    <!-- loading -->
-    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
-      <p>{{model.loading.message}}</p>
-      <ion-spinner></ion-spinner>
-    </div>
+		<!-- loading -->
+		<div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+			<p>{{model.loading.message}}</p>
+			<ion-spinner></ion-spinner>
+		</div>
 
-    <!-- error -->
-    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
-      <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
-    </div>
+		<!-- error -->
+		<div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+			<p>{{model.error.message}}</p>
+			<button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+		</div>
 
-    <!-- content -->
-    <div ng-show="model.status === 'content.ready'">
+		<!-- content -->
+		<div ng-show="model.status === 'content.ready'">
 
-      <div style="text-align: center; padding-top: 10em">
-        <p>{{model.message}}</p>
-        <ion-spinner></ion-spinner>
-      </div>
+			<div style="text-align: center; padding-top: 10em">
+				<p>{{model.message}}</p>
+				<ion-spinner></ion-spinner>
+			</div>
 
-    </div>
+		</div>
 
-  </ion-content>
+	</ion-content>
 </ion-view>

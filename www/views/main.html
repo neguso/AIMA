@@ -17,10 +17,10 @@
     </ion-header-bar>
     <ion-content>
       <ul class="list">
-        <a ng-repeat="item in model.menu" href="{{item.url}}" ng-click="model.select(item)" menu-close class="item item-icon-left" ng-class="{ 'menu-item-selected': item.selected, 'menu-item-separator': item.separator, 'menu-item': !item.separator }">
+        <li ng-repeat="item in model.menu" ng-click="model.select(item)" menu-close class="item item-icon-left" ng-class="{ 'menu-item-selected': item.selected, 'menu-item-separator': item.separator, 'menu-item': !item.separator }">
           <i class="icon" ng-class="item.icon" style="color: #727272; font-size: 1.4em"></i>
           {{item.label}}
-        </a>
+        </li>
       </ul>
     </ion-content>
   </ion-side-menu>

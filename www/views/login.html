@@ -1,46 +1,47 @@
 <ion-view view-title="Log In">
 	<ion-nav-buttons side="right">
 	</ion-nav-buttons>
-  <ion-content padding="true">
+	<ion-content padding="true">
 
-    <!-- loading -->
-    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
-      <p>{{model.loading.message}}</p>
-      <ion-spinner></ion-spinner>
-    </div>
+		<!-- loading -->
+		<div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+			<p>{{model.loading.message}}</p>
+			<ion-spinner></ion-spinner>
+		</div>
 
-    <!-- error -->
-    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
-      <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
-    </div>
+		<!-- error -->
+		<div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+			<p>{{model.error.message}}</p>
+			<button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+		</div>
 
-    <!-- content -->
-    <div ng-show="model.status === 'content.ready'">
+		<!-- content -->
+		<div ng-show="model.status === 'content.ready'">
 
-      <div style="text-align: center">
-        <img src="resources/common/images/login.png" />
-      </div>
+			<div style="text-align: center; margin-top: 0.5em; margin-bottom: 1em">
+				<img src="resources/common/images/login.png" style="width: 175px" />
+			</div>
 
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">{{model.user.label}}</span>
-          <input type="text" ng-model="model.user.value">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">{{model.password.label}}</span>
-          <input type="password" ng-model="model.password.value">
-        </label>
-      </div>
-      <div style="text-align: center">
-        <p ng-if="model.message.length > 0" style="color: red">{{model.message}}</p>
-      </div>
+			<div class="list">
+				<label class="item item-input">
+					<span class="input-label">{{model.user.label}}</span>
+					<input type="text" ng-model="model.user.value">
+				</label>
+				<label class="item item-input">
+					<span class="input-label">{{model.password.label}}</span>
+					<input type="password" ng-model="model.password.value">
+				</label>
+			</div>
 
-      <button class="button button-positive button-full" ng-click="model.login.handler()">{{model.login.label}}</button>
+			<button class="button button-block button-positive" ng-click="model.login.handler()">{{model.login.label}}</button>
 
-      <a class="button button-positive button-full button-clear" ui-sref="help">Help?</a>
+			<div style="text-align: center">
+				<p ng-if="model.message.length > 0" style="color: red">{{model.message}}</p>
+			</div>
 
-    </div>
+			<a class="button button-block button-positive button-clear" ui-sref="help">Help?</a>
 
-  </ion-content>
+		</div>
+
+	</ion-content>
 </ion-view>

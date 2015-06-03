@@ -3,7 +3,10 @@ angular.module('aima.services', [])
 
     var settings = {
 			set: function(key, value) {
-				$window.localStorage.setItem(key, JSON.stringify(value));
+				if(value === null)
+					$window.localStorage.removeItem(key);
+				else
+					$window.localStorage.setItem(key, JSON.stringify(value));
 			},
 
 			get: function(key) {
@@ -16,7 +19,7 @@ angular.module('aima.services', [])
 
     return settings;
   }])
-  .factory('identity', ['$q', '$timeout', '$window', function($q, $timeout, $window) {
+  .factory('identity', ['$q', '$timeout', '$window', 'settings', function($q, $timeout, $window, settings) {
 
     var identity = {
       token: null,
@@ -87,6 +90,12 @@ angular.module('aima.services', [])
 
         return defer.promise;
       },
+
+			logout: function()
+			{
+				settings.set('identity.token', null);
+				identity.token = null;
+			},
 
       // get the authenticated identity information
       identity: function()
