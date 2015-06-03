@@ -3,14 +3,14 @@ angular.module('aima')
 
 		$scope.model = {
       menu: [
-        { state: 'main.home', icon: 'ion-home', label: 'Dashboard', separator: false, selected: true },
-        { state: 'main.activities', icon: 'ion-compose', label: 'My Activities', separator: false, selected: false },
-        { state: 'main.projects', icon: 'ion-android-folder', label: 'My Projects', separator: false, selected: false },
-        { state: 'main.manual', icon: 'ion-help-circled', label: 'Help', separator: false, selected: false },
-        { state: 'main.about', icon: 'ion-information-circled', label: 'About', separator: false, selected: false },
-        { state: 'main.profile', icon: 'ion-person', label: 'My Profile', separator: true, selected: false },
-        { state: 'logout', icon: 'ion-power', label: 'Logout', separator: false, selected: false }
+        { name: '', url: 'main.home', icon: 'ion-home', label: 'Dashboard', separator: false, selected: true },
+        { name: '', url: 'main.activities', icon: 'ion-compose', label: 'My Activities', separator: false, selected: false },
+        { name: '', url: 'main.projects', icon: 'ion-android-folder', label: 'My Projects', separator: false, selected: false },
+        { name: '', url: 'main.manual', icon: 'ion-help-circled', label: 'Help', separator: false, selected: false },
+        { name: '', url: 'main.about', icon: 'ion-information-circled', label: 'About', separator: false, selected: false },
+        { name: '', url: 'main.profile', icon: 'ion-person', label: 'My Profile', separator: true, selected: false }				
       ],
+			logout: { icon: 'ion-power', label: 'Logout', handler: logout },
       select: select
     };
 
@@ -20,16 +20,11 @@ angular.module('aima')
       $scope.model.menu.forEach(function(item) {
         item.selected = (item === option);
       });
-
-			switch(option.state)
-			{
-				case 'logout': logout(); break;
-				default: $state.go(option.state);
-			}
     }
 
 		function logout()
 		{
+			select($scope.model.menu[0]);
 			identity.logout();
 
 			$ionicHistory.nextViewOptions({ disableBack: true });
