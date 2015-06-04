@@ -266,6 +266,7 @@ angular.module('aima.services', [])
 								record.duration = activity.duration;
 								record.overtime = activity.overtime;
 								record.notes = activity.notes;
+
 								defer.resolve({ status: 'updated', activity: record });
 							}
 						}
@@ -284,7 +285,7 @@ angular.module('aima.services', [])
 
     var projects = {
 			
-      asigned: function(date)
+      assigned: function(date)
       {
         var defer = $q.defer();
 
@@ -302,7 +303,10 @@ angular.module('aima.services', [])
 							return {
 								id: item.id,
 								name: item.name,
-								status: db.project_status[item.status]
+								status: db.project_status[item.status],
+								start: item.start,
+								finish: item.finish,
+								customer: item.customer.name
 							};
 						}));
 					}
@@ -326,21 +330,36 @@ angular.module('aima.services', [])
 
 var k = 0;
 var db = {
-	project_status: ['Not started', 'In progress', 'On hold', 'Completed', 'Cancelled']
+	customers: [],
+	project_status: ['Not started', 'In progress', 'On hold', 'Completed', 'Cancelled'],
 	projects: [],
-	activities: []
+	activities: []	
 };
+
+// create customers
+for(var c = 0; c < 50; c++)
+{
+	var customer = {
+		id: ++k,
+		name: 'Happy Enterprise Father & Son Ltd. ' + c.toString()
+	};
+
+	db.customers.push(customer);
+}
+
 
 // create projects
 for(var p = 0; p < 100; p++)
 {
 	var start = new Date(2014, 0, 1 + Math.floor(Math.random() * 365 * 2));
+	var customer = db.customers[Math.floor(Math.random() * db.customers.length)];
 	var project = {
 		id: ++k,
 		name: 'A very interesting project ' + p.toString(),
 		status: Math.floor(Math.random() * 4),
 		start: start, finish: new Date(start.getFullYear(), start.getMonth() + 1 + Math.floor(Math.random() * 12), start.getDate()),
-		tasks: []
+		tasks: [],
+		customer: { id: customer.id, name: customer.name }
 	};
 	
 	// create tasks

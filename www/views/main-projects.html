@@ -1,5 +1,6 @@
 <ion-view view-title="My Projects">
 	<ion-nav-buttons side="right">
+		<button class="button button-icon icon ion-settings" ui-sref="main.projects_settings"></button>
 	</ion-nav-buttons>
 	<ion-content>
 		<ion-refresher pulling-text="Pull to refresh..."></ion-refresher>
@@ -16,8 +17,27 @@
       <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
     </div>
 
+		<!-- content -->
+    <div ng-show="model.status.indexOf('content.') === 0">
 
+      <ion-list ng-if="model.configuration.grouping === 'none'">
+        <ion-item ng-repeat="item in model.list.items">
+          <span class="item-note" style="color: black; float: right;">{{item.status}}</span>
+          <h2>{{item.name}}</h2>
+          <p>{{item.customer}}</p>
+        </ion-item>
+      </ion-list>
 
+      <div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
+        <div class="row row-center">
+          <div class="col">{{model.error_more.message}}</div>
+          <div class="col">
+            <button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
 	</ion-content>
 </ion-view>

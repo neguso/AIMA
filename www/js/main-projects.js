@@ -16,7 +16,9 @@ angular.module('aima')
 		function load()
 		{
 			// setup model
-			$scope.model.configuration.sorting = settings.get('projects.sorting', 'ascending');
+			$scope.model.configuration.filtering = settings.get('projects.filtering', 'all');
+			$scope.model.configuration.grouping = settings.get('projects.grouping', 'none');
+			$scope.model.configuration.sorting = settings.get('projects.sorting', 'start:ascending');
 
 			$scope.model.status = 'loading';
 			compose()
@@ -57,7 +59,7 @@ angular.module('aima')
 
 			p1
 				.then(function(result) {
-					$scope.model.list.items = format(result);
+					$scope.model.list.items = format(result, $scope.model.configuration.filtering);
 				})
 				.catch(function(error) {
 				});
@@ -94,7 +96,9 @@ angular.module('aima')
 			return ary.map(function(item) {
 				return {
 					id: item.id,
-					name: item.name
+					name: item.name,
+					status: item.status,
+					customer: item.customer
 				};
 			});
 		}
