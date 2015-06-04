@@ -13,7 +13,7 @@
     <!-- error -->
     <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
       <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button">{{model.error.retry.label}}</button>
+      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
     </div>
 
     <!-- content -->

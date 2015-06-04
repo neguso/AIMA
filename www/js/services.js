@@ -176,8 +176,8 @@ angular.module('aima.services', [])
 								if(result.activities.length < take)
 									result.activities.push({
 										day: activity.date,
-										project: activity.project,
-										task: activity.task,
+										project: activity.project.name,
+										task: activity.task.name,
 										duration: activity.duration,
 										overtime: activity.overtime
 									});
@@ -206,11 +206,17 @@ angular.module('aima.services', [])
           }
           else
           {
-            defer.resolve({
-							id: id,
-							date: new Date()
-							//todo: add fields
-						});
+						var activity = null;
+						for(var a = 0; a < db.activities.length; a++)
+						{
+							activity = db.activities[a];
+							if(activity.id === id)
+								break;
+						}
+						if(activity === null)
+							defer.resolve(activity);
+						else
+							defer.resolve(null);
           }
 
         }, 1000);
@@ -218,7 +224,7 @@ angular.module('aima.services', [])
         return defer.promise;
 			},
 
-			update: function()
+			update: function(activity)
 			{
 				var defer = $q.defer();
 				
@@ -232,9 +238,37 @@ angular.module('aima.services', [])
           }
           else
           {
-            defer.resolve({
-							//todo: add fields
-						});
+						if(activity.id === 0)
+						{
+							activity.id = ++k;
+							db.activities.push(activity);
+							defer.resolve({ status: 'added', activity: activity });
+						}
+						else
+						{
+							var record = null;
+							for(var a = 0; a < db.activities.length; a++)
+							{
+								record = db.activities[a];
+								if(record.id === id)
+									break;
+							}
+							if(activity === null)
+							{
+								defer.resolve({ status: 'not-found' });
+							}
+							else
+							{
+								record.date = activity.date;
+								record.project = activity.project;
+								record.task = activity.task;
+								record.duration = activity.duration;
+								record.overtime = activity.overtime;
+								record.notes = activity.notes;
+								defer.resolve({ status: 'updated', activity: record });
+							}
+						}
+
           }
 
         }, 1000);
@@ -290,16 +324,17 @@ var db = {
 for(var p = 0; p < 100; p++)
 {
 	var project = {
-		id: k++,
+		id: ++k,
 		name: 'A very interesting project ' + p.toString(),
 		tasks: []
 	};
 	
+	// create tasks
 	var tc = 2 + Math.floor(9 * Math.random());
 	for(var t = 0; t < tc; t++)
 	{
 		var task = {
-			id: k++,
+			id: ++k,
 			name: 'Exciting task ' + t.toString()
 		};
 		project.tasks.push(task);
@@ -316,11 +351,12 @@ for(var d = 0; d < 365; d++)
 	for(var a = 0; a < ac; a++)
 	{
 		var project = db.projects[Math.floor(Math.random() * db.projects.length)];
+		var task = project.tasks[Math.floor(Math.random() * project.tasks.length)];
 		db.activities.push({
-			id: k++,
+			id: ++k,
 			date: new Date(date.getFullYear(), 0, d),
-			project: project.name,
-			task: project.tasks[Math.floor(Math.random() * project.tasks.length)].name,
+			project: { id: project.id, name: project.name },
+			task: { id: task.id, name: task.name },
 			duration: Math.floor(2 + Math.random() * 4),
 			overtime: Math.floor(Math.random() * 2),
 			notes: 'A few notes about the activity with id ' + k.toString()
