@@ -1,10 +1,23 @@
 <ion-view view-title="My Projects">
 	<ion-nav-buttons side="right">
 	</ion-nav-buttons>
-	<ion-content padding="true">
+	<ion-content>
 		<ion-refresher pulling-text="Pull to refresh..."></ion-refresher>
 
-		<p>projects</p>
+		<!-- loading -->
+    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+      <p>{{model.loading.message}}</p>
+      <ion-spinner></ion-spinner>
+    </div>
+
+    <!-- error -->
+    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+      <p>{{model.error.message}}</p>
+      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+    </div>
+
+
+
 
 	</ion-content>
 </ion-view>

@@ -172,8 +172,9 @@ angular.module('aima.services', [])
 						for(var a = 0; a < db.activities.length; a++)
 						{
 							var activity = db.activities[a];
+
 							if(activity.date.valueOf() >= from.valueOf() && activity.date.valueOf() <= to.valueOf())
-								if(result.activities.length < take)
+								if(skip-- === 0 && result.activities.length < take)
 									result.activities.push({
 										day: activity.date,
 										project: activity.project.name,
@@ -282,20 +283,29 @@ angular.module('aima.services', [])
   .factory('projects', ['$q', '$timeout', function($q, $timeout) {
 
     var projects = {
-      asigned: function()
+			
+      asigned: function(date)
       {
         var defer = $q.defer();
 
         //todo: call service, pass identity.token to autenticate
         $timeout(function() {
 
-          defer.resolve([
-            { name: 'accesa Office Administration', status: 'active' },
-            { name: 'Infonic Presales Activities', status: 'active' },
-            { name: 'accesa Improvement', status: 'active' },
-            { name: 'Kruss Proteus', status: 'completed' },
-            { name: 'accesa Evolve', status: 'active' }
-          ]);
+					if(Math.random() > 0.5)
+          {
+            // simulate connection error
+            defer.reject();
+          }
+          else
+          {
+						defer.resolve(db.projects.map(function(item) {
+							return {
+								id: item.id,
+								name: item.name,
+								status: db.project_status[item.status]
+							};
+						}));
+					}
 
         }, 1000);
 
@@ -316,6 +326,7 @@ angular.module('aima.services', [])
 
 var k = 0;
 var db = {
+	project_status: ['Not started', 'In progress', 'On hold', 'Completed', 'Cancelled']
 	projects: [],
 	activities: []
 };
@@ -323,9 +334,12 @@ var db = {
 // create projects
 for(var p = 0; p < 100; p++)
 {
+	var start = new Date(2014, 0, 1 + Math.floor(Math.random() * 365 * 2));
 	var project = {
 		id: ++k,
 		name: 'A very interesting project ' + p.toString(),
+		status: Math.floor(Math.random() * 4),
+		start: start, finish: new Date(start.getFullYear(), start.getMonth() + 1 + Math.floor(Math.random() * 12), start.getDate()),
 		tasks: []
 	};
 	
