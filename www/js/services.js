@@ -356,7 +356,7 @@ for(var p = 0; p < 100; p++)
 	var project = {
 		id: ++k,
 		name: 'A very interesting project ' + p.toString(),
-		status: Math.floor(Math.random() * 4),
+		status: Math.floor(Math.random() * 5),
 		start: start, finish: new Date(start.getFullYear(), start.getMonth() + 1 + Math.floor(Math.random() * 12), start.getDate()),
 		tasks: [],
 		customer: { id: customer.id, name: customer.name }

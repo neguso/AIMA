@@ -10,7 +10,7 @@ angular.module('aima')
 
 			id: 0,
 			reload: new Command('ion-refresh', 'Reload', reload),
-			edit: new Command('ion-edit', 'EDIT', edit),
+			edit: new Command('ion-compose', 'EDIT', edit),
 			save: new Command('ion-checkmark-round', 'SAVE', save)
 		};
 

@@ -1,4 +1,5 @@
 angular.module('aima', ['ionic', 'aima.services'])
+	.value('about', { name: 'AIMA Mobile', version: '1.0', status: 'alpha' })
 	.config(['$ionicConfigProvider', '$stateProvider', '$urlRouterProvider', function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
 
 		$ionicConfigProvider.views.transition('none');
@@ -14,6 +15,7 @@ angular.module('aima', ['ionic', 'aima.services'])
 			.state('main.activities_settings', { url: '/activities_settings', views: { 'menuContent': { templateUrl: 'views/main-activities-settings.html', controller: 'ActivitiesSettingsCtrl' } } })
 			.state('main.activities_edit', { url: '/activities_edit/:id', views: { 'menuContent': { templateUrl: 'views/main-activities-edit.html', controller: 'ActivitiesEditCtrl' } } })
 			.state('main.projects', { url: '/projects', views: { 'menuContent': { templateUrl: 'views/main-projects.html', controller: 'ProjectsCtrl' } } })
+			.state('main.projects_settings', { url: '/projects_settings', views: { 'menuContent': { templateUrl: 'views/main-projects-settings.html', controller: 'ProjectsSettingsCtrl' } } })
 			.state('main.manual', { url: '/manual', views: { 'menuContent': { templateUrl: 'views/main-manual.html', controller: 'ManualCtrl' } } })
 			.state('main.about', { url: '/about', views: { 'menuContent': { templateUrl: 'views/main-about.html', controller: 'AboutCtrl' } } })
 			.state('main.profile', { url: '/profile', views: { 'menuContent': { templateUrl: 'views/main-profile.html', controller: 'ProfileCtrl' } } });

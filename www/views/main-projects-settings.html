@@ -1,0 +1,27 @@
+<ion-view view-title="Projects Settings">
+	<ion-nav-buttons side="left">
+		<button ng-click="$ionicGoBack()" class="button button-icon ion-arrow-left-c"></button>
+	</ion-nav-buttons>
+	<ion-content>
+
+		<div class="list">
+			<div class="item item-divider" style="font-weight: bold">Status Filter</div>
+      <ion-checkbox ng-model="model.filtering.notstarted">Not started</ion-checkbox>
+      <ion-checkbox ng-model="model.filtering.inprogress">In Progress</ion-checkbox>
+      <ion-checkbox ng-model="model.filtering.onhold">On hold</ion-checkbox>
+			<ion-checkbox ng-model="model.filtering.completed">Completed</ion-checkbox>
+			<ion-checkbox ng-model="model.filtering.cancelled">Cancelled</ion-checkbox>
+
+			<div class="item item-divider" style="font-weight: bold">Group By</div>
+      <ion-radio name="g" ng-model="model.grouping" ng-value="'none'">None</ion-radio>
+      <ion-radio name="g" ng-model="model.grouping" ng-value="'status'">By Status</ion-radio>
+
+			<div class="item item-divider" style="font-weight: bold">Sort By</div>
+      <ion-radio name="s" ng-model="model.sorting" ng-value="'start:ascending'">Start Ascending</ion-radio>
+      <ion-radio name="s" ng-model="model.sorting" ng-value="'start:descending'">Start Descending</ion-radio>
+			<ion-radio name="s" ng-model="model.sorting" ng-value="'name:ascending'">Name Ascending</ion-radio>
+			<ion-radio name="s" ng-model="model.sorting" ng-value="'name:descending'">Name Descending</ion-radio>
+		</div>
+
+	</ion-content>
+</ion-view>

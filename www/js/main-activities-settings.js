@@ -2,9 +2,9 @@ angular.module('aima')
   .controller('ActivitiesSettingsCtrl', ['$scope', 'settings', function($scope, settings) {
 
     $scope.model = {
-      sorting: 'ascending', // ascending, descending
-      interval: 'week',			// week, month
-      grouping: 'day'				// day, project
+      sorting: 'ascending', // ascending | descending
+      interval: 'week',			// week | month
+      grouping: 'day'				// day | project
     };
 
 
