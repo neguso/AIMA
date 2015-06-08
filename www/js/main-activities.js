@@ -16,7 +16,8 @@ angular.module('aima')
 
 			prev: new Command('ion-chevron-left', null, interval_prev),
 			next: new Command('ion-chevron-right', null, interval_next),
-			create: new Command('ion-plus-round', null, create)
+			create: new Command('ion-plus-round', null, create),
+			edit: new Command(null, 'EDIT', edit)
     };
 
 
@@ -183,6 +184,11 @@ angular.module('aima')
 		function create()
 		{
 			$state.go('main.activities_edit', { id: 0 });
+		}
+
+		function edit(activity)
+		{
+			
 		}
 
 

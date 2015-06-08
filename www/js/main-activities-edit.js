@@ -1,5 +1,5 @@
 angular.module('aima')
-	.controller('ActivitiesEditCtrl', ['$scope', '$stateParams', '$ionicLoading', '$timeout', '$q', 'activities', 'projects', function($scope, $stateParams, $ionicLoading, $timeout, $q, activities, projects) {
+	.controller('ActivitiesEditCtrl', ['$scope', '$stateParams', '$ionicLoading', '$timeout', '$q', 'activities', 'projects', '$ionicModal', function($scope, $stateParams, $ionicLoading, $timeout, $q, activities, projects, $ionicModal) {
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready | edit.ready | edit.error
@@ -14,15 +14,27 @@ angular.module('aima')
 			
 			id: 0,
 			activity: null,
-			projects: []
+			projects: [],
+			selectProject: selectProject
 		};
 
+		$ionicModal.fromTemplateUrl('project-selector.html', {
+				scope: $scope,
+				animation: 'slide-in-up'
+			}).then(function(modal) {
+				$scope.projectSelectorModal = modal;
+			});
+		
+		
 		function load()
 		{
 			$scope.model.status = 'loading';
 			compose()
         .then(function() {
-          $scope.model.status = 'content.ready';
+					if($scope.model.id === 0)
+						$scope.model.status = 'edit.ready';
+					else
+          	$scope.model.status = 'content.ready';
         });
 		}
 
@@ -31,12 +43,24 @@ angular.module('aima')
 			$scope.model.status = 'loading';
       compose()
         .then(function() {
-          $scope.model.status = 'content.ready';
+          if($scope.model.id === 0)
+						$scope.model.status = 'edit.ready';
+					else
+          	$scope.model.status = 'content.ready';
         });
 		}
 
 		function reload()
 		{
+			$scope.model.status = 'loading';
+			$scope.model.activity = null;
+      compose()
+        .then(function() {
+          if($scope.model.id === 0)
+						$scope.model.status = 'edit.ready';
+					else
+          	$scope.model.status = 'content.ready';
+        });
 		}
 
 		function edit()
@@ -100,6 +124,10 @@ angular.module('aima')
 			$scope.model.status = 'error';
 		}
 
+		function selectProject()
+		{
+			$scope.projectSelectorModal.show();
+		}
 
 		$scope.$on('$ionicView.enter', function() {
 			load();

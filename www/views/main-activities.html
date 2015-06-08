@@ -25,6 +25,8 @@
 					<span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.weekday}}</h2>
           <p>{{item.task}}</p>
+					
+					<ion-option-button ng-click="model.edit.handler(item)" class="button-info">{{model.edit.label}}</ion-option-button>
         </ion-item>
       </ion-list>
 
@@ -33,6 +35,8 @@
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.weekday : item.task}}</h2>
           <p>{{item.header ? '' : item.project}}</p>
+					
+					<ion-option-button ng-if="!item.header" ng-click="model.edit.handler(item)" class="button-info">{{model.edit.label}}</ion-option-button>
         </ion-item>
       </ion-list>
 
@@ -41,6 +45,8 @@
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.project : item.weekday}}</h2>
           <p>{{item.header ? '' : item.task}}</p>
+					
+					<ion-option-button ng-click="model.edit.handler(item)" class="button-info">{{model.edit.label}}</ion-option-button>
         </ion-item>
       </ion-list>
 
@@ -52,6 +58,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>

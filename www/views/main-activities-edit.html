@@ -27,25 +27,15 @@
 			
 			<div class="list card">
 
-				<a href="#" class="item item-icon-left">
-					<h1>model.</h1>
-					Enter home address
-				</a>
+				<div class="item">
+					<p style="font-weight: bold">{{model.activity.project === null ? '' : model.activity.project.name}}</p>
+					<p>{{model.activity.task === null ? '' : model.activity.task.name}}</p>
+				</div>
 
-				<a href="#" class="item item-icon-left">
-					<i class="icon ion-ios-telephone"></i>
-					Enter phone number
-				</a>
-
-				<a href="#" class="item item-icon-left">
-					<i class="icon ion-wifi"></i>
-					Enter wireless password
-				</a>
-
-				<a href="#" class="item item-icon-left">
-					<i class="icon ion-card"></i>
-					Enter card information
-				</a>
+				<div class="item">
+					<p>{{model.activity.date}}</p>
+					<p>{{model.activity.duration}} / {{model.activity.overtime}}</p>
+				</div>
 
 			</div>
 			
@@ -55,8 +45,17 @@
 			<div ng-show="model.status === 'edit.error'" style="text-align: center; padding: 0.5em; background-color: #F44336; color: #FFFFFF">
 				{{model.error_save.message}}
 			</div>
-			edit record
-			<input type="date">
+			
+			<div class="list card">
+
+				<a class="item" ng-click="model.selectProject()">
+					<p style="font-weight: bold">{{model.activity.project === null ? '' : model.activity.project.name}}</p>
+				</a>
+
+
+			</div>
+			
+			
 		</div>
 
 	</ion-content>
