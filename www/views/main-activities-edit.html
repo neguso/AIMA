@@ -24,7 +24,31 @@
 			<div ng-show="model.message_save.length > 0" style="text-align: center; padding: 0.5em; background-color: #4CAF50; color: #FFFFFF">
 				{{model.message_save}}
 			</div>
-			view record
+			
+			<div class="list card">
+
+				<a href="#" class="item item-icon-left">
+					<h1>model.</h1>
+					Enter home address
+				</a>
+
+				<a href="#" class="item item-icon-left">
+					<i class="icon ion-ios-telephone"></i>
+					Enter phone number
+				</a>
+
+				<a href="#" class="item item-icon-left">
+					<i class="icon ion-wifi"></i>
+					Enter wireless password
+				</a>
+
+				<a href="#" class="item item-icon-left">
+					<i class="icon ion-card"></i>
+					Enter card information
+				</a>
+
+			</div>
+			
 		</div>
 
 		<div ng-show="model.status === 'edit.ready' || model.status === 'edit.error'">

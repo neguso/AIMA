@@ -193,6 +193,36 @@ angular.module('aima.services', [])
         return defer.promise;
       },
 
+			create: function()
+			{
+				var defer = $q.defer();
+				
+				//todo: call service, pass identity.token to autenticate
+        $timeout(function() {
+
+          if(Math.random() > 0.5)
+          {
+            // simulate connection error
+            defer.reject();
+          }
+          else
+          {
+						defer.resolve({
+							id: 0,
+							date: new Date(),
+							project: null,
+							task: null,
+							duration: 0,
+							overtime: 0,
+							notes: ''
+						});
+          }
+
+        }, 1000);
+
+        return defer.promise;
+			},
+
 			load: function(id)
 			{
 				var defer = $q.defer();
