@@ -168,13 +168,18 @@ angular.module('aima.services', [])
           }
           else
           {
+						to = moment(to).add(1, 'd').toDate();
+						
 						var result = { activities: [], count: 0 };
 						for(var a = 0; a < db.activities.length; a++)
 						{
 							var activity = db.activities[a];
 
-							if(activity.date.valueOf() >= from.valueOf() && activity.date.valueOf() <= to.valueOf())
-								if(skip-- === 0 && result.activities.length < take)
+							if(activity.date >= from && activity.date < to)
+							{
+								result.count++;
+
+								if(skip-- <= 0 && result.activities.length < take)
 									result.activities.push({
 										day: activity.date,
 										project: activity.project.name,
@@ -182,7 +187,7 @@ angular.module('aima.services', [])
 										duration: activity.duration,
 										overtime: activity.overtime
 									});
-								result.count++;
+							}
 						}
 
 						defer.resolve(result);

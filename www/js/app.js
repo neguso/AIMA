@@ -61,10 +61,11 @@ function List()
 }
 
 
-function InfiniteList()
+function InfiniteList(hasMore, fetchMore)
 {
 	this.items = [];
 	this.count = -1;
-	this.hasMore = function() { return false; };
-	this.fetchMore = function() { };
+	this.retrieved = 0;
+	this.hasMore = hasMore;
+	this.fetchMore = fetchMore;
 }
