@@ -3,7 +3,7 @@ angular.module('aima')
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready | content.refresh
-			loading: { message: '' },
+			loading: { message: 'loading...' },
 			error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
 
 			date: null,

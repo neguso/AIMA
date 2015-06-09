@@ -214,7 +214,7 @@ angular.module('aima.services', [])
           {
 						defer.resolve({
 							id: 0,
-							date: new Date(),
+							date: moment(new Date()).startOf('day').toDate(),
 							project: null,
 							task: null,
 							duration: 0,

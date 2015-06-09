@@ -3,7 +3,7 @@ angular.module('aima')
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready | edit.ready | edit.error
-			loading: { message: '' },
+			loading: { message: 'loading...' },
       error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
 			error_save: { message: 'Error saving activity.' },
 			message_save: '',
@@ -15,7 +15,8 @@ angular.module('aima')
 			id: 0,
 			activity: null,
 			projects: [],
-			selectProject: selectProject
+			selectProject: selectProject,
+			selectTask: selectTask
 		};
 
 		$ionicModal.fromTemplateUrl('project-selector.html', {
@@ -93,16 +94,14 @@ angular.module('aima')
 				p1 = activities.create();
 			else
 				p1 = activities.load($scope.model.id);
-
-			var p2 = projects.assigned(null);
-			
-      p1
+			p1
         .then(function(result) {
 					$scope.model.activity = result;
         })
         .catch(function(error) {
         });
 
+			var p2 = projects.assigned(null);
 			p2
 				.then(function(result) {
 					$scope.model.projects = result;
@@ -118,7 +117,7 @@ angular.module('aima')
 
       return all;
 		}
-		
+
 		function compose_error()
 		{
 			$scope.model.status = 'error';
@@ -128,6 +127,12 @@ angular.module('aima')
 		{
 			$scope.projectSelectorModal.show();
 		}
+		
+		function selectTask()
+		{
+			
+		}
+
 
 		$scope.$on('$ionicView.enter', function() {
 			load();

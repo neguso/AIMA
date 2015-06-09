@@ -20,6 +20,7 @@
       <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
     </div>
 
+		<!-- view mode -->
 		<div ng-show="model.status === 'content.ready'">
 			<div ng-show="model.message_save.length > 0" style="text-align: center; padding: 0.5em; background-color: #4CAF50; color: #FFFFFF">
 				{{model.message_save}}
@@ -41,18 +42,23 @@
 			
 		</div>
 
+		<!-- edit mode -->
 		<div ng-show="model.status === 'edit.ready' || model.status === 'edit.error'">
 			<div ng-show="model.status === 'edit.error'" style="text-align: center; padding: 0.5em; background-color: #F44336; color: #FFFFFF">
 				{{model.error_save.message}}
 			</div>
-			
+
 			<div class="list card">
-
-				<a class="item" ng-click="model.selectProject()">
-					<p style="font-weight: bold">{{model.activity.project === null ? '' : model.activity.project.name}}</p>
+				<a class="item">
+					<input type="datetime" value="{{model.activity.date}}" />
 				</a>
-
-
+				<a ng-click="model.selectProject()" class="item">
+					<p>{{model.activity.project === null ? 'Select Project' : model.activity.project.name}}</p>
+				</a>
+				<a ng-click="model.selectTask()" class="item">
+					<p>{{model.activity.task === null ? 'Select Task' : model.activity.task.name}}</p>
+				</a>
+				
 			</div>
 			
 			
