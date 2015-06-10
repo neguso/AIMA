@@ -1,3 +1,5 @@
+var ep = 5;
+
 angular.module('aima.services', [])
   .factory('settings', ['$window', function($window) {
 
@@ -32,7 +34,7 @@ angular.module('aima.services', [])
         //todo: call service to get token
         $timeout(function() {
 
-          if(Math.random() > 0.5)
+          if(Math.random() > ep)
           {
             // simulate connection error
             defer.reject();
@@ -74,7 +76,7 @@ angular.module('aima.services', [])
 
           //todo: call service to check token
           $timeout(function() {
-            if(Math.random() > 0.5)
+            if(Math.random() > ep)
             {
               // simulate connection error
               defer.reject();
@@ -122,7 +124,7 @@ angular.module('aima.services', [])
         //todo: call service, pass identity.token to autenticate
         $timeout(function() {
 
-          if(Math.random() > 0.5)
+          if(Math.random() > ep)
           {
             // simulate connection error
             defer.reject();
@@ -161,7 +163,7 @@ angular.module('aima.services', [])
         //todo: call real service, pass identity.token to autenticate
         $timeout(function() {
 
-          if(Math.random() > 5)
+          if(Math.random() > ep)
           {
             // simulate connection error
             defer.reject();
@@ -205,7 +207,7 @@ angular.module('aima.services', [])
 				//todo: call service, pass identity.token to autenticate
         $timeout(function() {
 
-          if(Math.random() > 0.5)
+          if(Math.random() > ep)
           {
             // simulate connection error
             defer.reject();
@@ -235,7 +237,7 @@ angular.module('aima.services', [])
 				//todo: call service, pass identity.token to autenticate
         $timeout(function() {
 
-          if(Math.random() > 0.5)
+          if(Math.random() > ep)
           {
             // simulate connection error
             defer.reject();
@@ -267,7 +269,7 @@ angular.module('aima.services', [])
 				//todo: call service, pass identity.token to autenticate
         $timeout(function() {
 
-          if(Math.random() > 0.5)
+          if(Math.random() > ep)
           {
             // simulate connection error
             defer.reject();
@@ -327,7 +329,7 @@ angular.module('aima.services', [])
         //todo: call service, pass identity.token to autenticate
         $timeout(function() {
 
-					if(Math.random() > 0.5)
+					if(Math.random() > ep)
           {
             // simulate connection error
             defer.reject();
