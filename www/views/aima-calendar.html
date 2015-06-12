@@ -1,0 +1,14 @@
+<div>
+	<div>{{value}}</div>
+	<div>
+		<button style="float: right">right</button>
+		<button style="float: left">left</button>
+		<div style="text-align: center">{{header}}</div>
+	</div>
+	<div class="row">
+		<div ng-repeat="name in names" class="col" style="text-align: center">{{name}}</div>
+	</div>
+	<div class="row" ng-repeat="week in weeks">
+		<div ng-repeat="day in week" class="col" style="text-align: center">{{day.text}}</div>
+	</div>
+</div>

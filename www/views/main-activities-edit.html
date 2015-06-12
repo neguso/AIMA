@@ -49,15 +49,26 @@
 			</div>
 
 			<div class="list card">
-				<a class="item">
+				<div class="item">
 					<input type="datetime" value="{{model.activity.date}}" />
-				</a>
+				</div>
 				<a ng-click="model.selectProject()" class="item">
 					<p>{{model.activity.project === null ? 'Select Project' : model.activity.project.name}}</p>
 				</a>
 				<a ng-click="model.selectTask()" class="item">
 					<p>{{model.activity.task === null ? 'Select Task' : model.activity.task.name}}</p>
 				</a>
+				<div class="item">
+					<input type="text" value="{{model.activity.duration}}" />
+				</div>
+				<div class="item">
+					<input type="text" value="{{model.activity.overtime}}" />
+				</div>
+				
+				<label class="item item-input item-stacked-label">
+					<span class="input-label">Duration</span>
+					<input type="text" placeholder="duration in hours">
+				</label>
 				
 			</div>
 			

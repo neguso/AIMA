@@ -6,6 +6,8 @@ angular.module('aima', ['ionic', 'aima.services'])
 		//$ionicConfigProvider.scrolling.jsScrolling(false);
 
 		$stateProvider
+			.state('test', { url: '/test', templateUrl: 'views/test.html', controller: 'TestCtrl' })
+		
 			.state('start', { url: '/start', templateUrl: 'views/start.html', controller: 'StartCtrl' })
 			.state('login', { url: '/login', templateUrl: 'views/login.html', controller: 'LoginCtrl' })
 			.state('help', { url: '/help', templateUrl: 'views/help.html', controller: 'HelpCtrl' })
@@ -19,7 +21,7 @@ angular.module('aima', ['ionic', 'aima.services'])
 			.state('main.manual', { url: '/manual', views: { 'menuContent': { templateUrl: 'views/main-manual.html', controller: 'ManualCtrl' } } })
 			.state('main.about', { url: '/about', views: { 'menuContent': { templateUrl: 'views/main-about.html', controller: 'AboutCtrl' } } })
 			.state('main.profile', { url: '/profile', views: { 'menuContent': { templateUrl: 'views/main-profile.html', controller: 'ProfileCtrl' } } });
-		$urlRouterProvider.otherwise("/start");
+		$urlRouterProvider.otherwise("/test");
 	}])
 	.controller('AppCtrl', ['$rootScope', function($rootScope) {
 
