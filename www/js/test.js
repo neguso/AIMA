@@ -2,13 +2,8 @@ angular.module('aima')
 	.controller('TestCtrl', ['$scope', function($scope) {
 
 		$scope.dateValue = new Date(2015, 1, 23);
-		$scope.dateDisplay = new Date(2015, 0, 10);
+		$scope.dateDisplay = new Date(2015, 0, 1);
 
-		$scope.date = function()
-		{
-			return moment($scope.dateValue).format('dddd, D MMMM, YYYY');
-		};
-		
 		$scope.today = function() {
 			$scope.dateValue = new Date();
 		};
@@ -32,7 +27,7 @@ angular.module('aima')
 		{
 			var day = moment(display).startOf('month').startOf('week');
 			if(day.date() === 1)
-				day = day.clone().add(-1, 'week');
+				day.add(-1, 'week');
 			var ary = [];
 			for(var w = 0; w < 6; w++)
 			{
@@ -54,11 +49,12 @@ angular.module('aima')
 		}
 	
 		function update(scope)
-		{
+		{console.log('value: ' + scope.value + '  -  display: ' + scope.display);
 			scope.header = moment(scope.display).format('MMMM, YYYY');
 			scope.names = names(scope.display);
 			scope.weeks = weeks(scope.display, scope.value);
 		}
+
 
 		return {
 			restrict: 'E',
@@ -77,24 +73,32 @@ angular.module('aima')
 				if(typeof scope.showWeeks !== 'boolean')
 					scope.showWeeks = false;
 
-				
+
 				scope.$watch('value', function(newValue, oldValue)
 				{
-					alert(newValue);
+					console.log('observe(value): ' + newValue);
+					update(scope);
 				});
-				
+
+				scope.$watch('display', function(newValue, oldValue)
+				{
+					console.log('observe(display): ' + newValue);
+					update(scope);
+				});
+
 				update(scope);
 
 				scope.navigate = function(delta)
 				{
 					scope.display = moment(scope.display).add(delta, 'month').toDate();
-					update(scope);
+					//update(scope);
 				};
 				
 				scope.select = function(date)
 				{
 					scope.value = scope.display = date;
-					update(scope);
+					//scope.display = date;
+					//update(scope);
 				};
 
 			}
