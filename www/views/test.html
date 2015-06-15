@@ -3,10 +3,14 @@
 	</ion-nav-buttons>
 	<ion-content padding="true">
 
-		<p>Calendar Test</p>
-		<p>{{date}}</p>
-		<p>start-directive</p>
-		<aima-calendar date="date"></aima-calendar>
-		<p>end-directive</p>
+		<h1>Calendar Test</h1>
+		
+		<div>{{dateValue}}</div>
+		<div class="card">
+			<aima-calendar value="dateValue" show-weeks="!false"></aima-calendar>
+		</div>
+		
+		<button ng-click="today()">Today</button>
+
 	</ion-content>
 </ion-view>

@@ -22,8 +22,8 @@
 
 		<!-- view mode -->
 		<div ng-show="model.status === 'content.ready'">
-			<div ng-show="model.message_save.length > 0" style="text-align: center; padding: 0.5em; background-color: #4CAF50; color: #FFFFFF">
-				{{model.message_save}}
+			<div ng-show="model.message_save.length > 0" ng-style="{ 'background-color': model.message_edit.color }" style="text-align: center; padding: 0.5em; color: #FFFFFF">
+				{{model.message_view.text}}
 			</div>
 			
 			<div class="list card">
@@ -39,13 +39,13 @@
 				</div>
 
 			</div>
-			
+
 		</div>
 
 		<!-- edit mode -->
 		<div ng-show="model.status === 'edit.ready' || model.status === 'edit.error'">
-			<div ng-show="model.status === 'edit.error'" style="text-align: center; padding: 0.5em; background-color: #F44336; color: #FFFFFF">
-				{{model.error_save.message}}
+			<div ng-show="model.message_edit.length > 0" ng-style="{ 'background-color': model.message_edit.color }" style="text-align: center; padding: 0.5em; color: #FFFFFF">
+				{{model.message_edit.text}}
 			</div>
 
 			<div class="list card">
@@ -64,15 +64,14 @@
 				<div class="item">
 					<input type="text" value="{{model.activity.overtime}}" />
 				</div>
-				
+
 				<label class="item item-input item-stacked-label">
 					<span class="input-label">Duration</span>
 					<input type="text" placeholder="duration in hours">
 				</label>
-				
+
 			</div>
-			
-			
+
 		</div>
 
 	</ion-content>
