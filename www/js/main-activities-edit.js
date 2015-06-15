@@ -5,8 +5,12 @@ angular.module('aima')
 			status: 'loading', // loading | error | content.ready | edit.ready | edit.error
 			loading: { message: 'loading...' },
       error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
+
 			error_save: { message: 'Error saving activity.' },
 			message_save: '',
+
+			message_view: { text: '', color: null },
+			message_edit: { text: '', color: null },
 
 			reload: new Command('ion-refresh', 'Reload', reload),
 			edit: new Command('ion-compose', 'EDIT', edit),
@@ -15,6 +19,7 @@ angular.module('aima')
 			id: 0,
 			activity: null,
 			projects: [],
+			validation: [],
 			selectProject: selectProject,
 			selectTask: selectTask
 		};
@@ -69,24 +74,6 @@ angular.module('aima')
 			$scope.model.status = 'edit.ready';
 		}
 
-		function save()
-		{
-			$ionicLoading.show({ animation: 'fade-in', templateUrl: 'spinner.html' });
-
-      activities.update()
-				.then(function() {
-					$scope.model.status = 'content.ready';
-					$scope.model.message_save = 'Activity saved.';
-					$timeout(function() { $scope.model.message_save = ''; }, 3000);
-				})
-				.catch(function() {
-					$scope.model.status = 'edit.error';
-				})
-				.finally(function() {
-					$ionicLoading.hide();
-				});
-		}
-
 		function compose()
 		{
 			var p1;
@@ -121,6 +108,84 @@ angular.module('aima')
 		function compose_error()
 		{
 			$scope.model.status = 'error';
+		}
+
+		function save()
+		{
+			if(!validate()) return;
+
+			$ionicLoading.show({ animation: 'fade-in', templateUrl: 'spinner.html' });
+
+      activities.update($scope.model.activity)
+				.then(function(result) {
+					if(result.status === 'added')
+					{
+						$scope.model.status = 'content.ready';
+						$scope.model.message_view.text = 'Activity created.';
+						$scope.model.message_view.color = '#4CAF50';
+						$timeout(function() { $scope.model.message_save = ''; }, 3000);
+					}
+					else if(result.status === 'updated')
+					{
+						$scope.model.status = 'content.ready';
+						$scope.model.message_view.text = 'Activity updated.';
+						$scope.model.message_view.color = '#4CAF50';
+						$timeout(function() { $scope.model.message_save = ''; }, 3000);
+					}
+					else if(result.status === 'not-found')
+					{
+						$scope.model.status = 'edit.error';
+						$scope.model.message_edit.text = 'Error saving activity. Activity no longer exists.';
+						$scope.model.message_view.color = '#F44336';
+					}
+					else
+					{
+						$scope.model.status = 'edit.error';
+						$scope.model.message_edit.text = 'Error saving activity.';
+						$scope.model.message_view.color = '#F44336';
+					}
+				})
+				.catch(function() {
+					$scope.model.status = 'edit.error';
+					$scope.model.message_edit.text = 'Error saving activity.';
+					$scope.model.message_view.color = '#F44336';
+				})
+				.finally(function() {
+					$ionicLoading.hide();
+				});
+		}
+
+		function validate()
+		{
+			$scope.model.validation.length = 0;
+			
+			// check date
+			
+			// check project
+			if($scope.model.activity.project === null)
+				$scope.model.validation.push({ field: 'project', error: 'Project not specified.' });
+			
+			// check task
+			if($scope.model.activity.task === null)
+				$scope.model.validation.push({ field: 'task', error: 'Task not specified.' });
+			
+			// check duration
+			
+			// check overtime
+			
+			// check notes
+			if($scope.model.activity.notes === null || $scope.model.activity.notes.trim().length === 0)
+				$scope.model.validation.push({ field: 'notes', error: 'Notes not specified.' });
+
+			//
+			if($scope.model.validation.length > 0)
+			{
+				$scope.model.status = 'edit.error';
+				$scope.model.message_edit.text = 'Invalid data, check highlighted fields.';
+				$scope.model.message_view.color = '#F44336';
+			}
+			
+			return $scope.model.validation.length === 0;
 		}
 
 		function selectProject()

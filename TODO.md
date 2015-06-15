@@ -2,14 +2,15 @@
 
 ## Required Features
 - create services design specification
-- simulate real data (read and save use that data)
+* simulate real data (read and save use that data)
 * view/edit/add activity
 - delete activity
 - show a message when list is empty
-- check status when stating a new async operation
-- logoff
+- check status for existing async op's when starting a new async op
+* logoff
+- message view, that queue messages with a timeout
 
 ## Optional Features
 - user profile view
-- settings view
-- app intro
+- app settings view
+- app intro slideshow
