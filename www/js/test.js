@@ -49,12 +49,60 @@ angular.module('aima')
 		}
 	
 		function update(scope)
-		{console.log('value: ' + scope.value + '  -  display: ' + scope.display);
+		{
+			//console.log('value: ' + scope.value + '  -  display: ' + scope.display);
 			scope.header = moment(scope.display).format('MMMM, YYYY');
 			scope.names = names(scope.display);
 			scope.weeks = weeks(scope.display, scope.value);
 		}
 
+
+		function link(scope, element, attributes)
+		{
+			if(typeof scope.value === 'undefined' || scope.value === null)
+				scope.value = moment().startOf('day').toDate();
+			if(typeof scope.display === 'undefined' || scope.display === null)
+				scope.display = scope.value;
+			if(typeof scope.showWeeks !== 'boolean')
+				scope.showWeeks = false;
+
+			scope.$watch('value', function(newValue, oldValue)
+			{
+				//console.log('observe(value): ' + newValue);
+				update(scope);
+			});
+
+			scope.$watch('display', function(newValue, oldValue)
+			{
+				//console.log('observe(display): ' + newValue);
+				update(scope);
+			});
+
+			scope.navigate = function(delta)
+			{
+				scope.display = moment(scope.display).add(delta, 'month').toDate();
+				//update(scope);
+			};
+
+			scope.selecta = function($event)
+			{
+				var date = new Date(parseInt($event.srcElement.attributes.day.value));
+				console.log(date);
+				scope.value = scope.display = date;
+				//scope.display = date;
+				//update(scope);
+			};
+			
+			scope.select = function(date)
+			{
+				
+				scope.value = scope.display = date;
+				//scope.display = date;
+				//update(scope);
+			};
+
+			update(scope);
+		}
 
 		return {
 			restrict: 'E',
@@ -64,43 +112,6 @@ angular.module('aima')
 				showWeeks: "=?"
 			},
 			templateUrl: 'views/aima-calendar.html',
-			link: function(scope, element, attributes) {
-
-				if(typeof scope.value === 'undefined' || scope.value === null)
-					scope.value = moment().startOf('day').toDate();
-				if(typeof scope.display === 'undefined' || scope.display === null)
-					scope.display = scope.value;
-				if(typeof scope.showWeeks !== 'boolean')
-					scope.showWeeks = false;
-
-
-				scope.$watch('value', function(newValue, oldValue)
-				{
-					console.log('observe(value): ' + newValue);
-					update(scope);
-				});
-
-				scope.$watch('display', function(newValue, oldValue)
-				{
-					console.log('observe(display): ' + newValue);
-					update(scope);
-				});
-
-				update(scope);
-
-				scope.navigate = function(delta)
-				{
-					scope.display = moment(scope.display).add(delta, 'month').toDate();
-					//update(scope);
-				};
-				
-				scope.select = function(date)
-				{
-					scope.value = scope.display = date;
-					//scope.display = date;
-					//update(scope);
-				};
-
-			}
+			link: link
 		};
 	});
