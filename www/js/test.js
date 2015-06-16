@@ -22,19 +22,27 @@ angular.module('aima')
 
 		function link(scope, element, attributes)
 		{
-			if(typeof scope.value !== 'number')
-				scope.value = 0;
-			if(typeof scope.step !== 'number')
+			if(typeof scope.min !== 'number')
+				scope.min = 0;
+			if(typeof scope.max !== 'number')
+				scope.max = 100;
+			if(typeof scope.value !== 'number' || scope.value < scope.min || scope.value > scope.max)
+				scope.value = scope.min;
+			if(typeof scope.step !== 'number' || scope.step <= 0)
 				scope.step = 1;
 
 			scope.increment = function()
 			{
 				scope.value += scope.step;
+				if(scope.value > scope.max)
+					scope.value = scope.max;
 			};
 
 			scope.decrement = function()
 			{
 				scope.value -= scope.step;
+				if(scope.value < scope.min)
+					scope.value = scope.min;
 			};
 		}
 
@@ -42,7 +50,9 @@ angular.module('aima')
 			restrict: 'E',
 			scope: {
 				value: '=?',
-				step: '=?'
+				step: '=?',
+				min: '=?',
+				max: '=?'
 			},
 			templateUrl: 'views/aima-duration.html',
 			link: link
