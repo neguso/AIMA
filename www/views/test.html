@@ -5,12 +5,16 @@
 
 		<h1>Calendar Test</h1>
 		
-		<div>{{dateValue}}</div>
+		<div>{{model.dateValue}}</div>
 		<div class="card">
-			<aima-calendar value="dateValue" display="dateDisplay" show-weeks="!false"></aima-calendar>
+			<aima-calendar value="model.dateValue" display="model.dateDisplay" show-weeks="model.showWeeks"></aima-calendar>
 		</div>
 		
 		<button ng-click="today()">Today</button>
+		<button ng-click="weeks()">Weeks</button>
 
+		<aima-duration value="model.durationValue" step="3"></aima-duration>
+		
+		
 	</ion-content>
 </ion-view>

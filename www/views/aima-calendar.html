@@ -1,17 +1,13 @@
-<div>{{value}}</div>
 <div>
-	<button ng-click="navigate(1)" class="button icon-right ion-chevron-right button-clear" style="float: right"></button>
-	<button ng-click="navigate(-1)" class="button icon-left ion-chevron-left button-clear" style="float: left"></button>
+	<button ng-click="navigate(1)" class="button icon-right ion-chevron-right button-clear" style="float: right; padding-right: 1em"></button>
+	<button ng-click="navigate(-1)" class="button icon-left ion-chevron-left button-clear" style="float: left; padding-left: 1em"></button>
 	<div style="text-align: center; padding-top: 1em">{{header}}</div>
 </div>
 <div class="row">
 	<div class="col" ng-show="showWeeks"></div>
 	<div ng-repeat="name in names" class="col" style="text-align: center">{{name}}</div>
 </div>
-<div>
-	<div class="row" ng-repeat="week in weeks">
-		<div class="col" ng-show="showWeeks" style="text-align: center; color: #C0C0C0">{{week.number}}</div>
-		<div ng-repeat="day in week" day="{{day.date.valueOf()}}" class="col" style="text-align: center" ng-style="{ 'color': day.current ? (day.selected ? '#FFFFFF' : '#2E2E2E') : '#C0C0C0', 'background-color': day.selected ? '#2E64FE' : 'inherit' }">{{day.text}}</div>
-	</div>
+<div class="row" ng-repeat="week in weeks">
+	<div class="col" ng-show="showWeeks" style="text-align: center; color: #C0C0C0">{{week.number}}</div>
+	<div ng-repeat="day in week" ng-click="select(day.date)" class="col" style="text-align: center" ng-style="{ 'color': day.current ? (day.selected ? '#FFFFFF' : '#2E2E2E') : '#C0C0C0', 'background-color': day.selected ? '#2E64FE' : 'inherit' }">{{day.text}}</div>
 </div>
-<button ng-click="select(new Date(12))">adsasda</button>

@@ -1,14 +1,53 @@
 angular.module('aima')
 	.controller('TestCtrl', ['$scope', function($scope) {
 
-		$scope.dateValue = new Date(2015, 1, 23);
-		$scope.dateDisplay = new Date(2015, 0, 1);
+		$scope.model = {
+			dateValue: new Date(2015, 1, 23),
+			dateDisplay: new Date(2015, 0, 1),
+			showWeeks: false,
+
+			durationValue: 10
+		};
 
 		$scope.today = function() {
-			$scope.dateValue = new Date();
+			$scope.model.dateValue = new Date();
+		};
+		
+		$scope.weeks = function() {
+			$scope.model.showWeeks = !$scope.model.showWeeks;
 		};
 		
 	}])
+	.directive('aimaDuration', function() {
+
+		function link(scope, element, attributes)
+		{
+			if(typeof scope.value !== 'number')
+				scope.value = 0;
+			if(typeof scope.step !== 'number')
+				scope.step = 1;
+
+			scope.increment = function()
+			{
+				scope.value += scope.step;
+			};
+
+			scope.decrement = function()
+			{
+				scope.value -= scope.step;
+			};
+		}
+
+		return {
+			restrict: 'E',
+			scope: {
+				value: '=?',
+				step: '=?'
+			},
+			templateUrl: 'views/aima-duration.html',
+			link: link
+		};
+	})
 	.directive('aimaCalendar', function() {
 
 		function names(date)
@@ -50,7 +89,6 @@ angular.module('aima')
 	
 		function update(scope)
 		{
-			//console.log('value: ' + scope.value + '  -  display: ' + scope.display);
 			scope.header = moment(scope.display).format('MMMM, YYYY');
 			scope.names = names(scope.display);
 			scope.weeks = weeks(scope.display, scope.value);
@@ -66,40 +104,27 @@ angular.module('aima')
 			if(typeof scope.showWeeks !== 'boolean')
 				scope.showWeeks = false;
 
+
+			scope.navigate = function(delta)
+			{
+				scope.display = moment(scope.display).add(delta, 'month').toDate();
+			};
+
+			scope.select = function(date)
+			{
+				scope.value = scope.display = date;
+			};
+
+
 			scope.$watch('value', function(newValue, oldValue)
 			{
-				//console.log('observe(value): ' + newValue);
 				update(scope);
 			});
 
 			scope.$watch('display', function(newValue, oldValue)
 			{
-				//console.log('observe(display): ' + newValue);
 				update(scope);
 			});
-
-			scope.navigate = function(delta)
-			{
-				scope.display = moment(scope.display).add(delta, 'month').toDate();
-				//update(scope);
-			};
-
-			scope.selecta = function($event)
-			{
-				var date = new Date(parseInt($event.srcElement.attributes.day.value));
-				console.log(date);
-				scope.value = scope.display = date;
-				//scope.display = date;
-				//update(scope);
-			};
-			
-			scope.select = function(date)
-			{
-				
-				scope.value = scope.display = date;
-				//scope.display = date;
-				//update(scope);
-			};
 
 			update(scope);
 		}
