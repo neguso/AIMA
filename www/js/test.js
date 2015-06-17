@@ -20,16 +20,24 @@ angular.module('aima')
 	}])
 	.directive('aimaDuration', function() {
 
+		var layouts = ['horizontal', 'vertical'];
+
 		function link(scope, element, attributes)
 		{
 			if(typeof scope.min !== 'number')
 				scope.min = 0;
 			if(typeof scope.max !== 'number')
 				scope.max = 100;
+			if(scope.min > scope.max)
+				scope.max = scope.min + 100;
 			if(typeof scope.value !== 'number' || scope.value < scope.min || scope.value > scope.max)
 				scope.value = scope.min;
 			if(typeof scope.step !== 'number' || scope.step <= 0)
 				scope.step = 1;
+			if(typeof scope.layout === 'undefined' || layouts.indexOf(scope.layout) === -1)
+				scope.layout = 'horizontal';
+			if(typeof scope.format === 'undefined' || scope.format.indexOf('{0}') === -1)
+				scope.format = '{0}';
 
 			scope.increment = function()
 			{
@@ -44,6 +52,14 @@ angular.module('aima')
 				if(scope.value < scope.min)
 					scope.value = scope.min;
 			};
+			
+			scope.replace = function(format)
+			{
+				var args = Array.prototype.slice.call(arguments, 1);
+				return format.replace(/{(\d+)}/g, function(match, number) { 
+					return typeof args[number] != 'undefined' ? args[number] : match;
+				});
+			};
 		}
 
 		return {
@@ -52,7 +68,9 @@ angular.module('aima')
 				value: '=?',
 				step: '=?',
 				min: '=?',
-				max: '=?'
+				max: '=?',
+				layout: '@?',
+				format: '@?'
 			},
 			templateUrl: 'views/aima-duration.html',
 			link: link

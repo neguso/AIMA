@@ -1,5 +1,10 @@
-<div class="row" style="padding: 0">
-	<div class="col" style="text-align: center; padding: 0"><button ng-click="decrement()" class="button icon ion-minus" style="width: 100%"></button></div>
-	<div class="col" style="text-align: center; padding: 0"><button class="button button-clear" style="width: 100%; color: black">{{value}}</button></div>
-	<div class="col" style="text-align: center; padding: 0"><button ng-click="increment()" class="button icon ion-plus" style="width: 100%"></button></div>
+<div ng-if="layout === 'horizontal'" class="row" style="padding: 0">
+	<div class="col" style="text-align: center; padding: 0"><button ng-click="decrement()" class="button button-clear icon ion-minus-round" style="width: 100%"></button></div>
+	<div class="col" style="text-align: center; padding: 0"><button class="button button-clear" style="width: 100%; color: black">{{replace(format, value)}}</button></div>
+	<div class="col" style="text-align: center; padding: 0"><button ng-click="increment()" class="button button-clear icon ion-plus-round" style="width: 100%"></button></div>
+</div>
+<div ng-if="layout === 'vertical'">
+	<div class="row" style="padding: 0"><div class="col" style="padding: 0"><button ng-click="increment()" class="button button-clear icon ion-plus-round" style="width: 100%"></button></div></div>
+	<div class="row" style="padding: 0"><div class="col" style="padding: 0"><button class="button button-clear" style="width: 100%; color: black">{{replace(format, value)}}</button></div></div>
+	<div class="row" style="padding: 0"><div class="col" style="padding: 0"><button ng-click="decrement()" class="button button-clear icon ion-minus-round" style="width: 100%"></button></div></div>
 </div>

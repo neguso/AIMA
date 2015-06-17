@@ -49,26 +49,39 @@
 			</div>
 
 			<div class="list card">
+				<div class="item item-divider">
+					Date
+				</div>
 				<div class="item">
 					<div style="text-align: center">{{model.activity.date | date: 'EEEE, d MMMM, yyyy'}}</div>
 					<aima-calendar value="model.activity.date"></aima-calendar>
 				</div>
+				<div class="item item-divider">
+					Project
+				</div>
 				<div ng-click="model.selectProject()" class="item">
 					{{model.activity.project === null ? '[select project]' : model.activity.project.name}}
+				</div>
+				<div class="item item-divider">
+					Task
 				</div>
 				<div ng-click="model.selectTask()" class="item">
 					{{model.activity.task === null ? '[select task]' : model.activity.task.name}}
 				</div>
-				<div class="item">
-					<div class="row">
-						<div class="col">Duration:</div>
-						<div class="col col-75"><aima-duration value="model.activity.duration" max="24" step="0.25"></aima-duration></div>
+				<div class="item item-divider">
+					<div class="row" style="padding: 0">
+						<div class="col" style="padding: 0; text-align: center">Duration</div>
+						<div class="col" style="padding: 0; text-align: center">Overtime</div>
 					</div>
 				</div>
-				<div class="item">
-					<aima-duration value="model.activity.overtime" max="24" step="0.25"></aima-duration>
+				<div class="item" style="padding: 10px 0 10px 0">
+					<div class="row" style="padding: 0">
+						<div class="col" style="padding: 0 0 0 10px"><aima-duration data-layout="vertical" format="{0} h" min="0" max="24"></aima-duration></div>
+						<div class="col" style="padding: 0 10px 0 0"><aima-duration data-layout="vertical" format="{0} min" min="0" max="60" step="5"></aima-duration></div>
+						<div class="col" style="padding: 0 0 0 0"><aima-duration data-layout="vertical" format="{0} h" min="0" max="24"></aima-duration></div>
+						<div class="col" style="padding: 0 10px 0 0"><aima-duration data-layout="vertical" format="{0} min" min="0" max="60" step="5"></aima-duration></div>
+					</div>
 				</div>
-
 			</div>
 
 		</div>
