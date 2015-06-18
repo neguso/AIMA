@@ -8,7 +8,8 @@
 - show a message when list is empty
 - check status for existing async op's when starting a new async op
 * logoff
-- message view, that queue messages with a timeout
+- notification message directive (background color, icon, title, text, timeout) with a model
+- edit fields (with validation support)
 
 ## Optional Features
 - user profile view

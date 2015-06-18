@@ -6,7 +6,13 @@ angular.module('aima')
 			dateDisplay: new Date(2015, 0, 1),
 			showWeeks: false,
 
-			durationValue: 10
+			durationValue: 10,
+			
+			notification: {
+				type: 'error',
+				title: 'This is the title!', message: 'The message content goes here.',
+				timeout: 0
+			}
 		};
 
 		$scope.today = function() {
@@ -17,6 +23,22 @@ angular.module('aima')
 			$scope.model.showWeeks = !$scope.model.showWeeks;
 		};
 		
+	}])
+	.directive('aimaNotification', ['$timeout', function($timeout) {
+
+		// https://www.pinterest.com/pin/240450067580509871/
+		
+		function link(scope, element, attributes)
+		{
+		}
+
+		return {
+			scope: {
+				value: '=?'
+			},
+			templateUrl: 'views/aima-notification.html',
+			link: link
+		};
 	}])
 	.directive('aimaDuration', function() {
 

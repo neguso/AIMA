@@ -7,7 +7,6 @@ angular.module('aima')
       error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
 
 			error_save: { message: 'Error saving activity.' },
-			message_save: '',
 
 			message_view: { text: '', color: null },
 			message_edit: { text: '', color: null },
@@ -15,11 +14,13 @@ angular.module('aima')
 			reload: new Command('ion-refresh', 'Reload', reload),
 			edit: new Command('ion-compose', 'EDIT', edit),
 			save: new Command('ion-checkmark-round', 'SAVE', save),
-			
+
 			id: 0,
 			activity: null,
 			projects: [],
-			validation: [],
+			duration_h: 0, duration_m: 0, overtime_h: 0, overtime_m: 0,
+			validation: {},
+
 			selectProject: selectProject,
 			selectTask: selectTask
 		};
@@ -123,14 +124,14 @@ angular.module('aima')
 						$scope.model.status = 'content.ready';
 						$scope.model.message_view.text = 'Activity created.';
 						$scope.model.message_view.color = '#4CAF50';
-						$timeout(function() { $scope.model.message_save = ''; }, 3000);
+						$timeout(function() { $scope.model.message_view.text = ''; }, 3000);
 					}
 					else if(result.status === 'updated')
 					{
 						$scope.model.status = 'content.ready';
 						$scope.model.message_view.text = 'Activity updated.';
 						$scope.model.message_view.color = '#4CAF50';
-						$timeout(function() { $scope.model.message_save = ''; }, 3000);
+						$timeout(function() { $scope.model.message_view.text = ''; }, 3000);
 					}
 					else if(result.status === 'not-found')
 					{
@@ -157,35 +158,38 @@ angular.module('aima')
 
 		function validate()
 		{
-			$scope.model.validation.length = 0;
+			$scope.model.validation = {};
 			
 			// check date
+			$scope.model.validation.date = { error: 'Invalid date.' };
 			
 			// check project
 			if($scope.model.activity.project === null)
-				$scope.model.validation.push({ field: 'project', error: 'Project not specified.' });
+				$scope.model.validation.project = { error: 'Project not specified.' };
 			
 			// check task
 			if($scope.model.activity.task === null)
-				$scope.model.validation.push({ field: 'task', error: 'Task not specified.' });
+				$scope.model.validation.task = { error: 'Task not specified.' };
 			
-			// check duration
-			
-			// check overtime
-			
+			// check duration & overtime
+			if($scope.model.activity.duration === 0)
+				$scope.model.validation.duration = { error: 'Duration not specified.' };
+			else if($scope.model.activity.overtime > $scope.model.activity.duration)
+				$scope.model.validation.duration = { error: 'Overtime must be less or equl with duration.' };
+
 			// check notes
 			if($scope.model.activity.notes === null || $scope.model.activity.notes.trim().length === 0)
-				$scope.model.validation.push({ field: 'notes', error: 'Notes not specified.' });
+				$scope.model.validation.notes = { error: 'Notes not specified.' };
 
 			//
-			if($scope.model.validation.length > 0)
+			if(Object.keys($scope.model.validation).length > 0)
 			{
 				$scope.model.status = 'edit.error';
-				$scope.model.message_edit.text = 'Invalid data, check highlighted fields.';
-				$scope.model.message_view.color = '#F44336';
+				$scope.model.message_edit.text = 'Some fields are incorrect.';
+				$scope.model.message_edit.color = '#F44336';
 			}
 			
-			return $scope.model.validation.length === 0;
+			return Object.keys($scope.model.validation).length === 0;
 		}
 
 		function selectProject()

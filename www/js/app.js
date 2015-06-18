@@ -21,7 +21,7 @@ angular.module('aima', ['ionic', 'aima.services'])
 			.state('main.manual', { url: '/manual', views: { 'menuContent': { templateUrl: 'views/main-manual.html', controller: 'ManualCtrl' } } })
 			.state('main.about', { url: '/about', views: { 'menuContent': { templateUrl: 'views/main-about.html', controller: 'AboutCtrl' } } })
 			.state('main.profile', { url: '/profile', views: { 'menuContent': { templateUrl: 'views/main-profile.html', controller: 'ProfileCtrl' } } });
-		$urlRouterProvider.otherwise("/start");
+		$urlRouterProvider.otherwise("/test");
 	}])
 	.controller('AppCtrl', ['$rootScope', function($rootScope) {
 
