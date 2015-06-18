@@ -10,8 +10,8 @@ angular.module('aima')
 			
 			notification: {
 				type: 'error',
-				title: 'This is the title!', message: 'The message content goes here.',
-				timeout: 0
+				title: 'This is the title!',
+				message: 'The message content goes here.'
 			}
 		};
 
@@ -27,9 +27,35 @@ angular.module('aima')
 	.directive('aimaNotification', ['$timeout', function($timeout) {
 
 		// https://www.pinterest.com/pin/240450067580509871/
+
+		var types = ['none', 'info', 'warning', 'error'];
+		var head_bg = { none: '', info: '#009688', warning: '#FFC107', error: '#F44336' };
+		var head_icon = '#FFFFFF';
+		var main_bg = '#F0F0F0';
+		var main_title = '#000000';
+		var main_text = '#727272';
+		
+		function update(scope)
+		{
+			scope.type = scope.value.type;
+			if(typeof scope.type === 'undefined' || types.indexOf(scope.type) === -1)
+				scope.type = 'info';
+			scope.head_bg = head_bg[scope.type];
+			scope.head_icon = head_icon;
+			scope.main_bg = main_bg;
+			scope.main_title = main_title;
+			scope.main_text = main_text;
+			scope.title = scope.value.title;
+			scope.message = scope.value.message;
+		}
 		
 		function link(scope, element, attributes)
 		{
+			scope.$watch('value', function(newValue, oldValue) {
+				update(scope);
+			});
+
+			update(scope);
 		}
 
 		return {

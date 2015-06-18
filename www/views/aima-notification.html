@@ -1,9 +1,9 @@
 <div class="row">
-	<div class="col col-10" style="text-align: center; background-color: red">
-		<i class="icon ion-information-circled" style="font-size: 1.5em; color: white"></i>
+	<div ng-show="type !== 'none'" class="col col-10" style="text-align: center; border-radius: 5px 0 0 5px" ng-style="{ 'background-color': head_bg }">
+		<i class="icon ion-information-circled" style="font-size: 1.5em" ng-style="{ 'color': head_icon }"></i>
 	</div>
-	<div class="col" style="background-color: blue">
-		<h4 style="margin: 0">{{value.title}}</h4>
-		<p>{{value.message}}</p>
+	<div class="col" ng-style="{ 'background-color': main_bg, 'border-radius': (type === 'none' ? '5px' : '0') + ' 5px 5px ' + (type === 'none' ? '5px' : '0') }">
+		<h4 style="margin: 0 0.25em 0 0.25em" ng-style="{ 'color': main_title }">{{title}}</h4>
+		<p style="margin: 0 0.25em 0 0.25em" ng-style="{ 'color': main_text }">{{message}}</p>
 	</div>
 </div>
