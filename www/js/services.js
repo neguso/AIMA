@@ -183,6 +183,7 @@ angular.module('aima.services', [])
 
 								if(skip-- <= 0 && result.activities.length < take)
 									result.activities.push({
+										id: activity.id,
 										day: activity.date,
 										project: activity.project.name,
 										task: activity.task.name,
@@ -247,14 +248,16 @@ angular.module('aima.services', [])
 						var activity = null;
 						for(var a = 0; a < db.activities.length; a++)
 						{
-							activity = db.activities[a];
-							if(activity.id === id)
+							if(db.activities[a].id === id)
+							{
+								activity = db.activities[a];
 								break;
+							}
 						}
 						if(activity === null)
-							defer.resolve(activity);
+							defer.reject();
 						else
-							defer.resolve(null);
+							defer.resolve(activity);
           }
 
         }, 1000);
@@ -343,7 +346,8 @@ angular.module('aima.services', [])
 								status: db.project_status[item.status],
 								start: item.start,
 								finish: item.finish,
-								customer: item.customer.name
+								customer: item.customer.name,
+								tasks: item.tasks.map(function(task) { return { id: task.id, name: task.name }; })
 							};
 						}));
 					}

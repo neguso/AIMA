@@ -17,7 +17,7 @@ angular.module('aima')
 			prev: new Command('ion-chevron-left', null, interval_prev),
 			next: new Command('ion-chevron-right', null, interval_next),
 			create: new Command('ion-plus-round', null, create),
-			edit: new Command(null, 'EDIT', edit)
+			view: view
 		};
 
 
@@ -186,9 +186,9 @@ angular.module('aima')
 			$state.go('main.activities_edit', { id: 0 });
 		}
 
-		function edit(activity)
+		function view(activity)
 		{
-
+			$state.go('main.activities_edit', { id: activity.id });
 		}
 
 
@@ -222,7 +222,7 @@ angular.module('aima')
 				});
 
 				ary1.forEach(function(item) {
-					ary2.push({ weekday: moment(item.day).format('dddd, D MMM'), project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
+					ary2.push({ id: item.id, weekday: moment(item.day).format('dddd, D MMM'), project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
 				});
 			}
 			else if(grouping === 'day')
@@ -239,7 +239,7 @@ angular.module('aima')
 				ary1.forEach(function(item) {
 					if(previous === null || item.day.valueOf() != previous.valueOf())
 						ary2.push(group = { header: true, weekday: moment(item.day).format('dddd, D MMM'), duration: 0, overtime: 0 });
-					ary2.push({ header: false, day: item.day, project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
+					ary2.push({ id: item.id, header: false, day: item.day, project: item.project, task: item.task, duration: item.duration, overtime: item.overtime });
 					group.duration += item.duration;
 					group.overtime += item.overtime;
 					previous = item.day;
@@ -259,7 +259,7 @@ angular.module('aima')
 				ary1.forEach(function(item) {
 					if(item.project != previous)
 						ary2.push(group = { header: true, project: item.project, duration: 0, overtime: 0 });
-					ary2.push({ header: false, weekday: moment(item.day).format('dddd, D MMM'), task: item.task, duration: item.duration, overtime: item.overtime });
+					ary2.push({ id: item.id, header: false, weekday: moment(item.day).format('dddd, D MMM'), task: item.task, duration: item.duration, overtime: item.overtime });
 					group.duration += item.duration;
 					group.overtime += item.overtime;
 					previous = item.project;

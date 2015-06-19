@@ -6,8 +6,6 @@ angular.module('aima')
 			loading: { message: 'loading...' },
       error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
 
-			error_save: { message: 'Error saving activity.' },
-
 			message_view: { visible: false },
 			message_edit: { visible: false },
 
@@ -17,25 +15,47 @@ angular.module('aima')
 
 			id: 0,
 			activity: null,
+			duration_h: 0, duration_m: 0, overtime_h: 0, overtime_m: 0,
+
 			projects: new List(),
 			tasks: new List(),
-			duration_h: 0, duration_m: 0, overtime_h: 0, overtime_m: 0,
 			validation: {},
 
+			openProjects: openProjects,
+			closeProjects: closeProjects,
 			selectProject: selectProject,
-			selectTask: selectTask
+			selectedProject: null,
+
+			openTasks: openTasks,
+			closeTasks: closeTasks,
+			selectTask: selectTask,
+			selectedTask: null
 		};
 
+		// create modal for project selection
 		$ionicModal.fromTemplateUrl('project-selector.html', {
 			scope: $scope,
 			animation: 'slide-in-up'
 		}).then(function(modal) {
-			$scope.modalProjectSelector = modal;
+			$scope.modalProjects = modal;
 		});
-		
-		
+
+		// create modal for task selection
+		$ionicModal.fromTemplateUrl('task-selector.html', {
+			scope: $scope,
+			animation: 'slide-in-up'
+		}).then(function(modal) {
+			$scope.modalTasks = modal;
+		});
+
+
 		function load()
 		{
+			// initialize model
+			$scope.model.id = parseInt($stateParams.id);
+			$scope.model.message_view = { visible: false };
+			$scope.model.message_edit = { visible: false };
+			
 			$scope.model.status = 'loading';
 			compose()
         .then(function() {
@@ -86,16 +106,16 @@ angular.module('aima')
 			p1
         .then(function(result) {
 					$scope.model.activity = result;
-        })
-        .catch(function(error) {
+					$scope.model.duration_h = Math.floor($scope.model.activity.duration);
+					$scope.model.duration_m = ($scope.model.activity.duration * 60) % 60;
+					$scope.model.overtime_h = Math.floor($scope.model.activity.overtime);
+					$scope.model.overtime_m = ($scope.model.activity.overtime * 60) % 60;
         });
 
 			var p2 = projects.assigned(null);
 			p2
 				.then(function(result) {
 					$scope.model.projects.items = result;
-        })
-        .catch(function(error) {
         });
 
       var all = $q.all([p1, p2]);
@@ -117,7 +137,7 @@ angular.module('aima')
 			// collect data
 			$scope.model.activity.duration = $scope.model.duration_h + Math.round(($scope.model.duration_m / 60) * 100) / 100;
 			$scope.model.activity.overtime = $scope.model.overtime_h + Math.round(($scope.model.overtime_m / 60) * 100) / 100;
-alert($scope.model.activity.duration + ' - ' + $scope.model.activity.overtime);
+
 			if(!validate()) return;
 
 			$ionicLoading.show({ animation: 'fade-in', templateUrl: 'spinner.html' });
@@ -183,20 +203,75 @@ alert($scope.model.activity.duration + ' - ' + $scope.model.activity.overtime);
 			if(Object.keys($scope.model.validation).length > 0)
 			{
 				$scope.model.status = 'edit.error';
-				$scope.model.message_edit = { type: 'error', title: 'Some fields are incorrect or missing.', message: 'Erros are highlighted below.' };
+				$scope.model.message_edit = { type: 'error', title: ' Some fields are incorrect or missing.', message: 'Erros are highlighted below.' };
 			}
 
 			return Object.keys($scope.model.validation).length === 0;
 		}
 
-		function selectProject()
+		function getProjectById(projects, project)
 		{
-			$scope.modalProjectSelector.show();
+			if(project === null) return null;
+			for(var i = 0; i < projects.length; i++)
+				if(projects[i].id === project.id)
+					return projects[i];
+			return null;
 		}
 		
+		function openProjects()
+		{
+			$scope.model.selectedProject = getProjectById($scope.model.projects.items, $scope.model.activity.project);
+			$scope.modalProjects.show();
+		}
+
+		function closeProjects()
+		{
+			$scope.modalProjects.hide();
+		}
+
+		function selectProject()
+		{
+			if($scope.model.selectedProject === null) return;
+
+			var id = $scope.model.activity.project === null ? -1 : $scope.model.activity.project.id;
+			$scope.model.activity.project = { id: $scope.model.selectedProject.id, name: $scope.model.selectedProject.name };
+
+			// reset task if project has been changed
+			if(id !== $scope.model.activity.project.id)
+				$scope.model.activity.task = null;
+
+			closeProjects();
+		}
+
+		function getTaskById(tasks, task)
+		{
+			if(task === null) return null;
+			for(var i = 0; i < tasks.length; i++)
+				if(tasks[i].id === task.id)
+					return tasks[i];
+			return null;
+		}
+
+		function openTasks()
+		{
+			if($scope.model.activity.project === null) return;
+
+			$scope.model.tasks.items = getProjectById($scope.model.projects.items, $scope.model.activity.project).tasks;
+			$scope.model.selectedTask = getTaskById($scope.model.tasks.items, $scope.model.activity.task);
+			$scope.modalTasks.show();
+		}
+
+		function closeTasks()
+		{
+			$scope.modalTasks.hide();
+		}
+
 		function selectTask()
 		{
-			
+			if($scope.model.selectedTask === null) return;
+
+			$scope.model.activity.task = { id: $scope.model.selectedTask.id, name: $scope.model.selectedTask.name };
+			closeTasks();
 		}
 
 

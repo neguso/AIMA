@@ -56,21 +56,47 @@
 		<script id="project-selector.html" type="text/ng-template">
 			<ion-modal-view>
 				<ion-header-bar align-title="center" class="bar-header bar-positive">
-					<button ng-click="$ionicGoBack()" class="button button-icon icon ion-arrow-left-c"></button>
+					<button ng-click="model.closeProjects()" class="button button-icon icon ion-arrow-left-c"></button>
 					<h1 class="title">Select Project</h1>
-					<button class="button button-icon icon ion-checkmark-round"></button>
+					<button ng-click="model.selectProject()" class="button button-icon icon ion-checkmark-round"></button>
 				</ion-header-bar>
 				<ion-content>
 
-					<div class="list list-inset">
+					<div class="list list-inset" style="margin: 0">
 						<label class="item item-input">
 							<i class="icon ion-search placeholder-icon"></i>
-							<input type="text" placeholder="Search Projects" ng-model="searchProject">
+							<input type="text" placeholder="Search Projects" ng-model="search.name">
 						</label>
 					</div>
 
 					<ion-list>
-						<ion-item ng-repeat="item in model.projects.items | filter:searchProject">
+						<ion-item ng-repeat="item in model.projects.items | filter:search" ng-click="model.selectedProject = item" ng-style="{ 'background-color': item.id === model.selectedProject.id ? '#E0E0E0' : '' }">
+							{{item.name}}
+						</ion-item>
+					</ion-list>
+
+				</ion-content>
+			</ion-modal-view>
+		</script>
+
+		<script id="task-selector.html" type="text/ng-template">
+			<ion-modal-view>
+				<ion-header-bar align-title="center" class="bar-header bar-positive">
+					<button ng-click="model.closeTasks()" class="button button-icon icon ion-arrow-left-c"></button>
+					<h1 class="title">Select Task</h1>
+					<button ng-click="model.selectTask()" class="button button-icon icon ion-checkmark-round"></button>
+				</ion-header-bar>
+				<ion-content>
+
+					<div class="list list-inset" style="margin: 0">
+						<label class="item item-input">
+							<i class="icon ion-search placeholder-icon"></i>
+							<input type="text" placeholder="Search Tasks" ng-model="search.name">
+						</label>
+					</div>
+
+					<ion-list>
+						<ion-item ng-repeat="item in model.tasks.items | filter:search" ng-click="model.selectedTask = item" ng-style="{ 'background-color': item.id === model.selectedTask.id ? '#E0E0E0' : '' }">
 							{{item.name}}
 						</ion-item>
 					</ion-list>

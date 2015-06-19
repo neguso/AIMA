@@ -21,16 +21,16 @@
     <div ng-show="model.status.indexOf('content.') === 0">
 
       <ion-list ng-if="model.configuration.grouping === 'none'">
-        <ion-item ng-repeat="item in model.list.items">
+        <ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)">
 					<span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.weekday}}</h2>
           <p>{{item.task}}</p>
-					<ion-option-button ng-if="!item.header" ng-click="model.edit.handler(item)" class="button-info">{{model.edit.label}}</ion-option-button>
+					<!--<ion-option-button ng-if="!item.header" ng-click="model.edit.handler(item)" class="button-info">{{model.edit.label}}</ion-option-button>-->
         </ion-item>
       </ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'day'">
-        <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+        <ion-item ng-repeat="item in model.list.items" ng-click="if(!item.header) model.view(item)" ng-class="item.header ? 'item-divider' : ''">
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.weekday : item.task}}</h2>
           <p>{{item.header ? '' : item.project}}</p>
@@ -38,7 +38,7 @@
       </ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'project'">
-        <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+        <ion-item ng-repeat="item in model.list.items" ng-click="if(!item.header) model.view(item)" ng-class="item.header ? 'item-divider' : ''">
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.project : item.weekday}}</h2>
           <p>{{item.header ? '' : item.task}}</p>
