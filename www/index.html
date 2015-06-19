@@ -56,12 +56,25 @@
 		<script id="project-selector.html" type="text/ng-template">
 			<ion-modal-view>
 				<ion-header-bar align-title="center" class="bar-header bar-positive">
-					<button class="button button-icon icon ion-close-round"></button>
+					<button ng-click="$ionicGoBack()" class="button button-icon icon ion-arrow-left-c"></button>
 					<h1 class="title">Select Project</h1>
 					<button class="button button-icon icon ion-checkmark-round"></button>
 				</ion-header-bar>
 				<ion-content>
-					projects list
+
+					<div class="list list-inset">
+						<label class="item item-input">
+							<i class="icon ion-search placeholder-icon"></i>
+							<input type="text" placeholder="Search Projects" ng-model="searchProject">
+						</label>
+					</div>
+
+					<ion-list>
+						<ion-item ng-repeat="item in model.projects.items | filter:searchProject">
+							{{item.name}}
+						</ion-item>
+					</ion-list>
+
 				</ion-content>
 			</ion-modal-view>
 		</script>

@@ -11,7 +11,9 @@ angular.module('aima')
 			notification: {
 				type: 'error',
 				title: 'This is the title!',
-				message: 'The message content goes here.'
+				message: 'The message content goes here.',
+				visible: true,
+				timeout: 0
 			}
 		};
 
@@ -23,6 +25,17 @@ angular.module('aima')
 			$scope.model.showWeeks = !$scope.model.showWeeks;
 		};
 		
+		$scope.notify = function()
+		{
+			$scope.model.notification = {
+				type: 'info',
+				title: 'This is the title!',
+				message: 'The message content goes here.',
+				visible: true,
+				timeout: 2000
+			};
+		};
+		
 	}])
 	.directive('aimaNotification', ['$timeout', function($timeout) {
 
@@ -30,7 +43,8 @@ angular.module('aima')
 
 		var types = ['none', 'info', 'warning', 'error'];
 		var head_bg = { none: '', info: '#009688', warning: '#FFC107', error: '#F44336' };
-		var head_icon = '#FFFFFF';
+		var head_icon = { none: '', info: 'ion-information-circled', warning: 'ion-alert-circled', error: 'ion-close-circled' };
+		var head_ink = '#FFFFFF';
 		var main_bg = '#F0F0F0';
 		var main_title = '#000000';
 		var main_text = '#727272';
@@ -39,14 +53,23 @@ angular.module('aima')
 		{
 			scope.type = scope.value.type;
 			if(typeof scope.type === 'undefined' || types.indexOf(scope.type) === -1)
-				scope.type = 'info';
+				scope.type = 'none';
 			scope.head_bg = head_bg[scope.type];
-			scope.head_icon = head_icon;
+			scope.head_icon = head_icon[scope.type];
+			scope.head_ink = head_ink;
 			scope.main_bg = main_bg;
 			scope.main_title = main_title;
 			scope.main_text = main_text;
 			scope.title = scope.value.title;
 			scope.message = scope.value.message;
+			scope.visible = scope.value.visible;
+			if(typeof scope.visible !== 'boolean')
+				scope.visible = true;
+			var timeout = scope.value.timeout;
+			if(typeof timeout === 'number' && timeout > 0)
+				$timeout(function() {
+					scope.visible = false;
+				}, timeout);
 		}
 		
 		function link(scope, element, attributes)
@@ -54,8 +77,6 @@ angular.module('aima')
 			scope.$watch('value', function(newValue, oldValue) {
 				update(scope);
 			});
-
-			update(scope);
 		}
 
 		return {

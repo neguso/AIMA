@@ -47,6 +47,7 @@
 			<div ng-show="model.message_edit.text.length > 0" ng-style="{ 'background-color': model.message_edit.color }" style="text-align: center; padding: 0.5em; color: #FFFFFF">
 				{{model.message_edit.text}}
 			</div>
+			<aima-notification value="model.message_edit"></aima-notification>
 
 			<div class="list card">
 				<div class="item item-divider">
@@ -80,11 +81,11 @@
 				</div>
 				<div class="item">
 					<div class="row" style="padding: 0">
-						<div class="col" value="model.duration_h" style="padding: 0"><aima-duration layout="vertical" format="{0} h" min="0" max="24"></aima-duration></div>
-						<div class="col" value="model.overtime_m" style="padding: 0"><aima-duration layout="vertical" format="{0} min" min="0" max="60" step="5"></aima-duration></div>
+						<div class="col" value="model.duration_h" style="padding: 0"><aima-duration value="model.duration_h" layout="vertical" format="{0} h" min="0" max="24"></aima-duration></div>
+						<div class="col" value="model.overtime_m" style="padding: 0"><aima-duration value="model.duration_m" layout="vertical" format="{0} min" min="0" max="45" step="15"></aima-duration></div>
 						<div class="col-10"></div>
-						<div class="col" value="model.duration_h" style="padding: 0"><aima-duration layout="vertical" format="{0} h" min="0" max="24"></aima-duration></div>
-						<div class="col" value="model.overtime_m" style="padding: 0"><aima-duration layout="vertical" format="{0} min" min="0" max="60" step="5"></aima-duration></div>
+						<div class="col" value="model.duration_h" style="padding: 0"><aima-duration value="model.overtime_h" layout="vertical" format="{0} h" min="0" max="24"></aima-duration></div>
+						<div class="col" value="model.overtime_m" style="padding: 0"><aima-duration value="model.overtime_m" layout="vertical" format="{0} min" min="0" max="45" step="15"></aima-duration></div>
 					</div>
 					<div ng-show="model.validation.hasOwnProperty('duration')" style="color: red; padding-top: 0.5em"><i class="icon ion-close-circled"></i>&nbsp;{{model.validation.duration.error}}</div>
 				</div>
