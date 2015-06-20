@@ -30,7 +30,7 @@
       </ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'day'">
-        <ion-item ng-repeat="item in model.list.items" ng-click="if(!item.header) model.view(item)" ng-class="item.header ? 'item-divider' : ''">
+        <ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)" ng-class="item.header ? 'item-divider' : ''">
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.weekday : item.task}}</h2>
           <p>{{item.header ? '' : item.project}}</p>
@@ -38,7 +38,7 @@
       </ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'project'">
-        <ion-item ng-repeat="item in model.list.items" ng-click="if(!item.header) model.view(item)" ng-class="item.header ? 'item-divider' : ''">
+        <ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)" ng-class="item.header ? 'item-divider' : ''">
           <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
           <h2>{{item.header ? item.project : item.weekday}}</h2>
           <p>{{item.header ? '' : item.task}}</p>

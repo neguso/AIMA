@@ -188,6 +188,7 @@ angular.module('aima')
 
 		function view(activity)
 		{
+			if(activity.header) return;
 			$state.go('main.activities_edit', { id: activity.id });
 		}
 
