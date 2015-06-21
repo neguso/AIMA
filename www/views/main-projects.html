@@ -6,54 +6,54 @@
 		<ion-refresher pulling-text="Pull to refresh..."></ion-refresher>
 
 		<!-- loading -->
-    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
-      <p>{{model.loading.message}}</p>
-      <ion-spinner></ion-spinner>
-    </div>
+		<div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+			<p>{{model.loading.message}}</p>
+			<ion-spinner></ion-spinner>
+		</div>
 
-    <!-- error -->
-    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
-      <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
-    </div>
+		<!-- error -->
+		<div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+			<p>{{model.error.message}}</p>
+			<button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+		</div>
 
 		<!-- content -->
-    <div ng-show="model.status.indexOf('content.') === 0">
+		<div ng-show="model.status.indexOf('content.') === 0">
 
 			<!-- no data -->
 			<div ng-if="model.list.items.length === 0" style="text-align: center; padding-top: 10em">
 				<p>No projects found.</p>
 			</div>
 
-      <ion-list ng-if="model.configuration.grouping === 'none'">
-        <ion-item ng-repeat="item in model.list.items">
-          <span class="item-note" style="color: black; float: right;">{{item.status}}</span>
-          <h2>{{item.name}}</h2>
-          <p>{{item.customer}}</p>
-        </ion-item>
-      </ion-list>
+			<ion-list ng-if="model.configuration.grouping === 'none'">
+				<ion-item ng-repeat="item in model.list.items">
+					<span class="item-note" style="color: black; float: right;">{{item.status}}</span>
+					<h2>{{item.name}}</h2>
+					<p>{{item.customer}}</p>
+				</ion-item>
+			</ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'status'">
-        <ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
-          <span class="item-note" style="color: black; float: right;">{{item.header ? item.count : item.status}}</span>
+				<ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+					<span class="item-note" style="color: black; float: right;">{{item.header ? item.count : item.status}}</span>
 					<h2 ng-if="item.header">{{item.status}}</h2>
 					<div ng-if="!item.header">
 						<h2>{{item.name}}</h2>
 						<p>{{item.customer}}</p>
 					</div>
-        </ion-item>
-      </ion-list>
+				</ion-item>
+			</ion-list>
 
-      <div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
-        <div class="row row-center">
-          <div class="col">{{model.error_more.message}}</div>
-          <div class="col">
-            <button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
-          </div>
-        </div>
-      </div>
+			<div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
+				<div class="row row-center">
+					<div class="col">{{model.error_more.message}}</div>
+					<div class="col">
+						<button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
+					</div>
+				</div>
+			</div>
 
-    </div>
+		</div>
 
 	</ion-content>
 </ion-view>

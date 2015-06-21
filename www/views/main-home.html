@@ -1,53 +1,53 @@
 <ion-view view-title="Dashboard">
 	<ion-nav-buttons side="right">
 	</ion-nav-buttons>
-  <ion-content>
-    <ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
+	<ion-content>
+		<ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
 
-    <!-- loading -->
-    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
-      <p>{{model.loading.message}}</p>
-      <ion-spinner></ion-spinner>
-    </div>
+		<!-- loading -->
+		<div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+			<p>{{model.loading.message}}</p>
+			<ion-spinner></ion-spinner>
+		</div>
 
-    <!-- error -->
-    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
-      <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
-    </div>
+		<!-- error -->
+		<div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+			<p>{{model.error.message}}</p>
+			<button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+		</div>
 
-    <!-- content -->
-    <div ng-show="model.status.indexOf('content.') === 0">
+		<!-- content -->
+		<div ng-show="model.status.indexOf('content.') === 0">
 
-      <div class="card">
-        <div class="item item-divider">Activities Summary</div>
-        <div class="item item-text-wrap" style="padding: 0">
+			<div class="card">
+				<div class="item item-divider">Activities Summary</div>
+				<div class="item item-text-wrap" style="padding: 0">
 
-          <div class="list">
-            <a ng-repeat="item in model.activities" class="item" href="#" style="padding: 0">
-              <div class="row">
-                <div class="col col-50">{{item.month}}</div>
-                <div class="col">{{item.hours}} hours ({{item.total}})</div>
-              </div>
-            </a>
-          </div>
+					<div class="list">
+						<a ng-repeat="item in model.activities" class="item" href="#" style="padding: 0">
+							<div class="row">
+								<div class="col col-50">{{item.month}}</div>
+								<div class="col">{{item.hours}} hours ({{item.total}})</div>
+							</div>
+						</a>
+					</div>
 
-        </div>
-      </div>
+				</div>
+			</div>
 
-      <div class="card">
-        <div class="item item-divider">Today Projects</div>
-        <div class="item item-text-wrap" style="padding: 0">
+			<div class="card">
+				<div class="item item-divider">Today Projects</div>
+				<div class="item item-text-wrap" style="padding: 0">
 
-          <div class="list">
-            <a ng-repeat="item in model.projects" class="item" href="#">
-              <h2>{{item.name}}</h2>
-            </a>
-          </div>
+					<div class="list">
+						<a ng-repeat="item in model.projects" class="item" href="#">
+							<h2>{{item.name}}</h2>
+						</a>
+					</div>
 
-        </div>
-      </div>
+				</div>
+			</div>
 
-    </div>
-  </ion-content>
+		</div>
+	</ion-content>
 </ion-view>

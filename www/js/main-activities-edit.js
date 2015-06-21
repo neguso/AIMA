@@ -4,7 +4,7 @@ angular.module('aima')
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready | edit.ready | edit.error
 			loading: { message: 'loading...' },
-      error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
+			error: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry) },
 
 			message_view: { visible: false },
 			message_edit: { visible: false },
@@ -55,40 +55,40 @@ angular.module('aima')
 			$scope.model.id = parseInt($stateParams.id);
 			$scope.model.message_view = { visible: false };
 			$scope.model.message_edit = { visible: false };
-			
+
 			$scope.model.status = 'loading';
 			compose()
-        .then(function() {
+				.then(function() {
 					if($scope.model.id === 0)
 						$scope.model.status = 'edit.ready';
 					else
-          	$scope.model.status = 'content.ready';
-        });
+						$scope.model.status = 'content.ready';
+				});
 		}
 
 		function retry()
 		{
 			$scope.model.status = 'loading';
-      compose()
-        .then(function() {
-          if($scope.model.id === 0)
+			compose()
+				.then(function() {
+					if($scope.model.id === 0)
 						$scope.model.status = 'edit.ready';
 					else
-          	$scope.model.status = 'content.ready';
-        });
+						$scope.model.status = 'content.ready';
+				});
 		}
 
 		function reload()
 		{
 			$scope.model.status = 'loading';
 			$scope.model.activity = null;
-      compose()
-        .then(function() {
-          if($scope.model.id === 0)
+			compose()
+				.then(function() {
+					if($scope.model.id === 0)
 						$scope.model.status = 'edit.ready';
 					else
-          	$scope.model.status = 'content.ready';
-        });
+						$scope.model.status = 'content.ready';
+				});
 		}
 
 		function edit()
@@ -104,27 +104,27 @@ angular.module('aima')
 			else
 				p1 = activities.load($scope.model.id);
 			p1
-        .then(function(result) {
+				.then(function(result) {
 					$scope.model.activity = result;
 					$scope.model.duration_h = Math.floor($scope.model.activity.duration);
 					$scope.model.duration_m = ($scope.model.activity.duration * 60) % 60;
 					$scope.model.overtime_h = Math.floor($scope.model.activity.overtime);
 					$scope.model.overtime_m = ($scope.model.activity.overtime * 60) % 60;
-        });
+				});
 
 			var p2 = projects.assigned(null);
 			p2
 				.then(function(result) {
 					$scope.model.projects.items = result;
-        });
+				});
 
-      var all = $q.all([p1, p2]);
-      all
-        .catch(function(error) {
-          compose_error();
-        });
+			var all = $q.all([p1, p2]);
+			all
+				.catch(function(error) {
+				compose_error();
+			});
 
-      return all;
+			return all;
 		}
 
 		function compose_error()
@@ -142,7 +142,7 @@ angular.module('aima')
 
 			$ionicLoading.show({ animation: 'fade-in', templateUrl: 'spinner.html' });
 
-      activities.update($scope.model.activity)
+			activities.update($scope.model.activity)
 				.then(function(result) {
 					if(result.status === 'added')
 					{
@@ -177,18 +177,18 @@ angular.module('aima')
 		function validate()
 		{
 			$scope.model.validation = {};
-			
+
 			// check date
 			$scope.model.validation.date = { error: 'Invalid date.' };
-			
+
 			// check project
 			if($scope.model.activity.project === null)
 				$scope.model.validation.project = { error: 'Project not specified.' };
-			
+
 			// check task
 			if($scope.model.activity.task === null)
 				$scope.model.validation.task = { error: 'Task not specified.' };
-			
+
 			// check duration & overtime
 			if($scope.model.activity.duration === 0)
 				$scope.model.validation.duration = { error: 'Duration not specified.' };
@@ -217,7 +217,7 @@ angular.module('aima')
 					return projects[i];
 			return null;
 		}
-		
+
 		function openProjects()
 		{
 			$scope.model.selectedProject = getProjectById($scope.model.projects.items, $scope.model.activity.project);

@@ -80,8 +80,6 @@ angular.module('aima')
 					$scope.model.list.items = format(result.activities, $scope.model.configuration.sorting, $scope.model.configuration.grouping);
 					$scope.model.list.retrieved = result.activities.length;
 					$scope.model.list.count = result.count;
-				})
-				.catch(function(error) {
 				});
 
 			var all = $q.all([p1]);
@@ -103,13 +101,13 @@ angular.module('aima')
 			var p = activities.get($scope.model.list.retrieved, $scope.model.take, $scope.model.dateFrom, $scope.model.dateTo);
 
 			p.then(function(result) {
-				Array.prototype.push.apply($scope.model.list.items, format(result.activities, $scope.model.configuration.sorting, $scope.model.configuration.grouping));
-				$scope.model.list.retrieved += result.activities.length;
-				//todo: what about the case when datasource changes while pagging?
-			})
+					Array.prototype.push.apply($scope.model.list.items, format(result.activities, $scope.model.configuration.sorting, $scope.model.configuration.grouping));
+					$scope.model.list.retrieved += result.activities.length;
+					//todo: what about the case when datasource changes while pagging?
+				})
 				.catch(function(error) {
-				more_error();
-			});
+					more_error();
+				});
 
 			return p;
 		}
@@ -129,11 +127,11 @@ angular.module('aima')
 			$scope.model.status = 'content.refresh';
 			more()
 				.then(function() {
-				$scope.model.status = 'content.ready';
-			})
+					$scope.model.status = 'content.ready';
+				})
 				.finally(function() {
-				$scope.$broadcast('scroll.infiniteScrollComplete');
-			});
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				});
 		}
 
 		function retry_more()
@@ -157,8 +155,8 @@ angular.module('aima')
 			$scope.model.status = 'loading';
 			compose()
 				.then(function() {
-				$scope.model.status = 'content.ready';
-			});
+					$scope.model.status = 'content.ready';
+				});
 		}
 
 		function interval_next()
@@ -177,8 +175,8 @@ angular.module('aima')
 			$scope.model.status = 'loading';
 			compose()
 				.then(function() {
-				$scope.model.status = 'content.ready';
-			});
+					$scope.model.status = 'content.ready';
+				});
 		}
 
 		function create()

@@ -1,11 +1,11 @@
 angular.module('aima')
-  .controller('ProjectsSettingsCtrl', ['$scope', 'settings', function($scope, settings) {
+	.controller('ProjectsSettingsCtrl', ['$scope', 'settings', function($scope, settings) {
 
-    $scope.model = {
+		$scope.model = {
 			filtering: { notstarted: true, inprogress: true, onhold: true, completed: true, cancelled: true },
-      grouping: 'none',						// none | status
-      sorting: 'start:ascending'	// field: (ascending | descending)
-    };
+			grouping: 'none',						// none | status
+			sorting: 'start:ascending'	// field: (ascending | descending)
+		};
 
 
 		function load()
@@ -43,4 +43,4 @@ angular.module('aima')
 		$scope.$on('$ionicView.beforeLeave', function() {
 			save();
 		});
-  }]);
+	}]);

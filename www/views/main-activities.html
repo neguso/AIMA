@@ -1,63 +1,63 @@
 <ion-view view-title="My Activities">
-  <ion-nav-buttons side="right">
-    <button class="button button-icon icon ion-settings" ui-sref="main.activities_settings"></button>
-  </ion-nav-buttons>
-  <ion-content>
-    <ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
+	<ion-nav-buttons side="right">
+		<button class="button button-icon icon ion-settings" ui-sref="main.activities_settings"></button>
+	</ion-nav-buttons>
+	<ion-content>
+		<ion-refresher pulling-text="Pull to refresh..." on-refresh="model.refresh()"></ion-refresher>
 
-    <!-- loading -->
-    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
-      <p>{{model.loading.message}}</p>
-      <ion-spinner></ion-spinner>
-    </div>
+		<!-- loading -->
+		<div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+			<p>{{model.loading.message}}</p>
+			<ion-spinner></ion-spinner>
+		</div>
 
-    <!-- error -->
-    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
-      <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
-    </div>
+		<!-- error -->
+		<div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+			<p>{{model.error.message}}</p>
+			<button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+		</div>
 
-    <!-- content -->
-    <div ng-show="model.status.indexOf('content.') === 0">
+		<!-- content -->
+		<div ng-show="model.status.indexOf('content.') === 0">
 
-      <ion-list ng-if="model.configuration.grouping === 'none'">
-        <ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)">
+			<ion-list ng-if="model.configuration.grouping === 'none'">
+				<ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)">
 					<span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
-          <h2>{{item.weekday}}</h2>
-          <p>{{item.task}}</p>
+					<h2>{{item.weekday}}</h2>
+					<p>{{item.task}}</p>
 					<!--<ion-option-button ng-if="!item.header" ng-click="model.edit.handler(item)" class="button-info">{{model.edit.label}}</ion-option-button>-->
-        </ion-item>
-      </ion-list>
+				</ion-item>
+			</ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'day'">
-        <ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)" ng-class="item.header ? 'item-divider' : ''">
-          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
-          <h2>{{item.header ? item.weekday : item.task}}</h2>
-          <p>{{item.header ? '' : item.project}}</p>
-        </ion-item>
-      </ion-list>
+				<ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)" ng-class="item.header ? 'item-divider' : ''">
+					<span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
+					<h2>{{item.header ? item.weekday : item.task}}</h2>
+					<p>{{item.header ? '' : item.project}}</p>
+				</ion-item>
+			</ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'project'">
-        <ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)" ng-class="item.header ? 'item-divider' : ''">
-          <span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
-          <h2>{{item.header ? item.project : item.weekday}}</h2>
-          <p>{{item.header ? '' : item.task}}</p>
-        </ion-item>
-      </ion-list>
+				<ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)" ng-class="item.header ? 'item-divider' : ''">
+					<span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
+					<h2>{{item.header ? item.project : item.weekday}}</h2>
+					<p>{{item.header ? '' : item.task}}</p>
+				</ion-item>
+			</ion-list>
 
-      <div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
-        <div class="row row-center">
-          <div class="col">{{model.error_more.message}}</div>
-          <div class="col">
-            <button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
-          </div>
-        </div>
-      </div>
+			<div ng-show="model.status === 'content.error'" style="text-align: center; padding: 1em 0 1em 0">
+				<div class="row row-center">
+					<div class="col">{{model.error_more.message}}</div>
+					<div class="col">
+						<button ng-click="model.error_more.retry.handler()" class="button">{{model.error_more.retry.label}}</button>
+					</div>
+				</div>
+			</div>
 
-    </div>
+		</div>
 
-    <ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
-  </ion-content>
+		<ion-infinite-scroll ng-if="model.list.hasMore()" on-infinite="model.list.fetchMore()" distance="1%"></ion-infinite-scroll>
+	</ion-content>
 	<ion-footer-bar class="bar-stable">
 		<div class="buttons">
 			<button ng-click="model.prev.handler()" class="button button-icon" ng-class="model.prev.icon"></button>

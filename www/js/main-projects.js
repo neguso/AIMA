@@ -12,7 +12,7 @@ angular.module('aima')
 			refresh: refresh
 		};
 
-		
+
 
 		function load()
 		{
@@ -61,15 +61,13 @@ angular.module('aima')
 			p1
 				.then(function(result) {
 					$scope.model.list.items = format(result, $scope.model.configuration.filtering, $scope.model.configuration.grouping, $scope.model.configuration.sorting);
-				})
-				.catch(function(error) {
 				});
 
 			var all = $q.all([p1]);
 			all
 				.catch(function(error) {
-					compose_error();
-				});
+				compose_error();
+			});
 
 			return all;
 		}

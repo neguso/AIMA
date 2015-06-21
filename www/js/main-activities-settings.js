@@ -1,11 +1,11 @@
 angular.module('aima')
-  .controller('ActivitiesSettingsCtrl', ['$scope', 'settings', function($scope, settings) {
+	.controller('ActivitiesSettingsCtrl', ['$scope', 'settings', function($scope, settings) {
 
-    $scope.model = {
-      sorting: 'ascending', // ascending | descending
-      interval: 'week',			// week | month
-      grouping: 'day'				// day | project
-    };
+		$scope.model = {
+			sorting: 'ascending', // ascending | descending
+			interval: 'week',			// week | month
+			grouping: 'day'				// day | project
+		};
 
 
 		function load()
@@ -29,4 +29,4 @@ angular.module('aima')
 		$scope.$on('$ionicView.beforeLeave', function() {
 			save();
 		});
-  }]);
+	}]);

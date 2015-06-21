@@ -1,4 +1,4 @@
-﻿/// <autosync enabled="true" />
+/// <autosync enabled="true" />
 
 /// <reference path="~/www/lib/ionic/ionic.bundle.js" />
 

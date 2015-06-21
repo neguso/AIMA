@@ -7,7 +7,7 @@ angular.module('aima', ['ionic', 'aima.services'])
 
 		$stateProvider
 			.state('test', { url: '/test', templateUrl: 'views/test.html', controller: 'TestCtrl' })
-		
+
 			.state('start', { url: '/start', templateUrl: 'views/start.html', controller: 'StartCtrl' })
 			.state('login', { url: '/login', templateUrl: 'views/login.html', controller: 'LoginCtrl' })
 			.state('help', { url: '/help', templateUrl: 'views/help.html', controller: 'HelpCtrl' })

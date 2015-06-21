@@ -8,10 +8,10 @@
 - show a message when list is empty
 - check status for existing async op's when starting a new async op
 * logoff
-- notification message directive (background color, icon, title, text, timeout) with a model
-- edit fields (with validation support)
+* notification message directive (background color, icon, title, text, timeout) with a model
 
 ## Optional Features
 - user profile view
 - app settings view
 - app intro slideshow
+- edit fields directives (with validation support)

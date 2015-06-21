@@ -3,22 +3,22 @@
 		<button ng-click="$ionicGoBack()" class="button button-icon ion-arrow-left-c"></button>
 	</ion-nav-buttons>
 	<ion-nav-buttons side="right">
-    <button ng-show="model.status === 'content.ready'" class="button button-icon icon" ng-class="model.edit.icon" ng-click="model.edit.handler()"></button>
+		<button ng-show="model.status === 'content.ready'" class="button button-icon icon" ng-class="model.edit.icon" ng-click="model.edit.handler()"></button>
 		<button ng-show="model.status === 'edit.ready' || model.status === 'edit.error'" class="button button-icon icon" ng-class="model.save.icon" ng-click="model.save.handler()"></button>
 	</ion-nav-buttons>
 	<ion-content padding="true">
 
-    <!-- loading -->
-    <div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
-      <p>{{model.loading.message}}</p>
-      <ion-spinner></ion-spinner>
-    </div>
+		<!-- loading -->
+		<div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+			<p>{{model.loading.message}}</p>
+			<ion-spinner></ion-spinner>
+		</div>
 
-    <!-- error -->
-    <div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
-      <p>{{model.error.message}}</p>
-      <button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
-    </div>
+		<!-- error -->
+		<div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+			<p>{{model.error.message}}</p>
+			<button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+		</div>
 
 		<!-- view mode -->
 		<div ng-show="model.status === 'content.ready'">
@@ -58,6 +58,12 @@
 						<div class="col" value="model.duration_h" style="padding: 0; text-align: center">{{model.overtime_h}} m</div>
 						<div class="col" value="model.overtime_m" style="padding: 0; text-align: center">{{model.overtime_m}} m</div>
 					</div>
+				</div>
+				<div class="item item-divider">
+					Notes
+				</div>
+				<div class="item">
+					{{model.activity.notes}}
 				</div>
 			</div>
 		</div>
@@ -105,6 +111,13 @@
 						<div class="col" value="model.overtime_m" style="padding: 0"><aima-duration value="model.overtime_m" layout="vertical" format="{0} min" min="0" max="45" step="15"></aima-duration></div>
 					</div>
 					<div ng-show="model.validation.hasOwnProperty('duration')" style="color: red; padding-top: 0.5em"><i class="icon ion-close-circled"></i>&nbsp;{{model.validation.duration.error}}</div>
+				</div>
+				<div class="item item-divider">
+					Notes
+				</div>
+				<div class="item">
+					<textarea ng-model="model.activity.notes" style="width: 100%; resize: none" rows="5"></textarea>
+					<div ng-show="model.validation.hasOwnProperty('notes')" style="color: red; padding-top: 0.5em"><i class="icon ion-close-circled"></i>&nbsp;{{model.validation.notes.error}}</div>
 				</div>
 			</div>
 

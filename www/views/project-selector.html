@@ -1,0 +1,23 @@
+<ion-modal-view>
+	<ion-header-bar align-title="center" class="bar-header bar-positive">
+		<button ng-click="model.closeProjects()" class="button button-icon icon ion-arrow-left-c"></button>
+		<h1 class="title">Select Project</h1>
+		<button ng-click="model.selectProject()" class="button button-icon icon ion-checkmark-round"></button>
+	</ion-header-bar>
+	<ion-content>
+
+		<div class="list list-inset" style="margin: 0">
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search Projects" ng-model="search.name">
+			</label>
+		</div>
+
+		<ion-list>
+			<ion-item ng-repeat="item in model.projects.items | filter:search" ng-click="model.selectedProject = item" ng-style="{ 'background-color': item.id === model.selectedProject.id ? '#E0E0E0' : '' }">
+				{{item.name}}
+			</ion-item>
+		</ion-list>
+
+	</ion-content>
+</ion-modal-view>
