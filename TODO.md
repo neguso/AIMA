@@ -9,6 +9,7 @@
 - check status for existing async op's when starting a new async op
 * logoff
 * notification message directive (background color, icon, title, text, timeout) with a model
+- hide validation error when field value change
 
 ## Optional Features
 - user profile view

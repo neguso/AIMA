@@ -33,7 +33,7 @@ angular.module('aima')
 		};
 
 		// create modal for project selection
-		$ionicModal.fromTemplateUrl('project-selector.html', {
+		$ionicModal.fromTemplateUrl('views/project-selector.html', {
 			scope: $scope,
 			animation: 'slide-in-up'
 		}).then(function(modal) {
@@ -41,7 +41,7 @@ angular.module('aima')
 		});
 
 		// create modal for task selection
-		$ionicModal.fromTemplateUrl('task-selector.html', {
+		$ionicModal.fromTemplateUrl('views/task-selector.html', {
 			scope: $scope,
 			animation: 'slide-in-up'
 		}).then(function(modal) {
@@ -93,6 +93,8 @@ angular.module('aima')
 
 		function edit()
 		{
+			$scope.model.message_edit = { visible: false };
+
 			$scope.model.status = 'edit.ready';
 		}
 
@@ -147,12 +149,12 @@ angular.module('aima')
 					if(result.status === 'added')
 					{
 						$scope.model.status = 'content.ready';
-						$scope.model.message_view = { type: 'info', title: 'Activity created.', timeout: 3000 };
+						$scope.model.message_view = { type: 'info', title: 'Activity created.', timeout: 5000 };
 					}
 					else if(result.status === 'updated')
 					{
 						$scope.model.status = 'content.ready';
-						$scope.model.message_view = { type: 'info', title: 'Activity updated.', timeout: 3000 };
+						$scope.model.message_view = { type: 'info', title: 'Activity updated.', timeout: 5000 };
 					}
 					else if(result.status === 'not-found')
 					{
@@ -179,7 +181,9 @@ angular.module('aima')
 			$scope.model.validation = {};
 
 			// check date
-			$scope.model.validation.date = { error: 'Invalid date.' };
+			var now = new Date();
+			if($scope.model.activity.date.getFullYear() !== now.getFullYear() || $scope.model.activity.date.getMonth() !== now.getMonth())
+				$scope.model.validation.date = { error: 'Invalid date.' };
 
 			// check project
 			if($scope.model.activity.project === null)
