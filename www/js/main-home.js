@@ -1,5 +1,5 @@
 angular.module('aima')
-  .controller('HomeCtrl', ['$scope', '$q', 'activities', 'projects', function($scope, $q, activities, projects) {
+  .controller('HomeCtrl', ['$scope', '$q', '$state', 'activities', 'projects', function($scope, $q, $state, activities, projects) {
 
     $scope.model = {
       status: 'loading', // loading | error | content.ready | content.refresh
@@ -8,7 +8,9 @@ angular.module('aima')
 
       refresh: refresh,
       activities: null,
-      projects: null
+      projects: null,
+			
+			view: view
     };
 
     function load()
@@ -50,7 +52,7 @@ angular.module('aima')
             if(a.month > b.month) return 1;
             return 0;
           }).map(function(item) {
-            return { month: moment(item.month).format('MMMM, YYYY'), hours: item.hours, total: item.total };
+            return { month: item.month, interval: moment(item.month).format('MMMM, YYYY'), hours: item.hours, total: item.total };
           });
         })
         .catch(function(error) {
@@ -59,7 +61,7 @@ angular.module('aima')
       p2
         .then(function(result) {
           $scope.model.projects = result.map(function(item) {
-            return { name: item.name };
+            return { name: item.name, customer: item.customer, status: item.status };
           });
         })
         .catch(function(error) {
@@ -78,6 +80,11 @@ angular.module('aima')
     {
       $scope.model.status = 'error';
     }
+
+		function view(month)
+		{
+			$state.go('main.activities', { year: month.getFullYear(), month: month.getMonth() });
+		}
 
 
     $scope.$on('$ionicView.enter', function() {

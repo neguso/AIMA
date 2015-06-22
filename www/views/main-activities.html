@@ -25,7 +25,6 @@
 					<span class="item-note" style="color: black; float: right;"><span ng-if="item.header">{{item.duration + item.overtime}}h : </span>{{item.duration}}h/{{item.overtime}}h</span>
 					<h2>{{item.weekday}}</h2>
 					<p>{{item.task}}</p>
-					<!--<ion-option-button ng-if="!item.header" ng-click="model.edit.handler(item)" class="button-info">{{model.edit.label}}</ion-option-button>-->
 				</ion-item>
 			</ion-list>
 
@@ -61,6 +60,7 @@
 	<ion-footer-bar class="bar-stable">
 		<div class="buttons">
 			<button ng-click="model.prev.handler()" class="button button-icon" ng-class="model.prev.icon"></button>
+			<!--<button ng-click="model.current.handler()" class="button button-icon" ng-class="model.current.icon"></button>-->
 			<button ng-click="model.next.handler()" class="button button-icon" ng-class="model.next.icon"></button>
 		</div>
 		<h1 class="title">{{model.footer()}}</h1>

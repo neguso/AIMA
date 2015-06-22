@@ -1,5 +1,5 @@
 angular.module('aima')
-	.controller('ActivitiesCtrl', ['$scope', '$state', '$q', 'settings','activities', function($scope, $state, $q, settings, activities) {
+	.controller('ActivitiesCtrl', ['$scope', '$state', '$stateParams', '$q', 'settings','activities', function($scope, $state, $stateParams, $q, settings, activities) {
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready | content.refresh | content.error
@@ -15,6 +15,7 @@ angular.module('aima')
 			error_more: { message: 'Check your connection and try again.', retry: new Command(null, 'Retry', retry_more) },
 
 			prev: new Command('ion-chevron-left', null, interval_prev),
+			current: new Command('ion-calendar', null, interval_current),
 			next: new Command('ion-chevron-right', null, interval_next),
 			create: new Command('ion-plus-round', null, create),
 			view: view
@@ -27,15 +28,18 @@ angular.module('aima')
 			$scope.model.configuration.sorting = settings.get('activities.sorting', 'ascending');
 			$scope.model.configuration.interval = settings.get('activities.interval', 'week');
 			$scope.model.configuration.grouping = settings.get('activities.grouping', 'day');
+			var year = typeof $stateParams.year === 'undefined' ? moment().year() : parseInt($stateParams.year),
+					month = typeof $stateParams.month === 'undefined' ? moment().month() : parseInt($stateParams.month),
+					day = typeof $stateParams.year === 'undefined' ? moment().day() : 1;
 			switch($scope.model.configuration.interval)
 			{
 				case 'week':
-					$scope.model.dateFrom = moment().startOf('week').startOf('day').toDate();
-					$scope.model.dateTo = moment().endOf('week').startOf('day').toDate();
+					$scope.model.dateFrom = moment({ year: year, month: month, day: day }).startOf('week').startOf('day').toDate();
+					$scope.model.dateTo = moment({ year: year, month: month, day: day }).endOf('week').startOf('day').toDate();
 					break;
 				case 'month':
-					$scope.model.dateFrom = moment().startOf('month').startOf('day').toDate();
-					$scope.model.dateTo = moment().endOf('month').startOf('day').toDate();
+					$scope.model.dateFrom = moment({ year: year, month: month, day: day }).startOf('month').startOf('day').toDate();
+					$scope.model.dateTo = moment({ year: year, month: month, day: day }).endOf('month').startOf('day').toDate();
 					break;
 			}
 
@@ -150,6 +154,26 @@ angular.module('aima')
 				case 'month':
 					$scope.model.dateFrom = moment($scope.model.dateFrom).subtract(1, 'm').toDate();
 					$scope.model.dateTo = moment($scope.model.dateTo).subtract(1, 'm').toDate();
+					break;
+			}
+			$scope.model.status = 'loading';
+			compose()
+				.then(function() {
+					$scope.model.status = 'content.ready';
+				});
+		}
+
+		function interval_current()
+		{
+			switch($scope.model.configuration.interval)
+			{
+				case 'week':
+					$scope.model.dateFrom = moment().startOf('week').startOf('day').toDate();
+					$scope.model.dateTo = moment().endOf('week').startOf('day').toDate();
+					break;
+				case 'month':
+					$scope.model.dateFrom = moment().startOf('month').startOf('day').toDate();
+					$scope.model.dateTo = moment().endOf('month').startOf('day').toDate();
 					break;
 			}
 			$scope.model.status = 'loading';

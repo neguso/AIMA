@@ -24,24 +24,26 @@
 				<div class="item item-text-wrap" style="padding: 0">
 
 					<div class="list">
-						<a ng-repeat="item in model.activities" class="item" href="#" style="padding: 0">
+						<div ng-repeat="item in model.activities" class="item" style="padding: 5px" ng-click="model.view(item.month)">
 							<div class="row">
-								<div class="col col-50">{{item.month}}</div>
-								<div class="col">{{item.hours}} hours ({{item.total}})</div>
+								<div class="col col-50">{{item.interval}}</div>
+								<div class="col" style="text-align: right">{{item.hours}} hours ({{item.total}})</div>
 							</div>
-						</a>
+						</div>
 					</div>
 
 				</div>
 			</div>
 
 			<div class="card">
-				<div class="item item-divider">Today Projects</div>
+				<div class="item item-divider">Today Projects<span style="float: right">{{model.projects.length}}</span></div>
 				<div class="item item-text-wrap" style="padding: 0">
 
 					<div class="list">
 						<a ng-repeat="item in model.projects" class="item" href="#">
+							<span style="float: right">{{item.status}}</span>
 							<h2>{{item.name}}</h2>
+							<p>{{item.customer}}</p>
 						</a>
 					</div>
 

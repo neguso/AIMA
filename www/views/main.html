@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="false">
+<ion-side-menus enable-menu-with-back-views="true">
 
 	<!-- content -->
 	<ion-side-menu-content>
@@ -17,7 +17,7 @@
 		</ion-header-bar>
 		<ion-content>
 			<ul class="list">
-				<a ng-repeat="item in model.menu" ui-sref="{{item.url}}" ng-click="model.select(item)" menu-close class="item item-icon-left" ng-class="{ 'menu-item-selected': item.selected, 'menu-item-separator': item.separator, 'menu-item': !item.separator }">
+				<a ng-repeat="item in model.menu" menu-close ui-sref="{{item.url}}" ui-sref-active="menu-item-selected" class="item item-icon-left" ng-class="{ 'menu-item-separator': item.separator, 'menu-item': !item.separator }">
 					<i class="icon" ng-class="item.icon" style="color: #727272; font-size: 1.4em"></i>
 					{{item.label}}
 				</a>
