@@ -26,7 +26,7 @@
 			</div>
 
 			<ion-list ng-if="model.configuration.grouping === 'none'">
-				<ion-item ng-repeat="item in model.list.items">
+				<ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)">
 					<span style="float: right">{{item.status}}</span>
 					<h2>{{item.name}}</h2>
 					<p>{{item.customer}}</p>
@@ -34,7 +34,7 @@
 			</ion-list>
 
 			<ion-list ng-if="model.configuration.grouping === 'status'">
-				<ion-item ng-repeat="item in model.list.items" ng-class="item.header ? 'item-divider' : ''">
+				<ion-item ng-repeat="item in model.list.items" ng-click="model.view(item)" ng-class="item.header ? 'item-divider' : ''">
 					<span style="float: right">{{item.header ? item.count : item.status}}</span>
 					<h2 ng-if="item.header">{{item.status}}</h2>
 					<div ng-if="!item.header">

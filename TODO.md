@@ -16,7 +16,7 @@
 - app settings view
 - app intro slideshow
 - edit fields directives (with validation support)
-
+- activity summaries settings (summary per week, )
 
 
 

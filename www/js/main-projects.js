@@ -9,7 +9,9 @@ angular.module('aima')
 			date: null,
 			configuration: { filtering: '' /* 'Not started,In progress,On hold,Completed,Cancelled' */, grouping: 'none' /* none | status */, sorting: 'start:ascending' },
 			list: new List(),
-			refresh: refresh
+			refresh: refresh,
+			
+			view: view
 		};
 
 
@@ -76,6 +78,13 @@ angular.module('aima')
 		{
 			$scope.model.status = 'error';
 		}
+
+		function view(project)
+		{
+			if(project.header) return;
+			$state.go('main.projects_edit', { id: project.id });
+		}
+
 
 		function format(items, filtering, grouping, sorting)
 		{

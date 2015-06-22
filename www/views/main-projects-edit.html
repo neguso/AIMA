@@ -1,0 +1,38 @@
+<ion-view view-title="Project">
+	<ion-nav-buttons side="left">
+		<button ng-click="$ionicGoBack()" class="button button-icon ion-arrow-left-c"></button>
+	</ion-nav-buttons>
+	<ion-content padding="true">
+
+		<!-- loading -->
+		<div ng-show="model.status === 'loading'" style="text-align: center; padding-top: 10em">
+			<p>{{model.loading.message}}</p>
+			<ion-spinner></ion-spinner>
+		</div>
+
+		<!-- error -->
+		<div ng-show="model.status === 'error'" style="text-align: center; padding-top: 10em">
+			<p>{{model.error.message}}</p>
+			<button ng-click="model.error.retry.handler()" class="button button-positive">{{model.error.retry.label}}</button>
+		</div>
+
+		<!-- view mode -->
+		<div ng-show="model.status === 'content.ready'">
+
+			<div class="list card">
+				<div class="item item-divider" style="font-weight: bold">Project</div>
+				<div class="item">{{model.project.name}}</div>
+
+				<div class="item item-divider" style="font-weight: bold">Start</div>
+				<div class="item">{{model.project.start}}</div>
+
+				<div class="item item-divider" style="font-weight: bold">Finish</div>
+				<div class="item">{{model.project.finish}}</div>
+
+
+			</div>
+
+		</div>
+
+	</ion-content>
+</ion-view>

@@ -114,6 +114,16 @@ angular.module('aima.services', [])
 	}])
 	.factory('activities', ['$q', '$timeout', 'identity', function($q, $timeout, identity) {
 
+		function workingDays(month)
+		{
+			var result = 0;
+			var count = moment(month).endOf('month').date();
+			for(var i = 0; i < count; i++)
+				if(moment(month).startOf('month').add(i, 'days').isoWeekday() < 6)
+					result++;
+			return result;
+		}
+
 		var activities = {
 
 			// get monthly activities summary for the current user
@@ -145,7 +155,7 @@ angular.module('aima.services', [])
 							result.push({
 								month: months[m],
 								hours: hours,
-								total: 160
+								total: workingDays(months[m]) * 8
 							});
 						}
 
@@ -160,7 +170,7 @@ angular.module('aima.services', [])
 			{
 				var defer = $q.defer();
 
-				//todo: call real service, pass identity.token to autenticate
+				//todo: call service, pass identity.token to autenticate
 				$timeout(function() {
 
 					if(Math.random() > ep)
@@ -355,6 +365,79 @@ angular.module('aima.services', [])
 				}, 1000);
 
 				return defer.promise;
+			},
+
+			load: function(id) {
+				var defer = $q.defer();
+
+				//todo: call service, pass identity.token to autenticate
+				$timeout(function() {
+
+					if(Math.random() > ep)
+					{
+						// simulate connection error
+						defer.reject();
+					}
+					else
+					{
+						var project = null;
+						for(var p = 0; p < db.projects.length; p++)
+						{
+							if(db.projects[p].id === id)
+							{
+								project = db.projects[p];
+								break;
+							}
+						}
+						if(project === null)
+							defer.reject();
+						else
+							defer.resolve({
+								id: project.id,
+								name: project.name,
+								status: db.project_status[project.status],
+								start: project.start,
+								finish: project.finish,
+								customer: project.customer
+							});
+					}
+
+				}, 1000);
+
+				return defer.promise;
+			},
+
+			tasks: function(id) {
+				var defer = $q.defer();
+
+				//todo: call service, pass identity.token to autenticate
+				$timeout(function() {
+
+					if(Math.random() > ep)
+					{
+						// simulate connection error
+						defer.reject();
+					}
+					else
+					{
+						var project = null;
+						for(var p = 0; p < db.projects.length; p++)
+						{
+							if(db.projects[p].id === id)
+							{
+								project = db.projects[p];
+								break;
+							}
+						}
+						if(project === null)
+							defer.reject();
+						else
+							defer.resolve(project.tasks);
+					}
+
+				}, 1000);
+
+				return defer.promise;
 			}
 		};
 
@@ -388,7 +471,6 @@ for(var c = 0; c < 50; c++)
 	db.customers.push(customer);
 }
 
-
 // create projects
 for(var p = 0; p < 100; p++)
 {
@@ -418,9 +500,11 @@ for(var p = 0; p < 100; p++)
 }
 
 // create activities
-var date = new Date(2015, 0, 1);
-for(var d = 0; d < 365; d++)
+for(var d = 1; d < 366; d++)
 {
+	var date = new Date(2015, 0, d);
+	if(moment(date).isoWeekday() > 5) continue;
+
 	var ac = 1 + Math.floor(Math.random() * 3);
 	for(var a = 0; a < ac; a++)
 	{
@@ -428,7 +512,7 @@ for(var d = 0; d < 365; d++)
 		var task = project.tasks[Math.floor(Math.random() * project.tasks.length)];
 		db.activities.push({
 			id: ++k,
-			date: new Date(date.getFullYear(), 0, d),
+			date: date,
 			project: { id: project.id, name: project.name },
 			task: { id: task.id, name: task.name },
 			duration: Math.floor(2 + Math.random() * 4),
@@ -437,5 +521,3 @@ for(var d = 0; d < 365; d++)
 		});
 	}
 }
-
-

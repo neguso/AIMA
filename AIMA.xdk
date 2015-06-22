@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "05fe36c6-7b51-47f9-aa42-1c5b96c8e3cb",
-      "lastModifiedDate": 1432567866038,
+      "lastModifiedDate": 1434987571168,
       "creationDate": 1431937149444
     },
     "sourceDirectory": "www",
@@ -152,7 +152,7 @@
         "excludedLibraries_": "",
         "appVersion_": "0.0.1",
         "appVersionCode_": "1",
-        "crosswalkVersion_": "11",
+        "crosswalkVersion_": "12",
         "cordovaCLIVersion_": "4.1.2",
         "appDescription_": "",
         "appAuthor_": "Accesa"

@@ -10,7 +10,8 @@ angular.module('aima')
       activities: null,
       projects: null,
 			
-			view: view
+			viewActivities: viewActivities,
+			viewProjects: viewProjects
     };
 
     function load()
@@ -81,9 +82,14 @@ angular.module('aima')
       $scope.model.status = 'error';
     }
 
-		function view(month)
+		function viewActivities(month)
 		{
 			$state.go('main.activities', { year: month.getFullYear(), month: month.getMonth() });
+		}
+
+		function viewProjects(project)
+		{
+			$state.go('main.projects_edit', { id: project.id });
 		}
 
 
