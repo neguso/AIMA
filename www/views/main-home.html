@@ -24,7 +24,7 @@
 				<div class="item item-text-wrap" style="padding: 0">
 
 					<div class="list">
-						<div ng-repeat="item in model.activities" class="item" style="padding: 5px" ng-click="model.viewActivities(item.month)">
+						<div ng-repeat="item in model.activities" ng-click="model.viewActivities(item.month)" class="item" style="padding: 5px">
 							<div class="row">
 								<div class="col col-50">{{item.interval}}</div>
 								<div class="col" style="text-align: right">{{item.hours}} hours ({{item.total}})</div>

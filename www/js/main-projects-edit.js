@@ -1,5 +1,5 @@
 angular.module('aima')
-	.controller('ProjectsEditCtrl', ['$scope', '$q', 'projects', function($scope, $q, projects) {
+	.controller('ProjectsEditCtrl', ['$scope', '$stateParams', '$q', 'projects', function($scope, $stateParams, $q, projects) {
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready
@@ -8,6 +8,7 @@ angular.module('aima')
 			
 			id: 0,
 			project: null,
+			start: null, finish: null,
 			tasks: new List()
 		};
 
@@ -39,6 +40,8 @@ angular.module('aima')
 			p1
 				.then(function(result) {
 					$scope.model.project = result;
+					$scope.model.start = moment($scope.model.project.start).fromNow();
+					$scope.model.finish = moment($scope.model.project.finish).fromNow();
 				});
 
 			var p2 = projects.tasks($scope.model.id);

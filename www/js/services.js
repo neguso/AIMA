@@ -398,7 +398,7 @@ angular.module('aima.services', [])
 								status: db.project_status[project.status],
 								start: project.start,
 								finish: project.finish,
-								customer: project.customer
+								customer: project.customer.name
 							});
 					}
 

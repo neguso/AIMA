@@ -11,7 +11,7 @@ angular.module('aima')
       projects: null,
 			
 			viewActivities: viewActivities,
-			viewProjects: viewProjects
+			viewProject: viewProject
     };
 
     function load()
@@ -62,7 +62,7 @@ angular.module('aima')
       p2
         .then(function(result) {
           $scope.model.projects = result.map(function(item) {
-            return { name: item.name, customer: item.customer, status: item.status };
+            return { id: item.id, name: item.name, customer: item.customer, status: item.status };
           });
         })
         .catch(function(error) {
@@ -87,7 +87,7 @@ angular.module('aima')
 			$state.go('main.activities', { year: month.getFullYear(), month: month.getMonth() });
 		}
 
-		function viewProjects(project)
+		function viewProject(project)
 		{
 			$state.go('main.projects_edit', { id: project.id });
 		}

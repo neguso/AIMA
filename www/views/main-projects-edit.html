@@ -22,13 +22,15 @@
 			<div class="list card">
 				<div class="item item-divider" style="font-weight: bold">Project</div>
 				<div class="item">{{model.project.name}}</div>
+				<div class="item item-divider" style="font-weight: bold">Status</div>
+				<div class="item">{{model.project.status}}</div>
+				<div class="item item-divider" style="font-weight: bold">Customer</div>
+				<div class="item">{{model.project.customer}}</div>
 
 				<div class="item item-divider" style="font-weight: bold">Start</div>
-				<div class="item">{{model.project.start}}</div>
-
+				<div class="item">{{model.project.start | date: 'd MMMM, yyyy'}} ({{model.start}})</div>
 				<div class="item item-divider" style="font-weight: bold">Finish</div>
-				<div class="item">{{model.project.finish}}</div>
-
+				<div class="item">{{model.project.finish | date: 'd MMMM, yyyy'}} ({{model.finish}})</div>
 
 			</div>
 
