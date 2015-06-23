@@ -18,10 +18,16 @@ angular.module('aima', ['ionic', 'aima.services'])
 			.state('main.activities_edit', { url: '/activities_edit/:id', views: { 'menuContent': { templateUrl: 'views/main-activities-edit.html', controller: 'ActivitiesEditCtrl' } } })
 			.state('main.projects', { url: '/projects', views: { 'menuContent': { templateUrl: 'views/main-projects.html', controller: 'ProjectsCtrl' } } })
 			.state('main.projects_settings', { url: '/projects_settings', views: { 'menuContent': { templateUrl: 'views/main-projects-settings.html', controller: 'ProjectsSettingsCtrl' } } })
-			.state('main.projects_edit', { url: '/projects_edit/:id', views: { 'menuContent': { templateUrl: 'views/main-projects-edit.html', controller: 'ProjectsEditCtrl' } } })
+			//.state('main.projects_edit', { url: '/projects_edit/:id', views: { 'menuContent': { templateUrl: 'views/main-projects-edit.html', controller: 'ProjectsEditCtrl' } } })
 			.state('main.manual', { url: '/manual', views: { 'menuContent': { templateUrl: 'views/main-manual.html', controller: 'ManualCtrl' } } })
 			.state('main.about', { url: '/about', views: { 'menuContent': { templateUrl: 'views/main-about.html', controller: 'AboutCtrl' } } })
-			.state('main.profile', { url: '/profile', views: { 'menuContent': { templateUrl: 'views/main-profile.html', controller: 'ProfileCtrl' } } });
+			.state('main.profile', { url: '/profile', views: { 'menuContent': { templateUrl: 'views/main-profile.html', controller: 'ProfileCtrl' } } })
+
+			.state('main.projects_edit', { url: '/projects_edit', abstract: true, views: { 'menuContent': { templateUrl: 'views/main-projects-edit.html', controller: 'ProjectEditCtrl' } } })
+			.state('main.projects_edit.info', { url: '/info', views: { 'infoTab': { templateUrl: 'views/main-projects-edit-info.html', controller: 'ProjectEditInfoCtrl' } } })
+			.state('main.projects_edit.tasks', { url: '/tasks', views: { 'tasksTab': { templateUrl: 'views/main-projects-edit-tasks.html', controller: 'ProjectEditTasksCtrl' } } })
+			.state('main.projects_edit.team', { url: '/team', views: { 'teamTab': { templateUrl: 'views/main-projects-edit-team.html', controller: 'ProjectEditTeamCtrl' } } });
+
 		$urlRouterProvider.otherwise("/start");
 	}])
 	.controller('AppCtrl', ['$rootScope', function($rootScope) {

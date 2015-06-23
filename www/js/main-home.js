@@ -89,7 +89,7 @@ angular.module('aima')
 
 		function viewProject(project)
 		{
-			$state.go('main.projects_edit', { id: project.id });
+			$state.go('main.projects_edit.info', { id: project.id });
 		}
 
 

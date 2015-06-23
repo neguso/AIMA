@@ -8,7 +8,7 @@ angular.module('aima')
 				{ url: 'main.projects', icon: 'ion-android-folder', label: 'My Projects', separator: false },
 				{ url: 'main.manual', icon: 'ion-help-circled', label: 'Help', separator: false },
 				{ url: 'main.about', icon: 'ion-information-circled', label: 'About', separator: false },
-				{ url: 'main.profile', icon: 'ion-person', label: 'My Profile', separator: true }				
+				{ url: 'main.profile', icon: 'ion-person', label: 'My Profile', separator: true }
 			],
 			logout: { icon: 'ion-power', label: 'Logout', handler: logout }
 		};

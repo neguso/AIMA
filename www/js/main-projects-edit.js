@@ -1,5 +1,20 @@
 angular.module('aima')
-	.controller('ProjectsEditCtrl', ['$scope', '$stateParams', '$q', 'projects', function($scope, $stateParams, $q, projects) {
+	.controller('ProjectEditCtrl', ['$scope', '$stateParams', function($scope, $stateParams) {
+
+		$scope.id = 0;
+
+		function load()
+		{
+			console.log('parent: ' + $stateParams.id);
+			$scope.id = $stateParams.id;
+		}
+
+
+		$scope.$on('$ionicView.enter', function() {
+			load();
+		});
+	}])
+	.controller('ProjectEditInfoCtrl', ['$scope', '$stateParams', '$q', 'projects', function($scope, $stateParams, $q, projects) {
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready
@@ -15,8 +30,11 @@ angular.module('aima')
 
 		function load()
 		{
+			console.log('info: ' + $stateParams.id);
+			
 			// initialize model
-			$scope.model.id = parseInt($stateParams.id);
+			//$scope.model.id = parseInt($stateParams.id);
+			$scope.model.id = db.projects[0].id;
 
 			$scope.model.status = 'loading';
 			compose()
@@ -62,6 +80,36 @@ angular.module('aima')
 		function compose_error()
 		{
 			$scope.model.status = 'error';
+		}
+
+
+		$scope.$on('$ionicView.enter', function() {
+			load();
+		});
+	}])
+	.controller('ProjectEditTasksCtrl', ['$scope', '$stateParams', function($scope, $stateParams) {
+
+		$scope.id = 0;
+
+		function load()
+		{
+			console.log('tasks: ' + $stateParams.id);
+			$scope.id = $stateParams.id;
+		}
+
+
+		$scope.$on('$ionicView.enter', function() {
+			load();
+		});
+	}])
+	.controller('ProjectEditTeamCtrl', ['$scope', '$stateParams', function($scope, $stateParams) {
+
+		$scope.id = 0;
+
+		function load()
+		{
+			console.log('team: ' + $stateParams.id);
+			$scope.id = $stateParams.id;
 		}
 
 

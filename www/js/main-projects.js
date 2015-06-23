@@ -82,7 +82,7 @@ angular.module('aima')
 		function view(project)
 		{
 			if(project.header) return;
-			$state.go('main.projects_edit', { id: project.id });
+			$state.go('main.projects_edit.info', { id: project.id });
 		}
 
 
