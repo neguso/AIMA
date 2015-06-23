@@ -1,15 +1,15 @@
 <ion-view>
 	<ion-tabs class="tabs-positive tabs-icon-only">
 
-		<ion-tab title="Project Info" icon-on="ion-ios-information" icon-off="ion-ios-information-outline" ng-href="#/main/projects_edit/info">
+		<ion-tab title="Project Info" icon-on="ion-ios-information" icon-off="ion-ios-information-outline" href="#/main/projects_edit/{{id}}/info">
 			<ion-nav-view name="infoTab"></ion-nav-view>
 		</ion-tab>
 
-		<ion-tab title="Project Tasks" icon-on="ion-ios-briefcase" icon-off="ion-ios-briefcase-outline" ng-href="#/main/projects_edit/tasks">
+		<ion-tab title="Project Tasks" icon-on="ion-ios-briefcase" icon-off="ion-ios-briefcase-outline" href="#/main/projects_edit/{{id}}/tasks">
 			<ion-nav-view name="tasksTab"></ion-nav-view>
 		</ion-tab>
 
-		<ion-tab title="Project Team" icon-on="ion-ios-people" icon-off="ion-ios-people-outline" ng-href="#/main/projects_edit/team">
+		<ion-tab title="Project Team" icon-on="ion-ios-people" icon-off="ion-ios-people-outline" href="#/main/projects_edit/{{id}}/team">
 			<ion-nav-view name="teamTab"></ion-nav-view>
 		</ion-tab>
 
