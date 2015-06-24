@@ -2,7 +2,25 @@ angular.module('aima')
 	.factory('edit-project', [function() {
 		return { id: 0 };
 	}])
-	.controller('ProjectEditCtrl', ['$scope', function($scope) { }])
+	.controller('ProjectEditCtrl', ['$scope', '$state', '$ionicHistory', function($scope, $state, $ionicHistory) {
+
+		$scope.go = function(tab)
+		{
+			switch(tab)
+			{
+				case 0:
+					$state.go('main.projects_edit.info', null, { location: 'replace' });
+					break;
+				case 1:
+					$state.go('main.projects_edit.tasks', null, { location: 'replace' });
+					break;
+				case 2:
+					$state.go('main.projects_edit.team', null, { location: 'replace' });
+					break;
+			}
+		};
+
+	}])
 	.controller('ProjectEditInfoCtrl', ['$scope', '$q', 'projects', 'edit-project', function($scope, $q, projects, current) {
 
 		$scope.model = {
