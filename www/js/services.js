@@ -43,7 +43,7 @@ angular.module('aima.services', [])
 					{
 						if(username === 'a' && password === 'a')
 						{
-							identity.token = { key: 123, expires: new Date(2015, 7, 1) };
+							identity.token = { key: 123, expires: new Date(2015, 7, 1), user: db.employees[Math.floor(db.employees.length * Math.random())].id };
 
 							// store token to storage
 							$window.localStorage.setItem('identity.token', JSON.stringify(identity.token));
@@ -331,7 +331,7 @@ angular.module('aima.services', [])
 
 		return activities;
 	}])
-	.factory('projects', ['$q', '$timeout', function($q, $timeout) {
+	.factory('projects', ['$q', '$timeout', 'identity', function($q, $timeout, identity) {
 
 		var projects = {
 
@@ -349,7 +349,9 @@ angular.module('aima.services', [])
 					}
 					else
 					{
-						defer.resolve(db.projects.map(function(item) {
+						defer.resolve(db.projects.filter(function(item) {
+								return item.members.some(function(item) { return item.employee.id === identity.token.user; });
+							}).map(function(item) {
 							return {
 								id: item.id,
 								name: item.name,
@@ -367,7 +369,8 @@ angular.module('aima.services', [])
 				return defer.promise;
 			},
 
-			load: function(id) {
+			load: function(id)
+			{
 				var defer = $q.defer();
 
 				//todo: call service, pass identity.token to autenticate
@@ -398,7 +401,8 @@ angular.module('aima.services', [])
 								status: db.project_status[project.status],
 								start: project.start,
 								finish: project.finish,
-								customer: project.customer.name
+								customer: project.customer.name,
+								members: project.members
 							});
 					}
 
@@ -407,7 +411,8 @@ angular.module('aima.services', [])
 				return defer.promise;
 			},
 
-			tasks: function(id) {
+			tasks: function(id)
+			{
 				var defer = $q.defer();
 
 				//todo: call service, pass identity.token to autenticate
@@ -454,25 +459,36 @@ angular.module('aima.services', [])
 
 var k = 0;
 var db = {
+	employees: [],
 	customers: [],
 	project_status: ['Not started', 'In progress', 'On hold', 'Completed', 'Cancelled'],
 	projects: [],
-	activities: []	
+	activities: []
 };
 
+
+// create employees
+for(var e = 0; e < 200; e++)
+{
+	var employee = {
+		id: ++k,
+		name: 'Jon Doe the ' + e.toString()
+	};
+	db.employees.push(employee);
+}
+
 // create customers
-for(var c = 0; c < 50; c++)
+for(var c = 0; c < 100; c++)
 {
 	var customer = {
 		id: ++k,
 		name: 'Happy Enterprise Father & Son Ltd. ' + c.toString()
 	};
-
 	db.customers.push(customer);
 }
 
 // create projects
-for(var p = 0; p < 100; p++)
+for(var p = 0; p < 500; p++)
 {
 	var start = new Date(2014, 0, 1 + Math.floor(Math.random() * 365 * 2));
 	var customer = db.customers[Math.floor(Math.random() * db.customers.length)];
@@ -482,11 +498,12 @@ for(var p = 0; p < 100; p++)
 		status: Math.floor(Math.random() * 5),
 		start: start, finish: new Date(start.getFullYear(), start.getMonth() + 1 + Math.floor(Math.random() * 12), start.getDate()),
 		tasks: [],
-		customer: { id: customer.id, name: customer.name }
+		customer: { id: customer.id, name: customer.name },
+		members: []
 	};
 
 	// create tasks
-	var tc = 2 + Math.floor(9 * Math.random());
+	var tc = 5 + Math.floor(50 * Math.random());
 	for(var t = 0; t < tc; t++)
 	{
 		var task = {
@@ -494,6 +511,20 @@ for(var p = 0; p < 100; p++)
 			name: 'Exciting task ' + t.toString()
 		};
 		project.tasks.push(task);
+	}
+	
+	// assign employees
+	var ec = 2 + Math.floor(25 * Math.random());
+	for(var e = 0; e < ec; e++)
+	{
+		var employee = db.employees[Math.floor(db.employees.length * Math.random())];
+		var member = {
+			id: ++k,
+			employee: { id: employee.id, name: employee.name },
+			start: null,
+			finish: null
+		};
+		project.members.push(member);
 	}
 
 	db.projects.push(project);

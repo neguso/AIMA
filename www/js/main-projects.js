@@ -1,5 +1,5 @@
 angular.module('aima')
-	.controller('ProjectsCtrl', ['$scope', '$state', '$q', 'settings','projects', function($scope, $state, $q, settings, projects) {
+	.controller('ProjectsCtrl', ['$scope', '$state', '$q', 'settings','projects', 'edit-project', function($scope, $state, $q, settings, projects, edit_project) {
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready | content.refresh
@@ -13,7 +13,6 @@ angular.module('aima')
 			
 			view: view
 		};
-
 
 
 		function load()
@@ -82,7 +81,8 @@ angular.module('aima')
 		function view(project)
 		{
 			if(project.header) return;
-			$state.go('main.projects_edit.info', { id: project.id });
+			edit_project.id = project.id;
+			$state.go('main.projects_edit.info');
 		}
 
 
