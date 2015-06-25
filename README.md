@@ -22,7 +22,7 @@ The document contains a proposal for Accesa Service Bus interface.
 
 | Name | Type | Description |
 | ----- | ----- | ----- |
-| key  | string | Application key required to access the service. Each client application has it's own key |
+| key  | string | Application key required to access the service. Each client application has it's own key. |
 | action | string | Action to be executed |
 | user | string | User name |
 | password | string | User password |
@@ -35,54 +35,96 @@ The document contains a proposal for Accesa Service Bus interface.
 
 ##### auth
 
-`auth(user, password)`
+**`auth(user, password)`**
 
 Search for an identity that match `user` and `password` and returns a token. The token is used to call services method that require authentication.
 
-Response
+Response:
 
 ```
 {
-  token: [string],
-  expires: [date],
-  identity: [string]
+	token: [string],
+	expires: [date],
+	identity: [string]
 }
 ```
 
-Sample
+Sample:
 
 `http://api.accesa.eu/v1/auth?key=12345&action=auth&user=ovidiu.negus&password=secret`
 
-`auth(token)`
+**`auth(token)`**
 
 Check if `token` is valid.
 
-Response
+Response:
 
 ```
 {
-  token: [string],
-  expires: [date]
+	token: [string],
+	expires: [date]
 }
 ```
 
 Field `expires` is `null` if the token has expired.
 
+
 ##### info
 
-`info(identity)`
+**`info(identity)`**
 
 Returns information about the identity.
 
-Response
+Response:
 
 ```
 {
-  identity: [string],
+	identity: [string],
 	firstname: [string],
 	lastname: [string]
 }
 ```
+
+
+### Projects Service
+
+#### Request
+
+`http://api.accesa.eu/v1/projects?...`
+
+#### Parameters
+
+| Name | Type | Description |
+| ----- | ----- | ----- |
+| key  | `string` | Application key required to access the service. Each client application has it's own key. |
+| token | `string` | Authetication token |
+| action | `string` | Action to be executed |
+| filter | `string` | Filter expression used to retrieve projects |
+| skip | `number` | Records to skip from the result list. Value must be `>= 0`. Default value is `0` |
+| take | `number` | Records to take from the result list. Value must be `> 0`, maximum value is `100`. Default value is `20` |
+
+
+#### Actions
+
+- get
+
+##### get
+
+**`get(filter, skip, take)`**
+
+Get information about projects.
+
+Response:
+
+```
+{
+	
+}
+```
+
+Sample:
+
+`http://api.accesa.eu/v1/projects?key=12345&token=QWERT&action=get&filter=(id=23)&skip=60&take=20`
 
 
 ### Timesheet Service

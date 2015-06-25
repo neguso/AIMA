@@ -2,13 +2,20 @@ angular.module('aima')
 	.controller('ProfileCtrl', ['$scope', 'settings', function($scope, settings) {
 
 		$scope.model = {
-			autologin: true
+			_autologin: true
 		};
+
+		Object.defineProperty($scope.model, 'autologin', {
+			configurable: false,
+			enumerable: true,
+			get: function() { return $scope.model._autologin; },
+			set: function(value) { $scope.model._autologin = value; save(); }
+		});
 
 
 		function load()
 		{
-			$scope.model.autologin = settings.get('profile.autologin', true);
+			$scope.model._autologin = settings.get('profile.autologin', true);
 		}
 
 		function save()
