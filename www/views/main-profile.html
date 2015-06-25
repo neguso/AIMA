@@ -1,10 +1,11 @@
 <ion-view view-title="My Profile">
 	<ion-nav-buttons side="right">
 	</ion-nav-buttons>
-	<ion-content padding="false">
+	<ion-content>
 
 		<div class="list">
-			<div class="item item-checkbox"><label class="checkbox"><input type="checkbox"></label>Remember Password</div>
+			<div class="item item-divider" style="font-weight: bold">Preferences</div>
+			<ion-checkbox ng-model="model.autologin">Remember Password</ion-checkbox>
 
 		</div>
 

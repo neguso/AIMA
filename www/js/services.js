@@ -72,7 +72,7 @@ angular.module('aima.services', [])
 
 				// restore token from storage
 				if(identity.token === null)
-					identity.token = JSON.parse($window.localStorage.getItem('identity.tokenX'));
+					identity.token = JSON.parse($window.localStorage.getItem('identity.token'));
 
 				//todo: call service to check token
 				$timeout(function() {
@@ -104,6 +104,7 @@ angular.module('aima.services', [])
 			{
 				var defer = $q.defer();
 
+				throw new Error('Not implemented.');
 
 				return defer.promise;
 			}

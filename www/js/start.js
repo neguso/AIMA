@@ -1,5 +1,5 @@
 angular.module('aima')
-	.controller('StartCtrl', ['$scope', '$state', '$ionicHistory', 'identity', function($scope, $state, $ionicHistory, identity) {
+	.controller('StartCtrl', ['$scope', '$state', '$ionicHistory', 'identity', 'settings', function($scope, $state, $ionicHistory, identity, settings) {
 
 		$scope.model = {
 			status: 'loading', // loading | error | content.ready
@@ -14,7 +14,14 @@ angular.module('aima')
 		{
 			// nothing to load
 			$scope.model.status = 'content.ready';
-			authenticate();
+
+			if(settings.get('profile.autologin', true))
+				authenticate();
+			else
+			{
+				$ionicHistory.nextViewOptions({ disableBack: true });
+				$state.go('login');
+			}
 		}
 
 		function retry()
