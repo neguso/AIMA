@@ -73,12 +73,12 @@
 				</div>
 				<div class="item item-divider" style="font-weight: bold">Project</div>
 				<div ng-click="model.openProjects()" class="item">
-					{{model.activity.project === null ? '[select project]' : model.activity.project.name}}
+					{{model.activity.project === null ? 'touch to select project' : model.activity.project.name}}
 					<div ng-show="model.validation.hasOwnProperty('project')" style="color: red; padding-top: 0.5em"><i class="icon ion-close-circled"></i>&nbsp;{{model.validation.project.error}}</div>
 				</div>
 				<div class="item item-divider">Task</div>
 				<div ng-click="model.openTasks()" class="item">
-					{{model.activity.task === null ? '[select task]' : model.activity.task.name}}
+					{{model.activity.task === null ? 'touch to select task' : model.activity.task.name}}
 					<div ng-show="model.validation.hasOwnProperty('task')" style="color: red; padding-top: 0.5em"><i class="icon ion-close-circled"></i>&nbsp;{{model.validation.task.error}}</div>
 				</div>
 				<div class="item item-divider">
@@ -100,7 +100,7 @@
 				</div>
 				<div class="item item-divider" style="font-weight: bold">Notes</div>
 				<div class="item">
-					<textarea ng-model="model.activity.notes" style="width: 100%; resize: none; font-size: 16px" rows="5"></textarea>
+					<textarea ng-model="model.activity.notes" placeholder="add activity notes here" style="width: 100%; resize: none; font-size: 16px" rows="5"></textarea>
 					<div ng-show="model.validation.hasOwnProperty('notes')" style="color: red; padding-top: 0.5em"><i class="icon ion-close-circled"></i>&nbsp;{{model.validation.notes.error}}</div>
 				</div>
 			</div>

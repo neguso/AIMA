@@ -4,20 +4,24 @@
 		<h1 class="title">Select Task</h1>
 		<button ng-click="model.selectTask()" class="button button-icon icon ion-checkmark-round"></button>
 	</ion-header-bar>
-	<ion-content>
+	<ion-content scroll="false">
 
-		<div class="list list-inset" style="margin: 0">
-			<label class="item item-input">
-				<i class="icon ion-search placeholder-icon"></i>
-				<input type="text" placeholder="Search Tasks" ng-model="search.name">
-			</label>
+		<div style="position: absolute; top: 0; width: 100%; height: 57px; padding: 5px 5px 0 5px; border-bottom: solid 1px #dddddd">
+			<div class="list list-inset" style="margin: 0">
+				<label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input type="text" placeholder="Search Tasks" ng-model="search.name">
+				</label>
+			</div>
 		</div>
 
-		<ion-list>
-			<ion-item ng-repeat="item in model.tasks.items | filter:search" ng-click="model.selectedTask = item" ng-style="{ 'background-color': item.id === model.selectedTask.id ? '#E0E0E0' : '' }">
-				{{item.name}}
-			</ion-item>
-		</ion-list>
+		<ion-scroll style="height: 100%; border-top: solid 57px transparent">
+			<ion-list>
+				<ion-item ng-repeat="item in model.tasks.items | filter:search" ng-click="model.selectedTask = item" ng-style="{ 'background-color': item.id === model.selectedTask.id ? '#E0E0E0' : '' }">
+					{{item.name}}
+				</ion-item>
+			</ion-list>
+		</ion-scroll>
 
 	</ion-content>
 </ion-modal-view>
