@@ -49,9 +49,9 @@ activity
 - view: add delete button
 
 projects
-- project view page
+# project view page
 
 my profile
-- add remember password option
+# add remember password option
 
 

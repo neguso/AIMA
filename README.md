@@ -1,4 +1,4 @@
-# AIMA Mobile Aplication
+# Accesa Service Bus
 
 The document contains a proposal for Accesa Service Bus interface.
 
@@ -100,8 +100,10 @@ Response:
 | token | `string` | Authetication token |
 | action | `string` | Action to be executed |
 | filter | `string` | Filter expression used to retrieve projects |
+| order | `string` | Order expression used to sort projects |
 | skip | `number` | Records to skip from the result list. Value must be `>= 0`. Default value is `0` |
 | take | `number` | Records to take from the result list. Value must be `> 0`, maximum value is `100`. Default value is `20` |
+| show | `string` | List of project properties to be retrieved |
 
 
 #### Actions
@@ -110,7 +112,7 @@ Response:
 
 ##### get
 
-**`get(filter, skip, take)`**
+**`get(filter, order, skip, take, show)`**
 
 Get information about projects.
 
@@ -118,7 +120,18 @@ Response:
 
 ```
 {
-	
+	from: [number],
+    count: [number],
+    total: [number],
+    projects: [
+    	{
+        	field1,
+            field2,
+            ...
+        },
+        ...    
+    ]
+    
 }
 ```
 
@@ -137,13 +150,31 @@ Parameters
 
 | Name | Type | Description |
 | ----- | ----- | ----- |
-| key  | string | A unique key required to access the service |
-| auth | string | Authentication token |
-| action | string | Action to be executed |
-| skip | number | Data items to skip |
-| take | number | Data items to take |
-| order | string | |
-| from | date | Dates interval start |
-| to | date | Dates interval end |
+| key  | `string` | A unique key required to access the service |
+| token | `string` | Authetication token |
+| action | `string` | Action to be executed |
+| filter | `string` | Filter expression used to retrieve activities |
+| order | `string` | Order expression used to sort activities |
+| skip | `number` | Records to skip from the result list. Value must be `>= 0`. Default value is `0` |
+| take | `number` | Records to take from the result list. Value must be `> 0`, maximum value is `100`. Default value is `20` |
+| show | `string` | List of activity properties to be retrieved |
+
+#### Actions
+
+- get
+
+##### get
+
+**`get(filter, order, skip, take, show)`**
+
+Get information about activities.
+
+Response:
+
+```
+{
+	[todo]
+}
+```
 
 
