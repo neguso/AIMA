@@ -21,13 +21,13 @@ angular.module('aima.services', [])
 
 		return settings;
 	}])
-	.factory('identity', ['$q', '$timeout', '$window', 'settings', function($q, $timeout, $window, settings) {
+	.factory('identity', ['$http', '$q', '$timeout', '$window', 'settings', function($http, $q, $timeout, $window, settings) {
 
 		var identity = {
 			token: null,
 
 			// authenticate a user and store the token
-			authenticate: function(username, password)
+			_authenticate: function(username, password)
 			{
 				var defer = $q.defer();
 
@@ -65,8 +65,39 @@ angular.module('aima.services', [])
 				return defer.promise;
 			},
 
+			authenticate: function(username, password)
+			{
+				var defer = $q.defer();
+
+				$http({ method: 'GET', url: 'http://localhost:3000/auth', params: { key: 12345, action: 'auth', user: username, password: password }})
+					.success(function(data, status) {
+						if(data.hasOwnProperty('error'))
+						{
+							identity.token = null;
+							$window.localStorage.removeItem('identity.token');
+
+							defer.resolve(null);
+						}
+						else
+						{
+							identity.token = data.token;
+							$window.localStorage.setItem('identity.token', JSON.stringify(identity.token));
+
+							defer.resolve(data.token);
+						}
+					})
+					.error(function(data, status) {
+						identity.token = null;
+						$window.localStorage.removeItem('identity.token');
+
+						defer.reject();
+					});
+
+				return defer.promise;
+			},
+
 			// check if current authentication is valid
-			check: function()
+			_check: function()
 			{
 				var defer = $q.defer();
 
@@ -89,6 +120,28 @@ angular.module('aima.services', [])
 							defer.resolve(true);
 					}
 				}, 1000);
+
+				return defer.promise;
+			},
+			
+			check: function()
+			{
+				var defer = $q.defer();
+
+				// restore token from storage
+				if(identity.token === null)
+					identity.token = JSON.parse($window.localStorage.getItem('identity.token'));
+
+				$http({ method: 'GET', url: 'http://localhost:3000/auth', params: { key: 12345, token: identity.token }})
+					.success(function(data, status) {
+						if(data.hasOwnProperty('error'))
+							defer.resolve(false);
+						else
+							defer.resolve(data.token.expires < Date.now());
+					})
+					.error(function(data, status) {
+						defer.reject();
+					});
 
 				return defer.promise;
 			},
