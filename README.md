@@ -111,7 +111,9 @@ Response:
 ```
 {
 	identity: [string],
-	<fields>
+	field1,
+	field2,
+	...
 }
 ```
 
