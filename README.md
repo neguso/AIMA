@@ -29,8 +29,7 @@ Services use standard HTTP response codes to indicate success or failure of an A
 ```
 {
 	code: [number],
-	message: [string],
-	<optional additional specific error information>
+	message: [string]
 }
 ```
 
@@ -40,7 +39,7 @@ Services use standard HTTP response codes to indicate success or failure of an A
 
 ## Naming Conventions
 
-Services use **camelCase** naming convention for JSON property names.
+Services use **camelCase** naming convention for JSON property names. Names contains letters, digits and special characters '_' (underscore) and '$' (dollar sign). Names starts always with letters or special characters.
 
 
 ## Services Specification
@@ -58,15 +57,21 @@ Services use **camelCase** naming convention for JSON property names.
 | user | `string` | User name |
 | password | `string` | User password |
 | token | `string` | Authentication token |
+| fields | `string` | Comma separated list of identity properties to be retrieved |
 
 #### Actions
 
-- auth
+- auth (default)
 - info
 
-**`auth(user, password)`**
+
+**` GET auth(user, password)`**
 
 Search for an identity that match `user` and `password` and returns a token. The token can be used to call services method that require authentication.
+
+Sample:
+
+`/auth?key=12345&action=auth&user=ovidiu.negus@accesa.eu&password=secret`
 
 Response:
 
@@ -79,11 +84,7 @@ Response:
 }
 ```
 
-Sample:
-
-`http://api.accesa.eu/v1/auth?key=12345&action=auth&user=ovidiu.negus&password=secret`
-
-**`auth(token)`**
+**`GET auth(token)`**
 
 Check if `token` is valid.
 
@@ -97,24 +98,41 @@ Response:
 }
 ```
 
-**`info(identity)`**
+**`GET info(identity, fields)`**
 
 Returns information about the identity.
+
+Sample:
+
+`/auth?key=12345&action=auth&identity=ovidiu.negus@accesa.eu&fields=firstName,lastName,avatar`
 
 Response:
 
 ```
 {
 	identity: [string],
-	firstName: [string],
-	lastName: [string]
+	<fields>
 }
 ```
 
+**`POST info`**
+
+Allows you to store custom information associated to a identity. The information is visible to any authenticated user. Input value for the action is a list of key and value pairs.
+The key is and value are both `string` with key being limited to 64 characters and value to 1024.
+
+
+#### Fields
+
+| Field | Type | Description |
+| ----- | ------ | ----- |
+| identity | `string` |  |
+| firstName | `string` |  |
+| lastName | `string` |  |
+| avatar | `string` | URL to identity avatar |
+| custom.<field> | `string` | Custom defined field |
+
 
 ### Projects Service
-
-#### Request
 
 `http://api.accesa.eu/v1/projects?...`
 
@@ -129,16 +147,15 @@ Response:
 | order | `string` | Order expression used to sort projects |
 | skip | `number` | Records to skip from the result list. Value must be `>= 0`. Default value is `0` |
 | take | `number` | Records to take from the result list. Value must be `> 0`, maximum value is `100`. Default value is `20` |
-| show | `string` | List of project properties to be retrieved |
+| fields | `string` | Comma separated list of project properties to be retrieved |
 
 
 #### Actions
 
-- get
+- get (default)
 
-##### get
 
-**`get(filter, order, skip, take, show)`**
+**`GET get(filter, order, skip, take, show)`**
 
 Get information about projects.
 
@@ -183,15 +200,13 @@ Parameters
 | order | `string` | Order expression used to sort activities |
 | skip | `number` | Records to skip from the result list. Value must be `>= 0`. Default value is `0` |
 | take | `number` | Records to take from the result list. Value must be `> 0`, maximum value is `100`. Default value is `20` |
-| show | `string` | List of activity properties to be retrieved |
+| fields | `string` | Comma separated list of activity properties to be retrieved |
 
 #### Actions
 
-- get
+- get (default)
 
-##### get
-
-**`get(filter, order, skip, take, show)`**
+**`GET get(filter, order, skip, take, fields)`**
 
 Get information about activities.
 
