@@ -3,18 +3,49 @@
 The document contains a proposal for Accesa Service Bus interface.
 
 
-## Services List
+## Accesa Services
 
 - Identity
 - Projects
 - Timesheet
 
 
-## Service Specification
+## Errors
+
+Services use standard HTTP response codes to indicate success or failure of an API request.
+
+| Status | Description |
+| ----- | ----- |
+| 200 | Ok |
+| 400 | Invalid request or missing parameters |
+| 401 | Unauthorized request, authentication token is missing or invalid |
+| 403 | Forbidden, authenticated user doesn't have access to requested resource  |
+| 500 | Server error |
+
+### 4xx Error Codes
+
+4xx errors come with the following error representation:
+
+```
+{
+	code: [number],
+	message: [string],
+	<optional additional specific error information>
+}
+```
+
+### 5xx Error Codes
+
+5xx errors are not guaranteed they return an consumable JSON error representation.
+
+## Naming Conventions
+
+Services use **camelCase** naming convention for JSON property names.
+
+
+## Services Specification
 
 ### Identity Service
-
-#### Request
 
 `http://api.accesa.eu/v1/auth?...`
 
@@ -22,27 +53,26 @@ The document contains a proposal for Accesa Service Bus interface.
 
 | Name | Type | Description |
 | ----- | ----- | ----- |
-| key  | string | Application key required to access the service. Each client application has it's own key. |
-| action | string | Action to be executed |
-| user | string | User name |
-| password | string | User password |
-| token | string | Authentication token |
+| key  | `string` | Application key required to access the service. Each client application has it's own key. |
+| action | `string` | Action to be executed |
+| user | `string` | User name |
+| password | `string` | User password |
+| token | `string` | Authentication token |
 
 #### Actions
 
 - auth
 - info
 
-##### auth
-
 **`auth(user, password)`**
 
-Search for an identity that match `user` and `password` and returns a token. The token is used to call services method that require authentication.
+Search for an identity that match `user` and `password` and returns a token. The token can be used to call services method that require authentication.
 
 Response:
 
 ```
 {
+	status: [string], // 'success' | 'fail'
 	token: [string],
 	expires: [date],
 	identity: [string]
@@ -61,15 +91,11 @@ Response:
 
 ```
 {
+	status: [string], // 'valid' | 'invalid'
 	token: [string],
 	expires: [date]
 }
 ```
-
-Field `expires` is `null` if the token has expired.
-
-
-##### info
 
 **`info(identity)`**
 
@@ -80,8 +106,8 @@ Response:
 ```
 {
 	identity: [string],
-	firstname: [string],
-	lastname: [string]
+	firstName: [string],
+	lastName: [string]
 }
 ```
 
