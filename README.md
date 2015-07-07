@@ -28,7 +28,7 @@ Services use standard HTTP response codes to indicate success or failure of an A
 
 ```
 {
-	code: [number],
+	code: [string],
 	message: [string]
 }
 ```
