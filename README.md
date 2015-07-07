@@ -98,13 +98,13 @@ Response:
 }
 ```
 
-**`GET info(identity, fields)`**
+**`GET info(token, identity, fields)`**
 
 Returns information about the identity.
 
 Sample:
 
-`/auth?key=12345&action=auth&identity=ovidiu.negus@accesa.eu&fields=firstName,lastName,avatar`
+`/auth?key=12345&action=auth&token=XYZ&identity=ovidiu.negus@accesa.eu&fields=firstName,lastName,avatar`
 
 Response:
 
