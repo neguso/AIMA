@@ -120,6 +120,10 @@ Response:
 **`GET resource(token, identity, type)`**
 
 Returns the requested resource type.
+Suported resource types:
+- avatar
+
+
 
 
 **`POST info`**
