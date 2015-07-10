@@ -104,7 +104,7 @@ Returns information about the identity.
 
 Sample:
 
-`/auth?key=12345&action=auth&token=XYZ&identity=ovidiu.negus@accesa.eu&fields=firstName,lastName,avatar`
+`/auth?key=12345&action=auth&token=XYZ&identity=ovidiu.negus@accesa.eu&fields=FirstName,LastName,Avatar`
 
 Response:
 
@@ -116,6 +116,11 @@ Response:
 	...
 }
 ```
+
+**`GET resource(token, identity, type)`**
+
+Returns the requested resource type.
+
 
 **`POST info`**
 
