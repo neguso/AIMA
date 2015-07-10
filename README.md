@@ -125,18 +125,24 @@ Returns the requested resource type.
 **`POST info`**
 
 Allows you to store custom information associated to a identity. The information is visible to any authenticated user. Input value for the action is a list of key and value pairs.
-The key is and value are both `string` with key being limited to 64 characters and value to 1024.
+The key and value are both `string` with key being limited to 64 characters and value to 1024.
 
 
 #### Fields
 
 | Field | Type | Description |
 | ----- | ------ | ----- |
-| identity | `string` |  |
-| firstName | `string` |  |
-| lastName | `string` |  |
-| avatar | `string` | URL to identity avatar |
-| custom.<field> | `string` | Custom defined field |
+| Identity | `string` | Identity key. |
+| FirstName | `string` |  |
+| LastName | `string` |  |
+| Avatar | `string` | URL to identity avatar |
+| Birthday | `date` |  |
+| Skype | `string` |  |
+| Phone | `string` |  |
+| JobPosition | `string` |  |
+| OfficeLocation | `string` |  |
+| Area | `string` |  |
+| Custom.<field name> | `string` | Custom defined field |
 
 
 ### Projects Service
