@@ -20,6 +20,7 @@ Services use standard HTTP response codes to indicate success or failure of an A
 | 400 | Invalid request or missing parameters |
 | 401 | Unauthorized request, authentication token is missing or invalid |
 | 403 | Forbidden, authenticated user doesn't have access to requested resource  |
+| 404 | Requested resource not found |
 | 500 | Server error |
 
 ### 4xx Error Codes
