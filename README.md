@@ -141,6 +141,7 @@ The key and value are both `string` with key being limited to 64 characters and 
 | LastName | `string` |  |
 | Avatar | `string` | URL to identity avatar |
 | Birthday | `date` |  |
+| Email | `string` |  |
 | Skype | `string` |  |
 | Phone | `string` |  |
 | JobPosition | `string` |  |
