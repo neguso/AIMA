@@ -64,6 +64,8 @@ Services use **camelCase** naming convention for JSON property names. Names cont
 
 - auth (default)
 - info
+- get
+- resource
 
 
 **` GET auth(user, password)`**
@@ -85,6 +87,7 @@ Response:
 }
 ```
 
+
 **`GET auth(token)`**
 
 Check if `token` is valid.
@@ -99,9 +102,10 @@ Response:
 }
 ```
 
+
 **`GET info(token, identity, fields)`**
 
-Returns information about the identity.
+Returns information about the supplied identity.
 
 Sample:
 
@@ -111,29 +115,52 @@ Response:
 
 ```
 {
-	identity: [string],
 	field1,
 	field2,
 	...
 }
 ```
 
+
+**`GET get(token, identity, filter, order, skip, take, fields)`**
+
+Get information about about identities. `filter` and `order` are not yet supported.
+
+Response:
+
+```
+{
+	from: [number],
+    count: [number],
+    total: [number],
+    identities: [
+    	{ field1, field2, ... },
+        ...
+    ]
+}
+```
+
+Sample:
+
+`http://api.accesa.eu/v1/auth?key=12345&token=QWERT&action=get&filter=(JobPosition='Software Developer')&skip=60&take=20`
+
 **`GET resource(token, identity, type)`**
 
-Returns the requested resource type.
-Suported resource types:
-- avatar
+Returns the requested resource type. Suported resource types: { avatar }
 
-
+| Resource | Description |
+| ----- | ----- |
+| avatar | PNG image of the identity |
 
 
 **`POST info`**
 
+[draft proposal]
 Allows you to store custom information associated to a identity. The information is visible to any authenticated user. Input value for the action is a list of key and value pairs.
 The key and value are both `string` with key being limited to 64 characters and value to 1024.
 
 
-#### Fields
+#### Identity Fields
 
 | Field | Type | Description |
 | ----- | ------ | ----- |
@@ -148,7 +175,7 @@ The key and value are both `string` with key being limited to 64 characters and 
 | JobPosition | `string` |  |
 | OfficeLocation | `string` |  |
 | Area | `string` |  |
-| Custom.<field name> | `string` | Custom defined field |
+| Custom.FieldName | `string` | Custom defined field |
 
 
 ### Projects Service
@@ -236,5 +263,3 @@ Response:
 	[todo]
 }
 ```
-
-
