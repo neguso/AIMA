@@ -124,7 +124,7 @@ Response:
 
 **`GET get(token, identity, filter, order, skip, take, fields)`**
 
-Get information about about identities. `filter` and `order` are not yet supported.
+Get information about about identities. `filter` and `order` parameters are not yet supported.
 
 Response:
 
