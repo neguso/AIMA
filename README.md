@@ -17,10 +17,11 @@ Services use standard HTTP response codes to indicate success or failure of an A
 | Status | Description |
 | ----- | ----- |
 | 200 | Ok |
-| 400 | Invalid request or missing parameters |
+| 400 | Invalid request |
 | 401 | Unauthorized request, authentication token is missing or invalid |
 | 403 | Forbidden, authenticated user doesn't have access to requested resource  |
 | 404 | Requested resource not found |
+| 409 | Invalid or missing parameters |
 | 500 | Server error |
 
 ### 4xx Error Codes
@@ -68,13 +69,17 @@ Services use **camelCase** naming convention for JSON property names. Names cont
 - resource
 
 
-**` GET auth(user, password)`**
+**` POST auth(user, password)`**
 
 Search for an identity that match `user` and `password` and returns a token. The token can be used to call services method that require authentication.
 
 Sample:
 
-`/auth?key=12345&action=auth&user=ovidiu.negus@accesa.eu&password=secret`
+```
+/auth?key=12345&action=auth
+form:(user=ovidiu.negus@accesa.eu,password=secret)
+```
+
 
 Response:
 
